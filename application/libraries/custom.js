@@ -1,7 +1,7 @@
 // Define Global base path...
 
 // local base_url...
-const base_url = 'http://localhost/learnIndia_admin/';
+const base_url = 'http://localhost/learnindia_adminpanel/';
 
 
 
@@ -53,11 +53,7 @@ function hidedotLoader() {
     $(".dot1").hide();
 }
 
-// function for email validation...
-function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
+
 
 // popup function...
 function showAlert(alertText) {
@@ -75,11 +71,6 @@ function showAlert(alertText) {
             ok: {
                 text: "Ok",
                 btnClass: 'btn-alert',
-                action: function () {
-                    // getCategoryList();
-                    // window.location.reload();
-                    // hidedotLoader();
-                }
             },
         }
     });
@@ -87,25 +78,25 @@ function showAlert(alertText) {
 
 
 // sidebar menu option's redirection
-$("#home_menu").on("click", function (event) {
-    window.location = 'home';
+$("#keyToSuccess").on("click", function (event) {
+    window.location = 'keyToSuccess';
 });
 
-$("#category_menu").on("click", function (event) {
-    window.location = 'category';
+$("#careerGuidanceHelp").on("click", function (event) {
+    window.location = 'careerGuidanceHelp';
 });
 
-$("#product_menu").on("click", function (event) {
-    window.location = 'product';
+$("#careerJourney").on("click", function (event) {
+    window.location = 'careerJourney';
 });
-$("#coupon_menu").on("click", function (event) {
-    window.location = 'coupon';
+$("#counseling").on("click", function (event) {
+    window.location = 'counseling';
 });
-$("#back_to_user_list").on("click", function (event) {
-    window.location = 'home';
+$("#successStory").on("click", function (event) {
+    window.location = 'successStory';
 });
-$("#add_coupon").on("click", function (event) {
-    window.location = 'addCoupon';
+$("#aboutUsContent").on("click", function (event) {
+    window.location = 'aboutUsContent';
 });
 $("#back_to_coupon").on("click", function (event) {
     window.location = 'coupon';
@@ -201,7 +192,7 @@ $("#logout_menu").on("click", function (event) {
     }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-            signOut();
+            // signOut();
         } else if (result.isDenied) {
 
         }
@@ -223,11 +214,50 @@ function signOut() {
     });
 }
 
+// ========================  USER FUNCTIONALITIES ====================
+
+
+// keyToSuccessAdd
+
+$(document).on("change", "#customFile", function () {
+    if ($(this)[0].files.length > 2) {
+        Swal.fire("You can select only up to 2 images");
+        $(this).val("");
+        $(".imgPreview").empty();
+        return false;
+    }
+    $(".imgPreview").empty();
+    for (let i = 0; i < $(this)[0].files.length; i++) {
+        $('.imgPreview').append(`<img src=${URL.createObjectURL($(this)[0].files[i])} class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
+    }
+
+});
+
+
+// const modal = $('.idMyModal');
+// const modalImg = $('.modal-content');
+
+$(document).on("click", ".toZoom", function (event) {
+    const i = $(".toZoom").index(this);
+    const modal = $('.idMyModal').eq(i);
+    const modalImg = modal.find('.modal-content');
+    modal.css('display', 'block');
+    modalImg.attr('src', $(this).attr('src'));
+});
 
 
 
-
-
+$(document).on("click",'.close',function(event){
+    const modal = $(this).closest('.idMyModal');
+    modal.css('display', 'none');
+    modal.find('.modal-content').attr('src', '');
+});
+// const span = $('.close');
+// span.click(function () {
+//     const i = span.index($(this));
+//     $(this).next('.idMyModal').css('display', 'none');
+//     $(this).next('.idMyModal').find('.modal-content').attr('src', '');
+// });
 
 
 // ========================  USER FUNCTIONALITIES ====================
@@ -269,40 +299,6 @@ function getUserList() {
         },
     });
 }
-
-$(document).on("click", "#view_user", function (event) {
-    // var id = $(this).attr('user_id');
-    // var name = $(this).attr('user_name');
-    // var email = $(this).attr('user_email');
-    // var image = $(this).attr('user_image');
-    // var address = $(this).attr('user_address');
-    // var status = $(this).attr('user_status');
-    // var user_full_name = $(this).attr('user_full_name');
-
-    // $.ajax({
-    //     url: base_url + 'Home/userData',
-    //     data: {
-    //         'id': id,
-    //         'name': name,
-    //         'email': email,
-    //         'image': image,
-    //         'address': address,
-    //         'status': status,
-    //         'user_full_name': user_full_name,
-    //     },
-    //     method: 'post',
-    //     error: function (data) {
-    //         alert("Something went wrong1");
-    //     },
-    //     success: function (data) {
-    //         $('#reportpost').html(data);
-
-    //     }
-    // })
-
-});
-
-
 
 // ========================  CATEGORY ====================
 
@@ -642,471 +638,4 @@ function getCategoryListForDropDown() {
         },
     });
 }
-
-// ========================  PRODUCT ====================
-
-function getProductList() {
-    $.ajax({
-        url: host_url + 'fatchAllProduct',
-        method: 'get',
-        beforeSend: function (data) {
-        },
-        complete: function (data) {
-        },
-        error: function (data) {
-            alert("Something went wrong");
-        },
-        success: function (data) {
-            let table = $('#product_list').DataTable();
-            table.clear().draw();
-            if (data.success) {
-                data.Response.forEach(function (currentProduct, index) {
-                    // console.log("current Product : ",currentProduct);
-                    let count = index + 1;
-                    let product_image = currentProduct.pro_image;
-                    let setProductImage = `<img src="${image_url}${product_image}" style="width:100px;height:auto;border-radius: 10px;">`;
-                    let product_name = currentProduct.pro_name;
-                    let product_price = currentProduct.pro_price;
-
-
-                    $("#product_list").DataTable().row.add([
-                        count, setProductImage, product_name, product_price,
-                        `<a mx-2" id="product_edit" product_id="${currentProduct.pro_id}" product_name="${product_name}" product_price="${product_price}" pro_qty="${currentProduct.pro_qty}" weight="${currentProduct.weight}" Description="${currentProduct.pro_desc}" Nutritional_Information="${currentProduct.nutrition_information}" Origin="${currentProduct.origin}" Season_Details="${currentProduct.season}" Storage_Description="${currentProduct.storage_instrustion}" best_before_date="${currentProduct.best_before_date}" pro_image="${currentProduct.pro_image}" category_id="${currentProduct.cat_id}"><i class="mx-2 fa fa-edit"></i></a>` +
-                        `<a id="product_delete" product_id="${currentProduct.pro_id}"><i class="mx-2 fa fa-trash"></i></a>`
-
-                    ]).draw();
-
-                });
-            }
-        },
-    });
-}
-
-$("#product_submit").on("click", function () {
-    var url = decodeURIComponent(document.URL);
-    var init_array = url.substring(url.lastIndexOf('?') + 1);
-    let array = init_array.split('=');
-    let id = array[1];
-
-    let category_name = $("#category_list_dropdown").val();
-    let product_name = $("#product_name").val();
-    let product_price = $("#product_price").val();
-    let Quantity = $("#Quantity").val();
-    let Weight = $("#Weight").val();
-    let product_Description = $("#product_Description").val();
-    let nutritional_Information = $("#nutritional_Information").val();
-    let origin_Information = $("#origin_Information").val();
-    let season_details = $("#season_details").val();
-    let storage_Description = $("#storage_Description").val();
-    let bestBeforeDate = $("#bestBeforeDate").val();
-    let image = $("#customFile").prop('files')[0];
-    let adminID = localStorage.getItem("admin_id");
-
-    if (id != '' && id != undefined) {
-        updateProduct(id, category_name, product_name, product_price, Quantity, Weight, product_Description, nutritional_Information, origin_Information, season_details, storage_Description, bestBeforeDate, image, adminID);
-    }
-    else {
-        if (category_name == -1) {
-            showAlert("Category is required field.");
-        }
-        else if (product_name == null || product_name == '') {
-            showAlert("Product Name is required field.");
-        }
-        else if (product_price == null || product_price == '') {
-            showAlert("Price is required field.");
-        }
-        else if (Weight == null || Weight == '') {
-            showAlert("Weight is required field.");
-        }
-        else if (Quantity == null || Quantity == '') {
-            showAlert("Weight is required field.");
-        }
-        else if (product_Description == null || product_Description == '') {
-            showAlert("Description is required field.");
-        }
-        else if (nutritional_Information == null || nutritional_Information == '') {
-            showAlert("Nutritional Information is required field.");
-        }
-        else if (origin_Information == null || origin_Information == '') {
-            showAlert("Origin Information is required field.");
-        }
-        else if (season_details == null || season_details == '') {
-            showAlert("Season Information is required field.");
-        }
-        else if (storage_Description == null || storage_Description == '') {
-            showAlert("Storage Description is required field.");
-        }
-        else if (bestBeforeDate == null || bestBeforeDate == '') {
-            showAlert("Best Before Date is required field.");
-        }
-        else if (image == null || image == '') {
-            showAlert("Image is required field.");
-        }
-        else {
-            addProduct(category_name, product_name, product_price, Quantity, Weight, product_Description, nutritional_Information, origin_Information, season_details, storage_Description, bestBeforeDate, image, adminID);
-        }
-    }
-});
-
-function addProduct(category_name, product_name, product_price, Quantity, Weight, product_Description, nutritional_Information, origin_Information, season_details, storage_Description, bestBeforeDate, image, adminID) {
-    let data = new FormData();
-    data.append('product_name', product_name);
-    data.append('description', product_Description);
-    data.append('product_price', product_price);
-    data.append('pro_qty', Quantity);
-    data.append('category_id', category_name);
-    data.append('adminID', adminID);
-    data.append('nutrition_information', nutritional_Information);
-    data.append('origin', origin_Information);
-    data.append('season', season_details);
-    data.append('weight', Weight);
-    data.append('storage_instrustion', storage_Description);
-    data.append('best_before_date', bestBeforeDate);
-    data.append('pro_image', image);
-
-
-    $.ajax({
-        url: host_url + 'addProduct',
-        data: data,
-        type: "POST",
-        cache: false,
-        processData: false,
-        contentType: false,
-        dataType: false,
-        beforeSend: function (data) {
-        },
-        complete: function (data) {
-        },
-        error: function (e) {
-            showAlert("Failed to Data Product . Please try again later");
-        },
-        success: function (data) {
-            if (data.success) {
-                Swal.fire({
-                    title: '',
-                    text: `${data.Message}`,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        getProductList();
-                    }
-                })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
-            }
-        },
-    });
-}
-
-$(document).on("click", "#product_edit", function (event) {
-
-    let id = $(this).attr('product_id');
-    let product_name = $(this).attr('product_name');
-    let Description = $(this).attr('Description');
-    let product_price = $(this).attr('product_price');
-    let pro_qty = $(this).attr('pro_qty');
-    let category_id = $(this).attr('category_id');
-    let Nutritional_Information = $(this).attr('Nutritional_Information');
-    let Origin = $(this).attr('Origin');
-    let Season_Details = $(this).attr('Season_Details');
-    let weight = $(this).attr('weight');
-    let Storage_Description = $(this).attr('Storage_Description');
-    let best_before_date = $(this).attr('best_before_date');
-    let pro_image = $(this).attr('pro_image');
-    $("#imgPreview").empty();
-    $('#imgPreview').append(`<img  src="${image_url}${pro_image}" style="width:100px;height:100px; margin-top:10px"/>`)
-
-    window.history.replaceState(null, null, '?id=' + id + '');
-
-    $("#product_name").val(product_name);
-    $("#product_price").val(product_price);
-    $("#Quantity").val(pro_qty);
-    $("#Weight").val(weight);
-    $("#product_Description").val(Description);
-    $("#nutritional_Information").val(Nutritional_Information);
-    $("#origin_Information").val(Origin);
-    $("#season_details").val(Season_Details);
-    $("#storage_Description").val(Storage_Description);
-    $("#bestBeforeDate").val(best_before_date);
-
-    window.history.replaceState(null, null, '?id=' + id + '');
-});
-
-function updateProduct(id, category_name, product_name, product_price, Quantity, Weight, product_Description, nutritional_Information, origin_Information, season_details, storage_Description, bestBeforeDate, image, adminID) {
-
-    let data = new FormData();
-    data.append('product_id', id);
-    data.append('product_name', product_name);
-    data.append('description', product_Description);
-    data.append('product_price', product_price);
-    data.append('pro_qty', Quantity);
-    data.append('category_id', category_name);
-    data.append('adminID', adminID);
-    data.append('nutrition_information', nutritional_Information);
-    data.append('origin', origin_Information);
-    data.append('season', season_details);
-    data.append('weight', Weight);
-    data.append('storage_instrustion', storage_Description);
-    data.append('best_before_date', bestBeforeDate);
-    data.append('pro_image', image);
-
-
-
-    $.ajax({
-        url: host_url + 'updateProduct',
-        data: data,
-        type: "POST",
-        cache: false,
-        processData: false,
-        contentType: false,
-        dataType: false,
-        beforeSend: function (data) {
-        },
-        complete: function (data) {
-        },
-        error: function (e) {
-            showAlert("Failed to Data Add.");
-        },
-        success: function (data) {
-            if (data.success) {
-                Swal.fire({
-                    title: '',
-                    text: `${data.Message}`,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-                        var url = window.location.href;
-                        url = url.slice(0, url.indexOf('?'));
-                        history.pushState(null, '', url);
-                        $("#imgPreview").hide();
-                        getProductList();
-                    }
-
-                })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
-            }
-        },
-    });
-
-}
-
-$(document).on("click", "#product_delete", function (event) {
-    var id = $(this).attr('product_id');
-    localStorage.setItem('product_id', id);
-
-    Swal.fire({
-        title: 'Do You want to delete this product ?',
-        showDenyButton: true,
-        confirmButtonText: 'Yes',
-        confirmButtonColor: '#F28123',
-        denyButtonText: `No`,
-    }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-            var id = localStorage.getItem('product_id');
-            let adminID = localStorage.getItem('admin_id');
-            productDelete(id, adminID);
-        } else if (result.isDenied) {
-
-        }
-    })
-});
-
-function productDelete(id, adminID) {
-    $.ajax({
-        url: host_url + 'deleteProduct',
-        data: {
-            'product_id': id,
-            'adminID': adminID,
-        },
-        method: 'post',
-        beforeSend: function () {
-        },
-        complete: function () {
-        },
-        success: function (data) {
-            if (data.success) {
-                Swal.fire({
-                    title: '',
-                    text: `${data.Message}`,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        getProductList();
-                    }
-
-                })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
-            }
-        }
-    });
-}
-
-function getProductListForDropDown() {
-    $.ajax({
-        url: host_url + 'fatchAllProduct',
-        method: 'get',
-        beforeSend: function (data) {
-        },
-        complete: function (data) {
-        },
-        error: function (data) {
-            alert("Something went wrong");
-        },
-        success: function (data) {
-            if (data.success) {
-                data.Response.forEach(function (currentProduct) {
-                    let product_name = currentProduct.pro_name;
-                    let productNameBind = `<option value="${currentProduct.pro_id}"> ${product_name} </option>`
-                    $("#product_list_dropdown").append(productNameBind);
-                });
-            }
-        },
-    });
-}
-
-// ========================  COUPON  ====================
-$("#generateCouponCode").on("click", () => {
-    let randomNumber = Math.floor(100000 + Math.random() * 900000);
-    let couponCode = `FF${randomNumber}`;
-    $("#coupon_code").val(couponCode);
-})
-
-$("#coupon_submit").on("click", function () {
-    var url = decodeURIComponent(document.URL);
-    var init_array = url.substring(url.lastIndexOf('?') + 1);
-    let array = init_array.split('=');
-    let id = array[1];
-
-    // variables 
-    let coupon_code = $("#coupon_code").val();
-    let category_name = $("#category_list_dropdown").val();
-    let product_name = $("#product_list_dropdown").val();
-    let purchaseAmount = $("#purchaseAmount").val();
-    let offerPrice = $("#offerPrice").val();
-    let couponType = $("#couponType").val();
-    let mini_purchase_amount = $("#mini_purchase_amount").val();
-    let max_purchase_amount = $("#max_purchase_amount").val();
-    let coupon_status = $("#coupon_status").val();
-    let UsageLimit = $("#UsageLimit").val();
-    if (coupon_status == 'Enable') {
-        coupon_status = "0";
-    }
-    else {
-        coupon_status = "1";
-    }
-    let expire_date = $("#expire_date").val();
-    let user_restrication = $("#user_restrication").val();
-    let user_Instructions = $("#user_Instructions").val();
-
-
-    if (id != '' && id != undefined) {
-        updateCoupon();
-    }
-    else {
-        // validate first 
-        if (coupon_code == "" || coupon_code == null) {
-            showAlert("Please Generate a coupon Code")
-        }
-        else if (category_name == "" || category_name == null || category_name == '-1') {
-            showAlert("Please choose a category ")
-        }
-        else if (product_name == "" || product_name == null || product_name == '-1') {
-            showAlert("Please choose a product ")
-        }
-        else if (purchaseAmount == "" || purchaseAmount == null) {
-            showAlert("Please Enter purchase amount")
-        }
-        else if (offerPrice == "" || offerPrice == null) {
-            showAlert("Please Enter offer price")
-        }
-        else if (couponType == "" || couponType == null || couponType == '-1') {
-            showAlert("Please choose coupon type")
-        }
-        else if (mini_purchase_amount == "" || mini_purchase_amount == null) {
-            showAlert("Please Enter minimum purchase amount")
-        }
-        else if (max_purchase_amount == "" || max_purchase_amount == null) {
-            showAlert("Please Enter maximum purchase amount")
-        }
-        else if (coupon_status == "" || coupon_status == null || coupon_status == '-1') {
-            showAlert("Please choose coupon status")
-        }
-        else if (expire_date == "" || expire_date == null) {
-            showAlert("Please choose expiry date")
-        }
-        else if (UsageLimit == "" || UsageLimit == null) {
-            showAlert("Please Enter Usage Limit")
-        }
-        else if (user_restrication == "" || user_restrication == null) {
-            showAlert("Please provie restrication for coupons")
-        }
-        else if (user_Instructions == "" || user_Instructions == null) {
-            showAlert("Please provie user Instructions for coupons")
-        }
-        else {
-            addCoupon(coupon_code, category_name, product_name, purchaseAmount, offerPrice, couponType, mini_purchase_amount, max_purchase_amount, coupon_status, expire_date, user_restrication, user_Instructions,UsageLimit);
-        }
-    }
-});
-
-function addCoupon(coupon_code, category_name, product_name, purchaseAmount, offerPrice, couponType, mini_purchase_amount, max_purchase_amount, coupon_status, expire_date, user_restrication, user_Instruction,UsageLimit) {
-
-    let data = new FormData();
-    let adminID = localStorage.getItem("admin_id");
-    data.append('category_name', category_name);
-    data.append('description', category_Description);
-    data.append('adminID', adminID);
-    data.append('category_type', category_type);
-    data.append('season_information', season_details);
-    data.append('nutritional_information', nutritional_Information);
-    data.append('storage_description', storage_Description);
-    data.append('quantity', Quantity);
-    data.append('pro_image', category_image);
-
-    $.ajax({
-        url: host_url + 'addCategory',
-        data: data,
-        type: "POST",
-        cache: false,
-        processData: false,
-        contentType: false,
-        dataType: false,
-        beforeSend: function (data) {
-
-        },
-        complete: function (data) {
-        },
-        error: function (e) {
-            showAlert("Failed to Data Add.");
-        },
-        success: function (data) {
-            if (data.Status == "Success") {
-                Swal.fire({
-                    title: '',
-                    text: `${data.Message}`,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        getCategoryList();
-                    }
-                })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
-            }
-        },
-    });
-}
-
 

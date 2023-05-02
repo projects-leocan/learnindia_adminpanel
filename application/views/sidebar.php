@@ -1,106 +1,292 @@
 <div class="wrapper">
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-        </ul>
-    </nav>
+      <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
 
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
+        </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>    
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-warning navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="" class="brand-link">
-            <!-- <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                style="opacity: .8"> -->
-            <span class="brand-text font-weight-Bold">LearnIndia</span>
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+            <img src="dist/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+            <span class="brand-text font-weight-light">LearnIndia</span>
         </a>
 
+        <!-- Sidebar -->
         <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <!-- SidebarSearch Form -->
+            <div class="form-inline mt-3 pb-3">
+                <div class="input-group" data-widget="sidebar-search">
+                    <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-sidebar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
+
                     <li class="nav-item">
-                        <a href="#" class="nav-link " id="home_menu">
-                            <i class="nav-icon fa fa-home"></i>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-home"></i>
                             <p>
                                 Home
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="submenu">
-                            <li><a href="#">Item 1</a></li>
-                            <li><a href="#">Item 2</a></li>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="keyToSuccess">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Key To Success</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="careerGuidanceHelp">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Career Guidance Help</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="careerJourney">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p> Career journey</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="counseling">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Counseling</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="successStory">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Student Success Stories</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
-                    
-
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="home_menu" role="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="nav-icon fa fa-home"></i>
-                            <p>Home</p>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="home_menu">
-                            <a class="dropdown-item" href="#">Key to Success</a>
-                            <a class="dropdown-item" href="#">Lorem5</a>
-                        </div>
-                    </li> -->
-
-
                     <li class="nav-item">
-                        <a href="#" class="nav-link has-arrow" id="">
-                            <i class="nav-icon fa fa-list-alt"></i>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-info-circle"></i>
                             <p>
-                                About
+                                About Us
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="aboutUsContent">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>About Us Content</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Education Logo</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Team Member</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="">
-                            <i class="nav-icon fa fa-box"></i>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-blog"></i>
                             <p>
                                 Blog
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon "></i>
+                                    <p>Blog Content</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Career Articles Intro </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Career Articles</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="">
-                            <i class="nav-icon fa fa-tag fa-lg"></i>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-poll"></i>
                             <p>
-                                Servey
+                                Survey
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Survey Content</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Survey Form Details</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Questionnaire</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="">
-                            <i class="nav-icon fa fa-tag fa-lg"></i>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file-contract"></i>
                             <p>
-                                Terms & Condtion
+                                Term & Condition
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Terms</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Career Help</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p> Term & Condition</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="">
-                            <i class="nav-icon fa fa-tag fa-lg"></i>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-address-book"></i>
                             <p>
                                 Contact Us
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Contact Us Content</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="pages/tables/data.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Contact Us Details </p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-
                     <li class="nav-item">
                         <a href="#" class="nav-link" id="logout_menu">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>
-                                Log Out
+                               Log Out
                             </p>
                         </a>
                     </li>
                 </ul>
             </nav>
+            <!-- /.sidebar-menu -->
         </div>
+        <!-- /.sidebar -->
     </aside>
-    <div id="sidebar-overlay"></div>
 </div>
