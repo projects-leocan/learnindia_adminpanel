@@ -3,25 +3,26 @@
 // local base_url...
 const base_url = 'http://localhost/learnindia_adminpanel/';
 
-
+// API Host URL
+// const host_url = "http://localhost/learnindia_adminpanel/learnIndia_API/v1/"
 
 $(document).ready(function () {
     state_management();
 
-    if (window.location.href == base_url + 'home') {
-        getUserList();
-    }
-    if (window.location.href == base_url + 'category') {
-        getCategoryList();
-    }
-    if (window.location.href == base_url + 'product') {
-        getCategoryListForDropDown();
-        getProductList();
-    }
-    if (window.location.href == base_url + 'addCoupon') {
-        getCategoryListForDropDown();
-        getProductListForDropDown();
-    }
+    // if (window.location.href == base_url + 'home') {
+    //     getUserList();
+    // }
+    // if (window.location.href == base_url + 'category') {
+    //     getCategoryList();
+    // }
+    // if (window.location.href == base_url + 'product') {
+    //     getCategoryListForDropDown();
+    //     getProductList();
+    // }
+    // if (window.location.href == base_url + 'addCoupon') {
+    //     getCategoryListForDropDown();
+    //     getProductListForDropDown();
+    // }
 
 });
 
@@ -214,10 +215,95 @@ function signOut() {
     });
 }
 
-// ========================  USER FUNCTIONALITIES ====================
+// ========================  HOME ====================
 
 
-// keyToSuccessAdd
+$("#keyToSuccessAdd").on("click", function(){
+    
+    let keyToSuccessContent = localStorage.getItem('keyToSuccessContent');
+    let data = new FormData();
+    data.append('content', keyToSuccessContent);
+
+
+    // if(keyToSuccess != "" && keyToSuccess != undefined ){
+        
+    //     $.ajax({
+    //         url: host_url + 'updateKeyToSuccess',
+    //         data: data,
+    //         type: "POST",
+    //         cache: false,
+    //         processData: false,
+    //         contentType: false,
+    //         dataType: false,
+    //         beforeSend: function (data) {
+    
+    //         },
+    //         complete: function (data) {
+    //         },
+    //         error: function (e) {
+    //             showAlert("Failed to Data Add.");
+    //         },
+    //         success: function (data) {
+    //             console.log("data :",data);
+    //             if (data.Status == "Success") {
+    //                 Swal.fire({
+    //                     title: '',
+    //                     text: `${data.Message}`,
+    //                     confirmButtonText: 'Ok',
+    //                     confirmButtonColor: '#F28123'
+    //                 }).then((result) => {
+    //                     if (result.isConfirmed) {
+    //                         localStorage.removeItem("keyToSuccessContent");
+    //                         // getCategoryList();
+    //                     }
+    //                 })
+    //             }
+    //             else {
+    //                 Swal.fire(`${data.Message}`);
+    //             }
+    //         },
+    //     });
+    // }
+    // else{
+        
+    // }
+    
+    $.ajax({
+        url: host_url + 'addKeyToSuccess',
+        data: data,
+        type: "POST",
+        cache: false,
+        processData: false,
+        contentType: false,
+        dataType: false,
+        beforeSend: function (data) {
+
+        },
+        complete: function (data) {
+        },
+        error: function (e) {
+            showAlert("Failed to Data Add.");
+        },
+        success: function (data) {
+            if (data.Status == "Success") {
+                Swal.fire({
+                    title: '',
+                    text: `${data.Message}`,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#F28123'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // localStorage.removeItem("keyToSuccessContent");
+                    }
+                })
+            }
+            else {
+                Swal.fire(`${data.Message}`);
+            }
+        },
+    });
+});
+
 
 $(document).on("change", "#customFile", function () {
     if ($(this)[0].files.length > 2) {
@@ -245,20 +331,11 @@ $(document).on("click", ".toZoom", function (event) {
     modalImg.attr('src', $(this).attr('src'));
 });
 
-
-
 $(document).on("click",'.close',function(event){
     const modal = $(this).closest('.idMyModal');
     modal.css('display', 'none');
     modal.find('.modal-content').attr('src', '');
 });
-// const span = $('.close');
-// span.click(function () {
-//     const i = span.index($(this));
-//     $(this).next('.idMyModal').css('display', 'none');
-//     $(this).next('.idMyModal').find('.modal-content').attr('src', '');
-// });
-
 
 // ========================  USER FUNCTIONALITIES ====================
 

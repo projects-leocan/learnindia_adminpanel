@@ -31,7 +31,7 @@
             <div class="card-body">
                 <div class="form-group">
 
-                    <textarea name="content" id="editor">
+                <textarea name="content" id="editor">
                     &lt;p&gt;Add Your Content Here .&lt;/p&gt;
                 </textarea>
 
@@ -44,9 +44,19 @@
 </div>
 
 <script>
-ClassicEditor
-    .create(document.querySelector('#editor'))
-    .catch(error => {
-        console.error(error);
-    });
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            let editorData = editor.getData();
+            let htmlContent = editorData.trim();
+            // Add an event listener to the editor element
+            editor.model.document.on('change:data', () => {
+                let editorData = editor.getData();
+                let htmlContent = editorData.trim();
+                localStorage.setItem("keyToSuccessContent",htmlContent)
+            });
+        }).catch(error => {
+            console.error(error);
+        });
 </script>
+
