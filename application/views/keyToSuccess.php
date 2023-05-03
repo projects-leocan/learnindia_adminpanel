@@ -47,15 +47,19 @@
     ClassicEditor
         .create(document.querySelector('#editor'))
         .then(editor => {
-            let editorData = editor.getData();
-            let htmlContent = editorData.trim();
-            // Add an event listener to the editor element
+            // Set the editor's content to the value from localStorage on page load
+            let htmlContent = localStorage.getItem("keyToSuccessContent");
+            if (htmlContent) {
+                editor.setData(htmlContent);
+            }
             editor.model.document.on('change:data', () => {
+                // Save the latest HTML content to localStorage whenever the editor content changes
                 let editorData = editor.getData();
                 let htmlContent = editorData.trim();
-                localStorage.setItem("keyToSuccessContent",htmlContent)
+                localStorage.setItem("keyToSuccessContent", htmlContent);
             });
-        }).catch(error => {
+        })
+        .catch(error => {
             console.error(error);
         });
 </script>

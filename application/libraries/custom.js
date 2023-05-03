@@ -4,7 +4,7 @@
 const base_url = 'http://localhost/learnindia_adminpanel/';
 
 // API Host URL
-// const host_url = "http://localhost/learnindia_adminpanel/learnIndia_API/v1/"
+const host_url = "http://localhost/learnindia_adminpanel/learnIndia_API/v1/";
 
 $(document).ready(function () {
     state_management();
@@ -221,87 +221,84 @@ function signOut() {
 $("#keyToSuccessAdd").on("click", function(){
     
     let keyToSuccessContent = localStorage.getItem('keyToSuccessContent');
+    let content_id = localStorage.getItem("last_added_id");
     let data = new FormData();
     data.append('content', keyToSuccessContent);
 
+    if(content_id != "" && content_id != undefined ){
 
-    // if(keyToSuccess != "" && keyToSuccess != undefined ){
+        data.append('content_id',content_id);
         
-    //     $.ajax({
-    //         url: host_url + 'updateKeyToSuccess',
-    //         data: data,
-    //         type: "POST",
-    //         cache: false,
-    //         processData: false,
-    //         contentType: false,
-    //         dataType: false,
-    //         beforeSend: function (data) {
+        $.ajax({
+            url: host_url + 'updateKeyToSuccess',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
     
-    //         },
-    //         complete: function (data) {
-    //         },
-    //         error: function (e) {
-    //             showAlert("Failed to Data Add.");
-    //         },
-    //         success: function (data) {
-    //             console.log("data :",data);
-    //             if (data.Status == "Success") {
-    //                 Swal.fire({
-    //                     title: '',
-    //                     text: `${data.Message}`,
-    //                     confirmButtonText: 'Ok',
-    //                     confirmButtonColor: '#F28123'
-    //                 }).then((result) => {
-    //                     if (result.isConfirmed) {
-    //                         localStorage.removeItem("keyToSuccessContent");
-    //                         // getCategoryList();
-    //                     }
-    //                 })
-    //             }
-    //             else {
-    //                 Swal.fire(`${data.Message}`);
-    //             }
-    //         },
-    //     });
-    // }
-    // else{
-        
-    // }
-    
-    $.ajax({
-        url: host_url + 'addKeyToSuccess',
-        data: data,
-        type: "POST",
-        cache: false,
-        processData: false,
-        contentType: false,
-        dataType: false,
-        beforeSend: function (data) {
+            },
+            complete: function (data) {
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+            },
+            success: function (data) {
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    }).then((result) => {
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else{
 
-        },
-        complete: function (data) {
-        },
-        error: function (e) {
-            showAlert("Failed to Data Add.");
-        },
-        success: function (data) {
-            if (data.Status == "Success") {
-                Swal.fire({
-                    title: '',
-                    text: `${data.Message}`,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // localStorage.removeItem("keyToSuccessContent");
-                    }
-                })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
-            }
-        },
-    });
+        $.ajax({
+            url: host_url + 'addKeyToSuccess',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+    
+            },
+            complete: function (data) {
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+            },
+            success: function (data) {
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            localStorage.setItem("last_added_id",data.last_added);
+                            // localStorage.removeItem("keyToSuccessContent");
+                        }
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
 });
 
 
