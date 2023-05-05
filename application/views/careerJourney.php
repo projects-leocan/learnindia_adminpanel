@@ -36,7 +36,7 @@
                 </textarea>
 
                 </div>
-                <button type="submit" id="keyToSuccessAdd" class="common-btn-padding btn btn-success "> Save </button>
+                <button type="submit" id="addCareerJourneyContent" class="common-btn-padding btn btn-success "> Save </button>
             </div>
 
         </div>
@@ -44,9 +44,23 @@
 </div>
 
 <script>
-ClassicEditor
-    .create(document.querySelector('#editor'))
-    .catch(error => {
-        console.error(error);
-    });
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            // Set the editor's content to the value from localStorage on page load
+            let htmlContent = localStorage.getItem("last_career_journey_cnt");
+            if (htmlContent) {
+                editor.setData('');
+                editor.setData(htmlContent);
+            }
+            editor.model.document.on('change:data', () => {
+                // Save the latest HTML content to localStorage whenever the editor content changes
+                let editorData = editor.getData();
+                let htmlContent = editorData.trim();
+                localStorage.setItem("careerjourneyContent", htmlContent);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>

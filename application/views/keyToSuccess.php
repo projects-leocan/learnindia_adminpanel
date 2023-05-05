@@ -30,8 +30,12 @@
 
             <div class="card-body">
                 <div class="form-group">
-
+                    <div class="fulfilling-bouncing-circle-spinner">
+                                <div class="circle"></div>
+                                <div class="orbit"></div>
+                        </div>
                 <textarea name="content" id="editor">
+
                     &lt;p&gt;Add Your Content Here .&lt;/p&gt;
                 </textarea>
 
@@ -48,7 +52,7 @@
         .create(document.querySelector('#editor'))
         .then(editor => {
             // Set the editor's content to the value from localStorage on page load
-            let htmlContent = localStorage.getItem("keyToSuccessContent");
+            let htmlContent = localStorage.getItem("last_keyToS_cnt");
             if (htmlContent) {
                 editor.setData(htmlContent);
             }

@@ -27,6 +27,7 @@ class Home extends CI_Controller {
         $email  = $this->input->post('email');
         $password   = $this->input->post('password');
     }
+    // it will change when login is successful 
     public function index()
     {
         if($this->session->userData('isAlreadyLogin')=="true")
@@ -39,7 +40,8 @@ class Home extends CI_Controller {
         else
         {
           $this->load->view('header');
-          $this->load->view('login');
+          $this->load->view('sidebar');
+          $this->load->view('home');
           $this->load->view('footer');
         }
     }
@@ -63,99 +65,99 @@ class Home extends CI_Controller {
 
     public function keyToSuccess()
     {
-        if($this->session->userData('isAlreadyLogin')=="true")
-        {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('keyToSuccess');
           $this->load->view('footer');
-        }
-        else
-        {
-          $this->load->view('header');
-          $this->load->view('login');
-          $this->load->view('footer');
-        }
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
     }
     public function careerGuidanceHelp()
     {
-        if($this->session->userData('isAlreadyLogin')=="true")
-        {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('careerGuidanceHelp');
           $this->load->view('footer');
-        }
-        else
-        {
-          $this->load->view('header');
-          $this->load->view('login');
-          $this->load->view('footer');
-        }
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
     }
     public function careerJourney()
     {
-        if($this->session->userData('isAlreadyLogin')=="true")
-        {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('careerJourney');
           $this->load->view('footer');
-        }
-        else
-        {
-          $this->load->view('header');
-          $this->load->view('login');
-          $this->load->view('footer');
-        }
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
     }
     public function counseling()
     {
-        if($this->session->userData('isAlreadyLogin')=="true")
-        {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('counseling');
           $this->load->view('footer');
-        }
-        else
-        {
-          $this->load->view('header');
-          $this->load->view('login');
-          $this->load->view('footer');
-        }
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
     }
     public function successStory()
     {
-        if($this->session->userData('isAlreadyLogin')=="true")
-        {
-          $this->load->view('header');
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+        //   $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('successStory');
           $this->load->view('footer');
-        }
-        else
-        {
-          $this->load->view('header');
-          $this->load->view('login');
-          $this->load->view('footer');
-        }
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
     }
     public function aboutUsContent()
     {
-        if($this->session->userData('isAlreadyLogin')=="true")
-        {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('aboutUsContent');
           $this->load->view('footer');
-        }
-        else
-        {
-          $this->load->view('header');
-          $this->load->view('login');
-          $this->load->view('footer');
-        }
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
     }
 
     public function logout()

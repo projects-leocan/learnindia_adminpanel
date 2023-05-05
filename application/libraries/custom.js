@@ -4,25 +4,22 @@
 const base_url = 'http://localhost/learnindia_adminpanel/';
 
 // API Host URL
-const host_url = "http://localhost/learnindia_adminpanel/learnIndia_API/v1/";
+const host_url = "http://localhost/learnindia_adminpanel/learnindia_API/v1/";
 
+// Image URL 
+const image_url = "http://localhost/learnindia_adminpanel/learnindia_API/uploads/";
 $(document).ready(function () {
     state_management();
 
-    // if (window.location.href == base_url + 'home') {
-    //     getUserList();
-    // }
-    // if (window.location.href == base_url + 'category') {
-    //     getCategoryList();
-    // }
-    // if (window.location.href == base_url + 'product') {
-    //     getCategoryListForDropDown();
-    //     getProductList();
-    // }
-    // if (window.location.href == base_url + 'addCoupon') {
-    //     getCategoryListForDropDown();
-    //     getProductListForDropDown();
-    // }
+    if (window.location.href == base_url + 'keyToSuccess') {
+        fetchSuccessContent();
+    }
+    if (window.location.href == base_url + 'careerGuidanceHelp') {
+        fetchGuidanceHelpContent();
+    }
+    if (window.location.href == base_url + 'careerJourney') {
+        fetchCareerJourneyContent();
+    }
 
 });
 
@@ -40,18 +37,12 @@ function state_management() {
     });
 }
 
-// Loader function...
+// Show loader 
 function showLoader() {
-    $(".dot").show();
+    $(".fulfilling-bouncing-circle-spinner").show();
 }
 function hideLoader() {
-    $(".dot").hide();
-}
-function showdotLoader() {
-    $(".dot1").show();
-}
-function hidedotLoader() {
-    $(".dot1").hide();
+    $(".fulfilling-bouncing-circle-spinner").hide();
 }
 
 
@@ -217,18 +208,45 @@ function signOut() {
 
 // ========================  HOME ====================
 
+const fetchSuccessContent = () => {
+    // fetch last added content of keyToSucess Section 
 
-$("#keyToSuccessAdd").on("click", function(){
-    
+    // AJAX Call 
+    $.ajax({
+        url: host_url + 'fetchKeyToSuccess',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_id", data.Response.id);
+                localStorage.setItem("last_keyToS_cnt", content);
+            }
+        }
+    });
+}
+
+$("#keyToSuccessAdd").on("click", function () {
+
     let keyToSuccessContent = localStorage.getItem('keyToSuccessContent');
     let content_id = localStorage.getItem("last_added_id");
     let data = new FormData();
     data.append('content', keyToSuccessContent);
 
-    if(content_id != "" && content_id != undefined ){
+    if (content_id != "" && content_id != undefined) {
 
-        data.append('content_id',content_id);
-        
+        data.append('content_id', content_id);
+
         $.ajax({
             url: host_url + 'updateKeyToSuccess',
             data: data,
@@ -238,7 +256,137 @@ $("#keyToSuccessAdd").on("click", function(){
             contentType: false,
             dataType: false,
             beforeSend: function (data) {
-    
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    }).then((result) => {
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addKeyToSuccess',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            localStorage.setItem("last_added_id", data.last_added);
+                            // localStorage.removeItem("keyToSuccessContent");
+                        }
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
+
+
+// Career Guidance help section 
+const fetchGuidanceHelpContent = () => {
+    // fetch last added content of keyToSucess Section 
+
+    // AJAX Call 
+    $.ajax({
+        url: host_url + 'fetchGuidenceContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                localStorage.setItem("last_career_gui_id",data.Response.id);
+                localStorage.setItem("last_career_gui_content",data.Response.content);
+                $(".imgPreview").empty();
+                $('.imgPreview').append(`<img src=${image_url}${data.Response.image} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
+                $('.imgPreview').append(`<img src=${image_url}${data.Response.image2} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
+                
+            }
+        }
+    });
+
+}
+
+$("#saveCareerGuidanceHelp").on("click", function () {
+    let careerGuidanceContent = localStorage.getItem('careerGuidanceContent');
+    let content_id = localStorage.getItem("last_career_gui_id");
+
+    let content_image = $("#customFile").prop('files')[0];
+    let content_image1 = $("#customFile").prop('files')[1];
+
+    let data = new FormData();
+
+    data.append('content', careerGuidanceContent);
+    data.append('content_image', content_image);
+    data.append('content_image2', content_image1);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateGuidenceContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+
             },
             complete: function (data) {
             },
@@ -261,10 +409,9 @@ $("#keyToSuccessAdd").on("click", function(){
             },
         });
     }
-    else{
-
+    else {
         $.ajax({
-            url: host_url + 'addKeyToSuccess',
+            url: host_url + 'addGuidenceContent',
             data: data,
             type: "POST",
             cache: false,
@@ -272,12 +419,12 @@ $("#keyToSuccessAdd").on("click", function(){
             contentType: false,
             dataType: false,
             beforeSend: function (data) {
-    
+
             },
             complete: function (data) {
             },
             error: function (e) {
-                showAlert("Failed to Data Add.");
+                Swal.fire("Failed to Data Add.");
             },
             success: function (data) {
                 if (data.Status == "Success") {
@@ -288,8 +435,7 @@ $("#keyToSuccessAdd").on("click", function(){
                         confirmButtonColor: '#F28123'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            localStorage.setItem("last_added_id",data.last_added);
-                            // localStorage.removeItem("keyToSuccessContent");
+                            localStorage.setItem("last_career_gui_id", data.last_added);
                         }
                     })
                 }
@@ -300,7 +446,6 @@ $("#keyToSuccessAdd").on("click", function(){
         });
     }
 });
-
 
 $(document).on("change", "#customFile", function () {
     if ($(this)[0].files.length > 2) {
@@ -328,388 +473,127 @@ $(document).on("click", ".toZoom", function (event) {
     modalImg.attr('src', $(this).attr('src'));
 });
 
-$(document).on("click",'.close',function(event){
+$(document).on("click", '.close', function (event) {
     const modal = $(this).closest('.idMyModal');
     modal.css('display', 'none');
     modal.find('.modal-content').attr('src', '');
 });
 
-// ========================  USER FUNCTIONALITIES ====================
 
-function getUserList() {
+// How we will help you in your Career journey? 
+const fetchCareerJourneyContent = () => {
+    // AJAX Call 
     $.ajax({
-        url: host_url + 'getAllUserList',
+        url: host_url + 'fetchJourneyContent',
         method: 'get',
         beforeSend: function (data) {
-            $(".dot").show();
+            showLoader();
         },
         complete: function (data) {
-            $(".dot").hide();
+            hideLoader();
         },
         error: function (data) {
             alert("Something went wrong");
+            hideLoader();
         },
         success: function (data) {
-            let table = $('#user_list').DataTable();
-            table.clear().draw();
-            if (data.Status == "Success") {
-                data.Response.map((currentUser, index) => {
-                    let count = index + 1;
-                    let user_name = currentUser.user_name;
-                    let email = currentUser.email;
-                    let contact_num = currentUser.contact_num;
-                    let gender = currentUser.gender;
-                    let profile_image = currentUser.profile_image;
-                    let setProfileImage = `<img src="${image_url}${profile_image}" style="width:35px;height:35px;border-radius: 50% 50%;">`;
-
-
-                    $("#user_list").DataTable().row.add([
-                        count, setProfileImage, user_name, email, contact_num, gender,
-                        `<a id="view_user" user_id="${currentUser.user_id}"> <i class="mx-2 fa fa-eye"></i></a>`
-                    ]).draw();
-                })
-
-            }
-        },
-    });
-}
-
-// ========================  CATEGORY ====================
-
-function getCategoryList() {
-    $.ajax({
-        url: host_url + 'fatchAllCategory',
-        method: 'get',
-        beforeSend: function (data) {
-        },
-        complete: function (data) {
-        },
-        error: function (data) {
-            alert("Something went wrong");
-        },
-        success: function (data) {
-            var table = $('#category_list').DataTable();
-            table.clear().draw();
+            hideLoader();
             if (data.success) {
-                data.Response.map((currentElement, index) => {
-                    // console.log("currentElement :",currentElement);
-                    let count = index + 1;
-                    let category_name = currentElement.cat_name;
-                    let category_type = currentElement.cat_type;
-                    let category_image = currentElement.image;
-                    let setCategoryImage = `<img src="${image_url}${category_image}" style="width:100px;height:auto;border-radius: 10px;">`;
-                    $("#category_list").DataTable().row.add([
-                        count, setCategoryImage, category_name, category_type,
-
-                        `<a mx-2" id="edit_category" edit_category="${currentElement.cat_id}" category_name="${category_name}"  Description="${currentElement.cat_description}" Season_Details="${currentElement.season}" Nutritional_Information="${currentElement.nutritional_information}"  category_type="${currentElement.cat_type}" Storage_Description="${currentElement.storage_desc}" Quantity="${currentElement.quantity}" category_image="${category_image}"  "><i class="mx-2 fa fa-edit"></i></a>` +
-                        `<a id="category_delete" category_delete="${currentElement.cat_id}" category_name="${category_name}" ><i class="mx-2 fa fa-trash"></i></a>`
-                    ]).draw();
-                })
+                const content = data.Response.content;
+                localStorage.setItem("last_added_id_cj", data.Response.id);
+                localStorage.setItem("last_career_journey_cnt", content);
             }
-        },
+        }
     });
 }
 
-$(document).on("change", "#customFile", function () {
-    $("#imgPreview").empty();
-    $('#imgPreview').prepend('<img  src="' + URL.createObjectURL($(this)[0].files[0]) + '" style="width:100px;height:100px; margin-top:10px"/>')
-})
 
 
-$("#category_submit").on("click", function () {
+$("#addCareerJourneyContent").on("click", function () {
 
-    var url = decodeURIComponent(document.URL);
-    var init_array = url.substring(url.lastIndexOf('?') + 1);
-    let array = init_array.split('=');
-    let id = array[1];
+    let careerJourneyContent = localStorage.getItem('careerjourneyContent');
+    let content_id = localStorage.getItem("last_added_id_cj");
+    let data = new FormData();
+    data.append('content', careerJourneyContent);
 
-    let category_name = $("#category_name").val();
-    let Description = $("#category_Description").val();
-    let adminID = localStorage.getItem("admin_id");
-    let category_type = $("#category_type").val();
-    let Season_Details = $("#season_details").val();
-    let Nutritional_Information = $("#nutritional_Information").val();
-    let Storage_Description = $("#storage_Description").val();
-    let Quantity = $("#Quantity").val();
-    let category_image = $("#customFile").prop('files')[0];
+    if (content_id != "" && content_id != undefined) {
 
+        data.append('content_id', content_id);
 
-
-    if (id != '' && id != undefined) {
-        updateCategory(id, category_name, Description, adminID, category_type, Season_Details, Nutritional_Information, Storage_Description, Quantity, category_image);
+        $.ajax({
+            url: host_url + 'updateJourneyContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
     }
     else {
 
-
-        // Validation
-        if (category_name == null || category_name == '') {
-            showAlert("Category Name is required field.");
-        }
-        else if (category_type == null || category_type == '') {
-            showAlert("Category type is required field.");
-        }
-        else if (category_Description == null || category_Description == '') {
-            showAlert("Description is required field.");
-        }
-        else if (season_details == null || season_details == '') {
-            showAlert("Season Details is required field.");
-        }
-        else if (nutritional_Information == null || nutritional_Information == '') {
-            showAlert("Nutritional Information is required field.");
-        }
-        else if (storage_Description == null || storage_Description == '') {
-            showAlert("Storage Description is  required field.");
-        }
-        else if (Quantity == null || Quantity == '') {
-            showAlert("Quantity is  required field.");
-        }
-        else if (category_image == null || category_image == '') {
-            showAlert("Image is required field.");
-        }
-        else {
-            addCategory(category_name, category_type, category_Description, season_details, nutritional_Information, storage_Description, Quantity, category_image);
-        }
+        $.ajax({
+            url: host_url + 'addJourneyContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    }).then((result) => {
+                            localStorage.setItem("last_added_id_cj", data.last_added);
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
     }
 });
 
-function addCategory(category_name, category_type, category_Description, season_details, nutritional_Information, storage_Description, Quantity, category_image) {
-    let data = new FormData();
-    let adminID = localStorage.getItem("admin_id");
-    data.append('category_name', category_name);
-    data.append('description', category_Description);
-    data.append('adminID', adminID);
-    data.append('category_type', category_type);
-    data.append('season_information', season_details);
-    data.append('nutritional_information', nutritional_Information);
-    data.append('storage_description', storage_Description);
-    data.append('quantity', Quantity);
-    data.append('pro_image', category_image);
-
-    $.ajax({
-        url: host_url + 'addCategory',
-        data: data,
-        type: "POST",
-        cache: false,
-        processData: false,
-        contentType: false,
-        dataType: false,
-        beforeSend: function (data) {
-
-        },
-        complete: function (data) {
-        },
-        error: function (e) {
-            showAlert("Failed to Data Add.");
-        },
-        success: function (data) {
-            if (data.Status == "Success") {
-                Swal.fire({
-                    title: '',
-                    text: `${data.Message}`,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        getCategoryList();
-                    }
-                })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
-            }
-        },
-    });
-}
-
-$(document).on("click", "#edit_category", function (event) {
-    let id = $(this).attr('edit_category');
-    let category_name = $(this).attr('category_name');
-    let category_type = $(this).attr('category_type');
-    let Description = $(this).attr('Description');
-    let Season_Details = $(this).attr('Season_Details');
-    let Nutritional_Information = $(this).attr('Nutritional_Information');
-    let Storage_Description = $(this).attr('Storage_Description');
-    let Quantity = $(this).attr('Quantity');
-    let category_image = $(this).attr('category_image');
-    $("#imgPreview").empty();
-    $('#imgPreview').append(`<img  src="${image_url}${category_image}" style="width:100px;height:100px; margin-top:10px"/>`)
 
 
-    window.history.replaceState(null, null, '?id=' + id + '');
-
-    $("#category_name").val(category_name);
-    $("#category_type").val(category_type);
-    $("#category_Description").val(Description);
-    $("#season_details").val(Season_Details);
-    $("#nutritional_Information").val(Nutritional_Information);
-    $("#storage_Description").val(Storage_Description);
-    $("#Quantity").val(Quantity);
-});
-
-function updateCategory(id, category_name, Description, adminID, category_type, Season_Details, Nutritional_Information, Storage_Description, Quantity, category_image) {
-
-    let data = new FormData();
-    data.append('category_id', id);
-    data.append('category_name', category_name);
-    data.append('description', Description);
-    data.append('adminID', adminID);
-    data.append('category_type', category_type);
-    data.append('season_info', Season_Details);
-    data.append('nutritional_information', Nutritional_Information);
-    data.append('storage_desc', Storage_Description);
-    data.append('quantity', Quantity);
-    data.append('pro_image', category_image);
-
-
-    $.ajax({
-        url: host_url + 'updateCategory',
-        data: data,
-        type: "POST",
-        cache: false,
-        processData: false,
-        contentType: false,
-        dataType: false,
-        beforeSend: function (data) {
-        },
-        complete: function (data) {
-        },
-        error: function (e) {
-            showAlert("Failed to Data Add.");
-        },
-        success: function (data) {
-            console.log("data :", data);
-            // data = JSON.parse(JSON.stringify(data));
-            if (data.success) {
-                Swal.fire({
-                    title: '',
-                    text: `${data.Message}`,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#53B175'
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-                        var url = window.location.href;
-                        url = url.slice(0, url.indexOf('?'));
-                        history.pushState(null, '', url);
-                        getCategoryList();
-                    }
-
-                })
-            }
-            else {
-                Swal.fire("Category Not Update");
-            }
-        },
-    });
-}
-
-$(document).on("click", "#category_delete", function (event) {
-    var id = $(this).attr('category_id');
-    localStorage.setItem('category_id', id);
-
-    Swal.fire({
-        title: 'Do You want to delete this Category ?',
-        showDenyButton: true,
-        confirmButtonText: 'Yes',
-        confirmButtonColor: '#F28123',
-        denyButtonText: `No`,
-    }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-            var id = localStorage.getItem('category_id');
-            // categoryBindWithProduct(id);
-            categoryDelete(id);
-        } else if (result.isDenied) {
-
-        }
-    })
-});
-
-function categoryBindWithProduct(id) {
-    $.ajax({
-        url: host_url + 'categoryBindWithProduct',
-        data: {
-            'id': id,
-        },
-        method: 'post',
-        beforeSend: function () {
-        },
-        complete: function () {
-        },
-        success: function (data) {
-            //    hideLoader()
-            var data = JSON.parse(JSON.stringify(data));
-            if (data.success) {
-
-                data.list.forEach(function (list, index) {
-                    var count = index + 1;
-                    var html = '<b>' + count + '</b>'
-                    Swal.fire(' ', 'This Category Bind With' + ' ' + html + ' ' + 'Product,So You can not Delete This Category', 'warning');
-                });
-            }
-            else {
-                categoryDelete(id);
-            }
-        }
-    });
-}
-
-function categoryDelete(id) {
-    $.ajax({
-        url: host_url + 'deleteCategory',
-        data: {
-            'id': id,
-        },
-        method: 'post',
-        beforeSend: function () {
-        },
-        complete: function () {
-        },
-        success: function (data) {
-            //    hideLoader()
-            var data = JSON.parse(JSON.stringify(data));
-            if (data.success) {
-                Swal.fire({
-                    title: '',
-                    text: 'Category Delete Succssfully.',
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-                        getCategoryList();
-                    }
-
-                })
-                // window.location = 'category';
-            }
-            else {
-                Swal.fire('Category not Delete');
-            }
-        }
-    });
-}
-
-function getCategoryListForDropDown() {
-    $.ajax({
-        url: host_url + 'fatchAllCategory',
-        method: 'get',
-        beforeSend: function (data) {
-        },
-        complete: function (data) {
-        },
-        error: function (data) {
-            alert("Something went wrong");
-        },
-        success: function (data) {
-            if (data.success) {
-                data.Response.forEach(function (currentCategory) {
-                    let category_name = currentCategory.cat_name;
-                    let categoryNameBind = `<option value="${currentCategory.cat_id}"> ${category_name} </option>`
-                    $("#category_list_dropdown").append(categoryNameBind);
-                });
-            }
-        },
-    });
-}
 

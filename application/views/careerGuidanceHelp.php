@@ -38,14 +38,14 @@
 .modal-content {
     margin: auto;
     display: block;
-    width: 35%;
+    width: 20%;
     max-width: 700px;
 }
 
 /* Add Animation */
 .modal-content {
     animation-name: zoom;
-    animation-duration: 0.6s;
+    animation-duration: 0.4s;
 }
 
 @keyframes zoom {
@@ -110,7 +110,7 @@
                     <label class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
                         <div class="custom-file">
-                            <input type="file" class="form-control-file" name="imageFile" id="customFile" multiple>
+                            <input type="file" class="form-control-file customFile" name="imageFile" id="customFile" multiple >
                             <a href="#">
                                 <div class="imgPreview">
 
@@ -122,7 +122,7 @@
             </div>
 
         </div>
-        <button type="submit" id="" class="common-btn-padding btn btn-success mx-4"> Save </button>
+        <button type="submit" id="saveCareerGuidanceHelp" class="common-btn-padding btn btn-success mx-4"> Save </button>
         <!-- The Modal -->
         <div class="idMyModal modal">
             <span class="close">&times;</span>
@@ -136,13 +136,25 @@
 </div>
 
 <script>
-ClassicEditor
-    .create(document.querySelector('#editor'))
-    .catch(error => {
-        console.error(error);
-    });
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            // Set the editor's content to the value from localStorage on page load
+            let htmlContent = localStorage.getItem("careerGuidanceContent");
+            let DBhtmlContent = localStorage.getItem("last_career_gui_content");
+            if (DBhtmlContent) {
+                editor.setData(DBhtmlContent);
+            }
+
+            editor.model.document.on('change:data', () => {
+                // Save the latest HTML content to localStorage whenever the editor content changes
+                let editorData = editor.getData();
+                let htmlContent = editorData.trim();
+                localStorage.setItem("careerGuidanceContent", htmlContent);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>
 
-<script>
-
-</script>
