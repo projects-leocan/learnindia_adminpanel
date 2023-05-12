@@ -57,6 +57,7 @@ $route['careerGuidanceHelp'] = 'Home/careerGuidanceHelp';
 $route['careerJourney'] = 'Home/careerJourney';
 $route['counseling'] = 'Home/counseling';
 $route['successStory'] = 'Home/successStory';
+$route['showStory'] = 'Home/showStory';
 $route['aboutUsContent'] = 'Home/aboutUsContent';
 $route['addProduct'] = 'Product/addProduct';
 $route['addCategory'] = 'Category/addCategory';

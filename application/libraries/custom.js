@@ -23,6 +23,16 @@ $(document).ready(function () {
     if (window.location.href == base_url + 'counseling') {
         fetchCounsellingSection();
     }
+    if (window.location.href == base_url + 'successStory') {
+        fetchSucessStorySection();
+        let sName = localStorage.getItem("student_name");
+        if(sName != null && sName != undefined && sName != ""){
+            $("#student_name").val(sName);
+        }
+    }
+    if (window.location.href == base_url + 'showStory') {
+        fetchSucessStorySection();
+    }
 
 });
 
@@ -93,20 +103,12 @@ $("#successStory").on("click", function (event) {
 $("#aboutUsContent").on("click", function (event) {
     window.location = 'aboutUsContent';
 });
-$("#back_to_coupon").on("click", function (event) {
-    window.location = 'coupon';
+$("#show_story").on("click", function (event) {
+    window.location = 'showStory';
 });
-$("#add_product").on("click", function (event) {
-    window.location = 'addProduct';
-});
-$("#back_to_product").on("click", function (event) {
-    window.location = 'product';
-});
-$("#add_category").on("click", function (event) {
-    window.location = 'addCategory';
-});
-$("#back_to_category").on("click", function (event) {
-    window.location = 'category';
+$("#back_to_sucsess_story").on("click", function (event) {
+    window.location = 'successStory';
+    localStorage.removeItem("last_added_id_sus_story");
 });
 
 
@@ -351,12 +353,12 @@ const fetchGuidanceHelpContent = () => {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                localStorage.setItem("last_career_gui_id",data.Response.id);
-                localStorage.setItem("last_career_gui_content",data.Response.content);
+                localStorage.setItem("last_career_gui_id", data.Response.id);
+                localStorage.setItem("last_career_gui_content", data.Response.content);
                 $(".imgPreview").empty();
                 $('.imgPreview').append(`<img src=${image_url}${data.Response.image} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
                 $('.imgPreview').append(`<img src=${image_url}${data.Response.image2} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
-                
+
             }
         }
     });
@@ -586,7 +588,7 @@ $("#addCareerJourneyContent").on("click", function () {
                         confirmButtonText: 'Ok',
                         confirmButtonColor: '#F28123'
                     }).then((result) => {
-                            localStorage.setItem("last_added_id_cj", data.last_added);
+                        localStorage.setItem("last_added_id_cj", data.last_added);
                     })
                 }
                 else {
@@ -624,28 +626,27 @@ const fetchCounsellingSection = () => {
     });
 }
 
-
 $("#counsellingSectionAdd").on("click", function () {
 
     let counseling = localStorage.getItem('latest_counselling_cnt');
     let heading = $("#heading").val();
     let content_id = localStorage.getItem("last_added_id_counselling");
-    if(counseling == "" || counseling == undefined || counseling == null){
+    if (counseling == "" || counseling == undefined || counseling == null) {
         Swal.fire("Please fill in the counseling field");
     }
-    else if(heading == "" || heading == undefined || heading == null){
+    else if (heading == "" || heading == undefined || heading == null) {
         Swal.fire("Please fill in the heading field");
     }
-    else{
+    else {
 
         let data = new FormData();
         data.append('content', counseling);
         data.append('heading', heading);
-    
+
         if (content_id != "" && content_id != undefined) {
-    
+
             data.append('content_id', content_id);
-    
+
             $.ajax({
                 url: host_url + 'updateCounseling',
                 data: data,
@@ -681,7 +682,7 @@ $("#counsellingSectionAdd").on("click", function () {
             });
         }
         else {
-    
+
             $.ajax({
                 url: host_url + 'addCounseling',
                 data: data,
@@ -709,7 +710,151 @@ $("#counsellingSectionAdd").on("click", function () {
                             confirmButtonText: 'Ok',
                             confirmButtonColor: '#F28123'
                         }).then((result) => {
-                                localStorage.setItem("last_added_id_counselling", data.last_added);
+                            localStorage.setItem("last_added_id_counselling", data.last_added);
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                },
+            });
+        }
+    }
+});
+
+const fetchSucessStorySection = () => {
+    // AJAX Call 
+    $.ajax({
+        url: host_url + 'fetchSuccessStory',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                let table = $('#story_table').DataTable();
+                table.clear().draw();
+                if (data.success) {
+                    data.Response.forEach(function (currentStory, index) {
+                        let count = index + 1;
+                        let student_name = currentStory.student_name;
+                        let content = currentStory.content;
+
+                        $("#story_table").DataTable().row.add([
+                            count,content,student_name,
+                            `<a mx-2" id="story_edit" story_id="${currentStory.id}" content="${content}" student_name="${student_name}" ><i class="mx-2 fa fa-edit"></i></a>`
+                        ]).draw();
+                    });
+                }
+            }
+        }
+    });
+}
+
+$(document).on("click","#story_edit",function(e){
+    let story_id = $(this).attr("story_id");
+    let content = $(this).attr("content");
+    let student_name = $(this).attr("student_name");
+
+    localStorage.setItem("last_added_id_sus_story", story_id);
+    localStorage.setItem("latest_succ_story_cnt", content);
+    localStorage.setItem("student_name", student_name);
+
+    window.location = 'successStory';
+})
+
+$("#studentSuceessAdd").on("click", function () {
+
+    let storyContent = localStorage.getItem('latest_succ_story_cnt');
+    let student_name = $("#student_name").val();
+    let content_id = localStorage.getItem("last_added_id_sus_story");
+    if (storyContent == "" || storyContent == undefined || storyContent == null) {
+        Swal.fire("Please fill in the Success story field");
+    }
+    else if (student_name == "" || student_name == undefined || student_name == null) {
+        Swal.fire("Please fill in the Student Name field");
+    }
+    else {
+        let data = new FormData();
+        data.append('content', storyContent);
+        data.append('student_name', student_name);
+
+        if (content_id != "" && content_id != undefined) {
+
+            data.append('content_id', content_id);
+
+            $.ajax({
+                url: host_url + 'updateSuccessStory',
+                data: data,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (data) {
+                    showLoader();
+                },
+                complete: function (data) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    Swal.fire("Failed To Update Content .");
+                    hideLoader();
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                            confirmButtonColor: '#F28123'
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                },
+            });
+        }
+        else {
+
+            $.ajax({
+                url: host_url + 'addSuccessStory',
+                data: data,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (data) {
+                    showLoader();
+                },
+                complete: function (data) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    showAlert("Failed to Data Add.");
+                    hideLoader();
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                            confirmButtonColor: '#F28123'
+                        }).then((result) => {
+                            // localStorage.setItem("last_added_id_sus_story", data.last_added);
                         })
                     }
                     else {

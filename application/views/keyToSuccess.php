@@ -3,13 +3,6 @@
     height: 30vh;
 }
 
-.btn-success {
-    color: #fff;
-    background-color:#046A38;
-    border-color: #046A38;
-    box-shadow: none;
-}
-
 
 </style>
 <div class="wrapper ScrollStyle">

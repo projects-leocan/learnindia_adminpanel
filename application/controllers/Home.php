@@ -143,6 +143,22 @@ class Home extends CI_Controller {
         //   $this->load->view('footer');
         // }
     }
+    public function showStory()
+    {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('showStory');
+          $this->load->view('footer');
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
+    }
     public function aboutUsContent()
     {
         // if($this->session->userData('isAlreadyLogin')=="true")

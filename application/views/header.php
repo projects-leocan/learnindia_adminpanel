@@ -48,10 +48,10 @@
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-        <!-- Preloader -->
+        <!-- Preloader
         <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="dist/img/Logo.jpeg" alt="LearnIndia" height="100" width="100">
-        </div>
+        </div> -->
 
 
         <style>
@@ -71,7 +71,7 @@
         }
 
         .swal2-styled.swal2-confirm:focus {
-            box-shadow: 0 0 0 3px rgba(17,64,34,0.5);
+            box-shadow: 0 0 0 3px rgba(17, 64, 34, 0.5);
         }
 
         .swal-modal {
@@ -132,6 +132,13 @@
 
         .submenu {
             display: none;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #046A38;
+            border-color: #046A38;
+            box-shadow: none;
         }
 
         /* Loader */

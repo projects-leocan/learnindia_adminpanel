@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-sm-2">
                         <ol class="breadcrumb float-sm-right">
-                            <!-- <button type="button" class="btn btn-block btn-primary" id="add_coupon" style=" width: 100%"> Add Coupon </button> -->
+                            <button type="button" class="btn btn-block btn-success" id="show_story" style=" width: 100%"> Show Story </button>
                         </ol>
                     </div>
                 </div>
@@ -38,11 +38,11 @@
                 <div class="form-group row">
                     <label for="" class="col-sm-2 col-form-label">Student Name </label>
                     <div class="col-sm-4">
-                        <input type="text" value="" class="form-control" placeholder="Student Name Here" >
+                        <input type="text"  id="student_name" value="" class="form-control" placeholder="Student Name Here" >
                     </div>
 
                 </div>
-                <button type="submit" id="keyToSuccessAdd" class="common-btn-padding btn btn-success "> Save </button>
+                <button type="submit" id="studentSuceessAdd" class="common-btn-padding btn btn-success "> Save </button>
             </div>
 
         </div>
@@ -50,9 +50,22 @@
 </div>
 
 <script>
-ClassicEditor
-    .create(document.querySelector('#editor'))
-    .catch(error => {
-        console.error(error);
-    });
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            // Set the editor's content to the value from localStorage on page load
+            let htmlContent = localStorage.getItem("latest_succ_story_cnt");
+            if (htmlContent) {
+                editor.setData(htmlContent);
+            }
+            editor.model.document.on('change:data', () => {
+                // Save the latest HTML content to localStorage whenever the editor content changes
+                let editorData = editor.getData();
+                let htmlContent = editorData.trim();
+                localStorage.setItem("latest_succ_story_cnt", htmlContent);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>
