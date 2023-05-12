@@ -12,7 +12,7 @@
 
 
 </style>
-<div class="wrapper ">
+<div class="wrapper ScrollStyle">
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">

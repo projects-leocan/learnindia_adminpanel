@@ -20,6 +20,9 @@ $(document).ready(function () {
     if (window.location.href == base_url + 'careerJourney') {
         fetchCareerJourneyContent();
     }
+    if (window.location.href == base_url + 'counseling') {
+        fetchCounsellingSection();
+    }
 
 });
 
@@ -591,6 +594,130 @@ $("#addCareerJourneyContent").on("click", function () {
                 }
             },
         });
+    }
+});
+
+
+const fetchCounsellingSection = () => {
+    // AJAX Call 
+    $.ajax({
+        url: host_url + 'fetchCounselingContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                localStorage.setItem("last_added_id_counselling", data.Response.id);
+                localStorage.setItem("latest_counselling_cnt", data.Response.content);
+                $("#heading").val(data.Response.heading)
+            }
+        }
+    });
+}
+
+
+$("#counsellingSectionAdd").on("click", function () {
+
+    let counseling = localStorage.getItem('latest_counselling_cnt');
+    let heading = $("#heading").val();
+    let content_id = localStorage.getItem("last_added_id_counselling");
+    if(counseling == "" || counseling == undefined || counseling == null){
+        Swal.fire("Please fill in the counseling field");
+    }
+    else if(heading == "" || heading == undefined || heading == null){
+        Swal.fire("Please fill in the heading field");
+    }
+    else{
+
+        let data = new FormData();
+        data.append('content', counseling);
+        data.append('heading', heading);
+    
+        if (content_id != "" && content_id != undefined) {
+    
+            data.append('content_id', content_id);
+    
+            $.ajax({
+                url: host_url + 'updateCounseling',
+                data: data,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (data) {
+                    showLoader();
+                },
+                complete: function (data) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    Swal.fire("Failed To Update Content .");
+                    hideLoader();
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                            confirmButtonColor: '#F28123'
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                },
+            });
+        }
+        else {
+    
+            $.ajax({
+                url: host_url + 'addCounseling',
+                data: data,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (data) {
+                    showLoader();
+                },
+                complete: function (data) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    showAlert("Failed to Data Add.");
+                    hideLoader();
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                            confirmButtonColor: '#F28123'
+                        }).then((result) => {
+                                localStorage.setItem("last_added_id_counselling", data.last_added);
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                },
+            });
+        }
     }
 });
 

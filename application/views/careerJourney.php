@@ -48,7 +48,7 @@
         .create(document.querySelector('#editor'))
         .then(editor => {
             // Set the editor's content to the value from localStorage on page load
-            let htmlContent = localStorage.getItem("last_career_journey_cnt");
+        let htmlContent = localStorage.getItem("last_career_journey_cnt");
             if (htmlContent) {
                 editor.setData('');
                 editor.setData(htmlContent);

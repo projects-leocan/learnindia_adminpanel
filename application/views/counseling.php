@@ -40,11 +40,11 @@
                 <div class="form-group row">
                     <label for="" class="col-sm-2 col-form-label">Heading </label>
                     <div class="col-sm-4">
-                        <input type="text" value="" class="form-control" placeholder="Heading Here" >
+                        <input type="text" id="heading" value="" class="form-control" placeholder="Heading Here" >
                     </div>
 
                 </div>
-                <button type="submit" id="keyToSuccessAdd" class="common-btn-padding btn btn-success "> Save </button>
+                <button type="submit" id="counsellingSectionAdd" class="common-btn-padding btn btn-success "> Save </button>
             </div>
 
         </div>
@@ -52,9 +52,22 @@
 </div>
 
 <script>
-ClassicEditor
-    .create(document.querySelector('#editor'))
-    .catch(error => {
-        console.error(error);
-    });
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            // Set the editor's content to the value from localStorage on page load
+            let htmlContent = localStorage.getItem("latest_counselling_cnt");
+            if (htmlContent) {
+                editor.setData(htmlContent);
+            }
+            editor.model.document.on('change:data', () => {
+                // Save the latest HTML content to localStorage whenever the editor content changes
+                let editorData = editor.getData();
+                let htmlContent = editorData.trim();
+                localStorage.setItem("latest_counselling_cnt", htmlContent);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>

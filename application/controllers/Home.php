@@ -131,7 +131,7 @@ class Home extends CI_Controller {
     {
         // if($this->session->userData('isAlreadyLogin')=="true")
         // {
-        //   $this->load->view('header');
+          $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('successStory');
           $this->load->view('footer');
