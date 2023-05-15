@@ -137,7 +137,13 @@ $("#educationLogo").on("click", function (event) {
 $("#teamMember").on("click", function (event) {
     window.location = 'ourTeamMember';
 });
-
+// BLOG SECTION
+$("#blogArea").on("click", function (event) {
+    window.location = 'blog';
+});
+$("#blogAreaInner").on("click", function (event) {
+    window.location = 'blogInner';
+});
 // ========================= ADMIN SIGN UP ==========================
 
 $("#sign_in").on("click", function () {
@@ -349,8 +355,6 @@ $("#keyToSuccessAdd").on("click", function () {
         });
     }
 });
-
-
 
 // Career Guidance help section 
 const fetchGuidanceHelpContent = () => {
@@ -1213,7 +1217,6 @@ $("#saveEducationLogo").on('click', function () {
 });
 
 
-
 function fetchOurMemeberContent() {
     $.ajax({
         url: host_url + 'fetchTeamMember',
@@ -1297,9 +1300,6 @@ $(document).on('click',"#team_delete",function(event){
     })
 })
 
-
-
-
 $(document).on('click',"#team_edit",function(event){
     let id = $(this).attr("member_id");
     let teacher_name = $(this).attr("teacher_name");
@@ -1310,7 +1310,6 @@ $(document).on('click',"#team_edit",function(event){
     $(".imgPreview").empty();
     $('.imgPreview').append(`<img src="${image_url}${image}" class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
 })
-
 
 
 $("#addTeamMembers").on("click", function () {
@@ -1400,6 +1399,7 @@ $("#addTeamMembers").on("click", function () {
         });
     }
 });
+
 
 
 

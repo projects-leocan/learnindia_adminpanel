@@ -64,5 +64,8 @@ $route['aboutUs'] = 'Home/aboutUsContent';
 $route['aboutUsInner'] = 'Home/aboutUsInner';
 $route['educationLogo'] = 'Home/educationLogo';
 $route['ourTeamMember'] = 'Home/ourTeamMember';
+// BLOGS SECTION
+$route['blog'] = 'Home/blog';
+$route['blogInner'] = 'Home/blogInner';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

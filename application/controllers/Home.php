@@ -223,6 +223,38 @@ class Home extends CI_Controller {
         //   $this->load->view('footer');
         // }
     }
+    public function blog()
+    {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('blogs');
+          $this->load->view('footer');
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
+    }
+    public function blogInner()
+    {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('blogInner');
+          $this->load->view('footer');
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
+    }
 
     public function logout()
     {
