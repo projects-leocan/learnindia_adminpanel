@@ -134,13 +134,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Career Articles Intro </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="careerArticle">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Career Articles</p>
                                 </a>

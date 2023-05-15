@@ -45,6 +45,24 @@ $(document).ready(function () {
     if (window.location.href == base_url + 'ourTeamMember') {
         fetchOurMemeberContent();
     }
+    if (window.location.href == base_url + 'blog') {
+        fetchBlogContent();
+    }
+    if (window.location.href == base_url + 'blogInner') {
+        fetchBlogInnerContent();
+    }
+    if (window.location.href == base_url + 'careerArticle') {
+        $("#heading").val(localStorage.getItem("heading"))
+
+        if(localStorage.getItem("image") != undefined && localStorage.getItem("image") != null){
+            $(".imgPreview").empty();
+            $('.imgPreview').append(`<img src=${image_url}${localStorage.getItem("image")} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`)
+        }
+        fetchCareerArticlesSection();
+    }
+    if (window.location.href == base_url + 'show_articles') {
+        fetchCareerArticlesSection();
+    }
 
 });
 
@@ -144,6 +162,21 @@ $("#blogArea").on("click", function (event) {
 $("#blogAreaInner").on("click", function (event) {
     window.location = 'blogInner';
 });
+$("#careerArticle").on("click", function (event) {
+    window.location = 'careerArticle';
+});
+$("#show_articles").on("click", function (event) {
+    window.location = 'show_articles';
+});
+$("#back_to_article").on("click", function (event) {
+    localStorage.removeItem("last_added_article_id");
+    localStorage.removeItem("articlesContent");
+    localStorage.removeItem("heading");
+    localStorage.removeItem("image");
+    window.location = 'careerArticle';
+});
+
+
 // ========================= ADMIN SIGN UP ==========================
 
 $("#sign_in").on("click", function () {
@@ -1399,6 +1432,435 @@ $("#addTeamMembers").on("click", function () {
         });
     }
 });
+
+// BLOG SECTION 
+const fetchBlogContent = () => {
+
+    // AJAX Call 
+    $.ajax({
+        url: host_url + 'fetchBlogContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_blog_id", data.Response.id);
+                localStorage.setItem("last_blog_cnt", content);
+            }
+        }
+    });
+}
+
+$("#addBlogContent").on("click", function () {
+
+    let blogContent = localStorage.getItem('blogContent');
+    let content_id = localStorage.getItem("last_added_blog_id");
+    let data = new FormData();
+    data.append('content', blogContent);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateBlogContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addBlogContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            localStorage.setItem("last_added_blog_id", data.last_added);
+                        }
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
+const fetchBlogInnerContent = () => {
+
+    // AJAX Call 
+    $.ajax({
+        url: host_url + 'fetchblogInnerContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_blog_Inner_id", data.Response.id);
+                localStorage.setItem("last_blog_Inner_cnt", content);
+            }
+        }
+    });
+}
+
+$("#addBlogInnerContent").on("click", function () {
+
+    let innerBlogContent = localStorage.getItem('blogInnerContent');
+    let content_id = localStorage.getItem("last_added_blog_Inner_id");
+    let data = new FormData();
+    data.append('content', innerBlogContent);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateblogInner',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addBlogInner',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            localStorage.setItem("last_added_blog_Inner_id", data.last_added);
+                        }
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
+
+const fetchCareerArticlesSection = () => {
+    $.ajax({
+        url: host_url + 'fetchCareerArticles',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                let table = $('#article_table').DataTable();
+                table.clear().draw();
+                if (data.success) {
+                    data.Response.forEach(function (currentArticle, index) {
+                        let count = index + 1;
+                        let heading = currentArticle.heading;
+                        let content = currentArticle.content;
+                        let image = `<img src="${image_url}${currentArticle.image}" class="toZoom" style="width:100px;height:auto;border-radius: 10px;">`
+
+                        $("#article_table").DataTable().row.add([
+                            count,image, heading, content,
+                            `<a mx-2" id="article_edit" article_id="${currentArticle.id}" heading="${heading}" content="${content}" image="${currentArticle.image}"  ><i class="mx-2 fa fa-edit"></i></a>` + 
+                            `<a mx-2" id="article_delete" article_id="${currentArticle.id}" ><i class="mx-2 fa fa-trash"></i></a>`
+                        ]).draw();
+                    });
+                }
+            }
+        }
+    });
+}
+
+$(document).on("click", "#article_edit", function (e) {
+    let article_id = $(this).attr("article_id");
+    let heading = $(this).attr("heading");
+    let content = $(this).attr("content");
+    let image = $(this).attr("image");
+
+    localStorage.setItem("last_added_article_id", article_id);
+    localStorage.setItem("articlesContent", content);
+    localStorage.setItem("heading", heading);
+    localStorage.setItem("image", image);
+
+    window.location = 'careerArticle';
+})
+
+
+
+$(document).on('click',"#article_delete",function(event){
+    let id = $(this).attr('article_id');
+
+    Swal.fire({
+        title: 'Do You want to delete this article ?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: host_url + 'deleteCareerArticles',
+                data: {
+                    'content_id': id,
+                },
+                method: 'post',
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            fetchCareerArticlesSection();
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                }
+            });
+
+        } else if (result.isDenied) {
+
+        }
+    })
+})
+
+
+$("#addCareerArticles").on("click", function () {
+
+    let articles = localStorage.getItem('articlesContent');
+    let heading = $("#heading").val();
+    let content_image = $("#customFile").prop('files')[0];
+    let content_id = localStorage.getItem("last_added_article_id");
+
+    if (articles == "" || articles == undefined || articles == null) {
+        Swal.fire("Please fill in the article field");
+    }
+    else if (heading == "" || heading == undefined || heading == null) {
+        Swal.fire("Please fill in the heading field");
+    }
+    else {
+        let data = new FormData();
+        data.append('content', articles);
+        data.append('heading', heading);
+        data.append('content_image', content_image);
+
+        if (content_id != "" && content_id != undefined) {
+
+            data.append('content_id', content_id);
+
+            $.ajax({
+                url: host_url + 'updateCareerArticles',
+                data: data,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (data) {
+                    showLoader();
+                },
+                complete: function (data) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    Swal.fire("Failed To Update Content .");
+                    hideLoader();
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            localStorage.removeItem("last_added_article_id");
+                            localStorage.removeItem("articlesContent");
+                            localStorage.removeItem("heading");
+                            localStorage.removeItem("image");
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                },
+            });
+        }
+        else {
+
+            $.ajax({
+                url: host_url + 'addCareerArticles',
+                data: data,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (data) {
+                    showLoader();
+                },
+                complete: function (data) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    showAlert("Failed to Data Add.");
+                    hideLoader();
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                },
+            });
+        }
+    }
+});
+
 
 
 

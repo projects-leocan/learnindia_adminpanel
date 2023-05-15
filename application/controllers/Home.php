@@ -255,6 +255,38 @@ class Home extends CI_Controller {
         //   $this->load->view('footer');
         // }
     }
+    public function careerArticle()
+    {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('careerArticle');
+          $this->load->view('footer');
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
+    }
+    public function show_articles()
+    {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('showArticles');
+          $this->load->view('footer');
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
+    }
 
     public function logout()
     {

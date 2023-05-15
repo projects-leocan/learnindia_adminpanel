@@ -2,8 +2,6 @@
 .ck-editor__editable {
     height: 30vh;
 }
-
-
 </style>
 <div class="wrapper ScrollStyle">
     <div class="content-wrapper">
@@ -29,7 +27,7 @@
                 </textarea>
 
                 </div>
-                <button type="submit" id="keyToSuccessAdd" class="common-btn-padding btn btn-success "> Save </button>
+                <button type="submit" id="addBlogInnerContent" class="common-btn-padding btn btn-success "> Save </button>
             </div>
 
         </div>
@@ -41,7 +39,7 @@
         .create(document.querySelector('#editor'))
         .then(editor => {
             // Set the editor's content to the value from localStorage on page load
-            let htmlContent = localStorage.getItem("last_keyToS_cnt");
+            let htmlContent = localStorage.getItem("last_blog_Inner_cnt");
             if (htmlContent) {
                 editor.setData(htmlContent);
             }
@@ -49,7 +47,7 @@
                 // Save the latest HTML content to localStorage whenever the editor content changes
                 let editorData = editor.getData();
                 let htmlContent = editorData.trim();
-                localStorage.setItem("keyToSuccessContent", htmlContent);
+                localStorage.setItem("blogInnerContent", htmlContent);
             });
         })
         .catch(error => {

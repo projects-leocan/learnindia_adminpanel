@@ -67,5 +67,9 @@ $route['ourTeamMember'] = 'Home/ourTeamMember';
 // BLOGS SECTION
 $route['blog'] = 'Home/blog';
 $route['blogInner'] = 'Home/blogInner';
+$route['careerArticle'] = 'Home/careerArticle';
+$route['show_articles'] = 'Home/show_articles';
+
+// DEFAULT 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
