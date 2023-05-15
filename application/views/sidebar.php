@@ -46,7 +46,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link" id="keyToSuccess">
+                                <a class="nav-link" id="keyToSuccess">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Key To Success</p>
                                 </a>
@@ -87,19 +87,25 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link" id="aboutUsContent">
+                                <a  class="nav-link" id="aboutUsContent">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>About Us Content</p>
+                                    <p>About Us Main</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a  class="nav-link" id="aboutUsInner">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>About Us Inner</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="educationLogo">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Education Logo</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="teamMember">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Team Member</p>
                                 </a>

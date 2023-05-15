@@ -89,7 +89,7 @@
             <div class="container-fluid">
                 <div class="row mb-2" id="manage">
                     <div class="col-sm-10">
-                        <h1 class="m-0 mx-2">How career guidance can help you ?</h1>
+                        <h1 class="m-0 mx-2"> Our Team </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -99,18 +99,23 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="form-group">
 
-                    <textarea name="content" id="editor">
-                    &lt;p&gt;Add Your Content Here .&lt;/p&gt;
-                </textarea>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Teacher Name </label>
+                    <div class="col-sm-4">
+                        <input type="text" id="teacher_name" value="" class="form-control"
+                            placeholder="Teacher Name Here">
+                    </div>
+                    <div class="col-sm-4">
+                    <button type="submit" id="addTeamMembers" class="common-btn-padding btn btn-success mx-4"> Save </button>
+                    </div>
 
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
                         <div class="custom-file">
-                            <input type="file" class="form-control-file customFile" name="imageFile" id="customFile" multiple >
+                            <input type="file" class="form-control-file customFile" name="imageFile" id="customFile">
                             <a href="#">
                                 <div class="imgPreview">
 
@@ -122,38 +127,24 @@
             </div>
 
         </div>
-        <button type="submit" id="saveCareerGuidanceHelp" class="common-btn-padding btn btn-success mx-4"> Save </button>
-        <!-- The Modal -->
-        <div class="idMyModal modal">
-            <span class="close">&times;</span>
-            <img class="modal-content">
-        </div>
-        <div class="idMyModal modal">
-            <span class="close">&times;</span>
-            <img class="modal-content">
-        </div>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="table-responsive">
+                    <table id="member_list" class="table table-bordered table-striped" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Image</th>
+                                <th>Teacher Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
-
-<script>
-    ClassicEditor
-        .create(document.querySelector('#editor'))
-        .then(editor => {
-            // Set the editor's content to the value from localStorage on page load
-            let DBhtmlContent = localStorage.getItem("last_career_gui_content");
-            if (DBhtmlContent) {
-                editor.setData(DBhtmlContent);
-            }
-
-            editor.model.document.on('change:data', () => {
-                // Save the latest HTML content to localStorage whenever the editor content changes
-                let editorData = editor.getData();
-                let htmlContent = editorData.trim();
-                localStorage.setItem("careerGuidanceContent", htmlContent);
-            });
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
-

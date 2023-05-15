@@ -1,7 +1,7 @@
 <div class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <p><b>Fruitka </b> Admin</p>
+            <p>Learn<b>India</b></p>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -32,7 +32,7 @@
                 </form>
 
                 <div class="social-auth-links text-center mb-3">
-                    <button type="submit" class="btn btn-block btn-primary" id="sign_in" >Sign In</button>
+                    <button type="submit" class="btn btn-block btn-success" id="sign_in" >Sign In</button>
                 </div>
             </div>
 

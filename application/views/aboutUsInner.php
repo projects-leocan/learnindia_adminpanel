@@ -3,14 +3,16 @@
     height: 30vh;
 }
 
+
+
 </style>
 <div class="wrapper ">
-    <div class="content-wrapper">
+    <div class="content-wrapper"> 
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 mx-3">About Us</h1>
+                        <h1 class="m-0 mx-3">About Us </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -28,7 +30,7 @@
                 </textarea>
 
                 </div>
-                <button type="submit" id="aboutUsAdd" class="common-btn-padding btn btn-success "> Save </button>
+                <button type="submit" id="addInnerAboutUs" class="common-btn-padding btn btn-success "> Save </button>
             </div>
 
         </div>
@@ -40,7 +42,7 @@
         .create(document.querySelector('#editor'))
         .then(editor => {
             // Set the editor's content to the value from localStorage on page load
-            let htmlContent = localStorage.getItem("aboutUsContent");
+            let htmlContent = localStorage.getItem("InnerAboutContent");
             if (htmlContent) {
                 editor.setData(htmlContent);
             }
@@ -48,7 +50,7 @@
                 // Save the latest HTML content to localStorage whenever the editor content changes
                 let editorData = editor.getData();
                 let htmlContent = editorData.trim();
-                localStorage.setItem("aboutUsContent", htmlContent);
+                localStorage.setItem("InnerAboutContent", htmlContent);
             });
         })
         .catch(error => {

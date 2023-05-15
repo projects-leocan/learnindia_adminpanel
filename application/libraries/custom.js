@@ -26,12 +26,24 @@ $(document).ready(function () {
     if (window.location.href == base_url + 'successStory') {
         fetchSucessStorySection();
         let sName = localStorage.getItem("student_name");
-        if(sName != null && sName != undefined && sName != ""){
+        if (sName != null && sName != undefined && sName != "") {
             $("#student_name").val(sName);
         }
     }
     if (window.location.href == base_url + 'showStory') {
         fetchSucessStorySection();
+    }
+    if (window.location.href == base_url + 'aboutUs') {
+        fetchAboutContent();
+    }
+    if (window.location.href == base_url + 'aboutUsInner') {
+        fetchAboutInnerContent();
+    }
+    if (window.location.href == base_url + 'educationLogo') {
+        fetchEducationLogo();
+    }
+    if (window.location.href == base_url + 'ourTeamMember') {
+        fetchOurMemeberContent();
     }
 
 });
@@ -83,14 +95,14 @@ function showAlert(alertText) {
 
 
 // sidebar menu option's redirection
+
+// HOME SECTION
 $("#keyToSuccess").on("click", function (event) {
     window.location = 'keyToSuccess';
 });
-
 $("#careerGuidanceHelp").on("click", function (event) {
     window.location = 'careerGuidanceHelp';
 });
-
 $("#careerJourney").on("click", function (event) {
     window.location = 'careerJourney';
 });
@@ -106,11 +118,25 @@ $("#aboutUsContent").on("click", function (event) {
 $("#show_story").on("click", function (event) {
     window.location = 'showStory';
 });
+
 $("#back_to_sucsess_story").on("click", function (event) {
     window.location = 'successStory';
     localStorage.removeItem("last_added_id_sus_story");
 });
 
+// ABOUT US SECTION 
+$("#aboutUsContent").on("click", function (event) {
+    window.location = 'aboutUs';
+});
+$("#aboutUsInner").on("click", function (event) {
+    window.location = 'aboutUsInner';
+});
+$("#educationLogo").on("click", function (event) {
+    window.location = 'educationLogo';
+});
+$("#teamMember").on("click", function (event) {
+    window.location = 'ourTeamMember';
+});
 
 // ========================= ADMIN SIGN UP ==========================
 
@@ -119,15 +145,12 @@ $("#sign_in").on("click", function () {
     var password = $("#signin_user_password").val();
 
     if (email == null || email == '') {
-        $("#signin_user_email").effect("shake");
         showAlert('Enter Email');
     }
     else if (!validateEmail(email)) {
-        $("#signin_user_email").effect("shake");
         showAlert("Please enter valid email address.");
     }
     else if (password == null || password == '') {
-        $("#signin_user_password").effect("shake");
         showAlert('Enter Password');
     }
     else {
@@ -149,28 +172,28 @@ function signInUser(email, password) {
             alert("Something went wrong");
         },
         success: function (data) {
-            localStorage.setItem("admin_id", data.Response.admin_id)
+            window.location = 'home';
             if (data.Status == "Success") {
-                $.ajax({
-                    url: base_url + 'Home/set_session',
-                    data: fd,
-                    processData: false,
-                    contentType: false,
-                    method: 'post',
-                    error: function (data) {
-                        alert("Something went wrong");
-                    },
-                    success: function () {
-                        Swal.fire({
-                            title: 'Login Success',
-                            text: 'Redirecting...',
-                            icon: 'success',
-                            timer: 2000,
-                        }).then(() => {
-                            window.location = 'home';
-                        });
-                    }
-                })
+                // $.ajax({
+                //     url: base_url + 'Home/set_session',
+                //     data: fd,
+                //     processData: false,
+                //     contentType: false,
+                //     method: 'post',
+                //     error: function (data) {
+                //         alert("Something went wrong");
+                //     },
+                //     success: function () {
+                //         Swal.fire({
+                //             title: 'Login Success',
+                //             text: 'Redirecting...',
+                //             icon: 'success',
+                //             timer: 2000,
+                //         }).then(() => {
+                //             window.location = 'home';
+                //         });
+                //     }
+                // })
             }
             else {
                 Swal.fire('Invalid Email or Password');
@@ -184,10 +207,8 @@ $("#logout_menu").on("click", function (event) {
         title: 'Are you sure you want to logout?',
         showDenyButton: true,
         confirmButtonText: 'Yes',
-        confirmButtonColor: '#F28123',
         denyButtonText: `Cancel`,
     }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
             // signOut();
         } else if (result.isDenied) {
@@ -318,7 +339,6 @@ $("#keyToSuccessAdd").on("click", function () {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             localStorage.setItem("last_added_id", data.last_added);
-                            // localStorage.removeItem("keyToSuccessContent");
                         }
                     })
                 }
@@ -334,7 +354,6 @@ $("#keyToSuccessAdd").on("click", function () {
 
 // Career Guidance help section 
 const fetchGuidanceHelpContent = () => {
-    // fetch last added content of keyToSucess Section 
 
     // AJAX Call 
     $.ajax({
@@ -467,9 +486,6 @@ $(document).on("change", "#customFile", function () {
 });
 
 
-// const modal = $('.idMyModal');
-// const modalImg = $('.modal-content');
-
 $(document).on("click", ".toZoom", function (event) {
     const i = $(".toZoom").index(this);
     const modal = $('.idMyModal').eq(i);
@@ -511,7 +527,6 @@ const fetchCareerJourneyContent = () => {
         }
     });
 }
-
 
 
 $("#addCareerJourneyContent").on("click", function () {
@@ -749,7 +764,7 @@ const fetchSucessStorySection = () => {
                         let content = currentStory.content;
 
                         $("#story_table").DataTable().row.add([
-                            count,content,student_name,
+                            count, content, student_name,
                             `<a mx-2" id="story_edit" story_id="${currentStory.id}" content="${content}" student_name="${student_name}" ><i class="mx-2 fa fa-edit"></i></a>`
                         ]).draw();
                     });
@@ -759,7 +774,7 @@ const fetchSucessStorySection = () => {
     });
 }
 
-$(document).on("click","#story_edit",function(e){
+$(document).on("click", "#story_edit", function (e) {
     let story_id = $(this).attr("story_id");
     let content = $(this).attr("content");
     let student_name = $(this).attr("student_name");
@@ -863,6 +878,526 @@ $("#studentSuceessAdd").on("click", function () {
                 },
             });
         }
+    }
+});
+
+
+// ABOUT US SECTION 
+const fetchAboutContent = () => {
+    $.ajax({
+        url: host_url + 'fetchAbout',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_about_id", data.Response.id);
+                localStorage.setItem("aboutUsContent", content);
+            }
+        }
+    });
+}
+
+$("#aboutUsAdd").on("click", function () {
+
+    let content = localStorage.getItem('aboutUsContent');
+    let content_id = localStorage.getItem("last_added_about_id");
+    let data = new FormData();
+    data.append('content', content);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateAbout',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addAbout',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    }).then((result) => {
+                        localStorage.setItem("last_added_about_id", data.last_added);
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
+const fetchAboutInnerContent = () => {
+    $.ajax({
+        url: host_url + 'fetchAboutInner',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_inner_about_id", data.Response.id);
+                localStorage.setItem("InnerAboutContent", content);
+            }
+        }
+    });
+}
+
+$("#addInnerAboutUs").on("click", function () {
+
+    let careerJourneyContent = localStorage.getItem('InnerAboutContent');
+    let content_id = localStorage.getItem("last_added_inner_about_id");
+    let data = new FormData();
+    data.append('content', careerJourneyContent);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateAboutInner',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addAboutInner',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    }).then((result) => {
+                        localStorage.setItem("last_added_inner_about_id", data.last_added);
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
+
+const fetchEducationLogo = () => {
+    // AJAX Call 
+    $.ajax({
+        url: host_url + 'fetchEducationLogo',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                let table = $('#logo_table').DataTable();
+                table.clear().draw();
+                if (data.success) {
+                    data.Response.forEach(function (currentLogo, index) {
+                        let count = index + 1;
+                        let logo = `<img src="${image_url}${currentLogo.image}" class="toZoom" style="width:100px;height:auto;border-radius: 10px;">`;
+
+                        let editLink = `<a  class="logo_edit text-dark mx-2" logo_id="${currentLogo.id}" logo="${currentLogo.image}"><i class="mx-2 fa fa-edit"></i></a>`;
+                        let fileUploadInput = `<input type="file" class="file_upload" id="file_upload_${currentLogo.id}" style="display: none;">`;
+
+                        $("#logo_table").DataTable().row.add([
+                            count, logo,
+                            editLink + fileUploadInput
+                        ]).draw();
+                    });
+
+                    // Event listeners for edit icon and file upload input
+                    $('.logo_edit').on('click', function () {
+                        $(this).siblings('.file_upload').click();
+                    });
+
+                    $('.file_upload').on('change', function (e) {
+                        $(".imgPreview").empty();
+                        $('.imgPreview').append(`<img src=${URL.createObjectURL(e.target.files[0])} class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
+                    });
+                }
+            }
+        }
+
+
+    });
+}
+
+$(document).on("change", "#customLOGO", function () {
+    if ($(this)[0].files.length > 4) {
+        Swal.fire("You can select only up to 4 images");
+        $(this).val("");
+        $(".imgPreview").empty();
+        return false;
+    }
+    $(".imgPreview").empty();
+    for (let i = 0; i < $(this)[0].files.length; i++) {
+        $('.imgPreview').append(`<img src=${URL.createObjectURL($(this)[0].files[i])} class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
+    }
+
+});
+
+$("#saveEducationLogo").on('click', function () {
+    let image = $("#customLOGO").prop('files');
+
+    let data = new FormData();
+    for (let i = 0; i < image.length; i++) {
+        data.append("image[]", image[i]);
+    }
+
+    $.ajax({
+        url: host_url + 'addEducationLogo',
+        data: data,
+        type: "POST",
+        cache: false,
+        processData: false,
+        contentType: false,
+        dataType: false,
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (e) {
+            Swal.fire("Failed To Update Content .");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.Status == "Success") {
+                Swal.fire({
+                    title: '',
+                    text: `${data.Message}`,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#F28123'
+                })
+            }
+            else {
+                Swal.fire(`${data.Message}`);
+            }
+        },
+    });
+});
+
+
+
+function fetchOurMemeberContent() {
+    $.ajax({
+        url: host_url + 'fetchTeamMember',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                let table = $('#member_list').DataTable();
+                table.clear().draw();
+                if (data.success) {
+                    data.Response.forEach(function (currentMember, index) {
+
+                        let count = index + 1;
+                        let teacher_name = currentMember.teacher_name;
+                        let image = `<img src="${image_url}${currentMember.image}" class="toZoom" style="width:100px;height:auto;border-radius: 10px;">`
+
+
+                        $("#member_list").DataTable().row.add([
+                            count, image, teacher_name,
+                            `<a id="team_edit" member_id="${currentMember.id}" teacher_name="${teacher_name}" image="${currentMember.image}">
+                            <i class="mx-2 fa fa-edit"></i></a>`+ `<a id="team_delete" member_id="${currentMember.id}"><i class="mx-2 fa fa-trash"></i></a>`
+                        ]).draw();
+                    });
+                }
+            }
+        }
+    });
+}
+
+$(document).on('click',"#team_delete",function(event){
+    let id = $(this).attr('member_id');
+
+    Swal.fire({
+        title: 'Do You want to delete this Member ?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: host_url + 'deleteTeamMember',
+                data: {
+                    'member_id': id,
+                },
+                method: 'post',
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            fetchOurMemeberContent();
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                }
+            });
+
+        } else if (result.isDenied) {
+
+        }
+    })
+})
+
+
+
+
+$(document).on('click',"#team_edit",function(event){
+    let id = $(this).attr("member_id");
+    let teacher_name = $(this).attr("teacher_name");
+    let image = $(this).attr("image");
+    localStorage.setItem("last_added_teacher_id",id);
+    $("#teacher_name").val(teacher_name);
+
+    $(".imgPreview").empty();
+    $('.imgPreview').append(`<img src="${image_url}${image}" class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
+})
+
+
+
+$("#addTeamMembers").on("click", function () {
+
+    let teacherName = $("#teacher_name").val();
+    let content_image = $("#customFile").prop('files')[0];
+    let content_id = localStorage.getItem("last_added_teacher_id");
+    let data = new FormData();
+    data.append('teacher_name', teacherName);
+    data.append('content_image', content_image);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateTeamMember',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        fetchOurMemeberContent();
+                        localStorage.removeItem("last_added_teacher_id");
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addTeamMember',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        fetchOurMemeberContent();
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
     }
 });
 

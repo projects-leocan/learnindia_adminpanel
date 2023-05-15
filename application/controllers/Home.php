@@ -30,20 +30,20 @@ class Home extends CI_Controller {
     // it will change when login is successful 
     public function index()
     {
-        if($this->session->userData('isAlreadyLogin')=="true")
-        {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('home');
           $this->load->view('footer');
-        }
-        else
-        {
-          $this->load->view('header');
-          $this->load->view('sidebar');
-          $this->load->view('home');
-          $this->load->view('footer');
-        }
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('sidebar');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
     }
     public function userData()
 	{
@@ -166,6 +166,54 @@ class Home extends CI_Controller {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('aboutUsContent');
+          $this->load->view('footer');
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
+    }
+    public function aboutUsInner()
+    {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('aboutUsInner');
+          $this->load->view('footer');
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
+    }
+    public function educationLogo()
+    {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('educationLogo');
+          $this->load->view('footer');
+        // }
+        // else
+        // {
+        //   $this->load->view('header');
+        //   $this->load->view('login');
+        //   $this->load->view('footer');
+        // }
+    }
+    public function ourTeamMember()
+    {
+        // if($this->session->userData('isAlreadyLogin')=="true")
+        // {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('ourTeamMember');
           $this->load->view('footer');
         // }
         // else

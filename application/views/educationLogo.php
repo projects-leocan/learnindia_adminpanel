@@ -89,28 +89,23 @@
             <div class="container-fluid">
                 <div class="row mb-2" id="manage">
                     <div class="col-sm-10">
-                        <h1 class="m-0 mx-2">How career guidance can help you ?</h1>
+                        <h1 class="m-0 mx-2"> Education Logo </h1>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <ol class="breadcrumb float-sm-right">
-                            <!-- <button type="button" class="btn btn-block btn-primary" id="add_product" style=" width: 100%">Add Product</button> -->
+                            <!-- <button type="button" class="btn btn-block btn-success" id="add_product" style=" width: 100%">Show Logo </button> -->
                         </ol>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <div class="form-group">
 
-                    <textarea name="content" id="editor">
-                    &lt;p&gt;Add Your Content Here .&lt;/p&gt;
-                </textarea>
-
-                </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Image</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-2 col-form-label">Logo </label>
+                    <div class="col-sm-6">
                         <div class="custom-file">
-                            <input type="file" class="form-control-file customFile" name="imageFile" id="customFile" multiple >
+                            <input type="file" class="form-control-file customFile" name="imageFile" id="customLOGO"
+                                multiple>
                             <a href="#">
                                 <div class="imgPreview">
 
@@ -118,12 +113,43 @@
                             </a>
                         </div>
                     </div>
+                    <div class="col-sm-3">
+                        <button type="submit" id="saveEducationLogo" class="common-btn-padding btn btn-success"> Save
+                        </button>
+                    </div>
                 </div>
+
+                
             </div>
+            <section class="content mt-5">
+                <div class="container-fluid">
+                    <div class="table-responsive">
+                        <table id="logo_table" class="table table-bordered table-striped"
+                            style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Logo</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
         </div>
-        <button type="submit" id="saveCareerGuidanceHelp" class="common-btn-padding btn btn-success mx-4"> Save </button>
         <!-- The Modal -->
+        <div class="idMyModal modal">
+            <span class="close">&times;</span>
+            <img class="modal-content">
+        </div>
+        <div class="idMyModal modal">
+            <span class="close">&times;</span>
+            <img class="modal-content">
+        </div>
         <div class="idMyModal modal">
             <span class="close">&times;</span>
             <img class="modal-content">
@@ -134,26 +160,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    ClassicEditor
-        .create(document.querySelector('#editor'))
-        .then(editor => {
-            // Set the editor's content to the value from localStorage on page load
-            let DBhtmlContent = localStorage.getItem("last_career_gui_content");
-            if (DBhtmlContent) {
-                editor.setData(DBhtmlContent);
-            }
-
-            editor.model.document.on('change:data', () => {
-                // Save the latest HTML content to localStorage whenever the editor content changes
-                let editorData = editor.getData();
-                let htmlContent = editorData.trim();
-                localStorage.setItem("careerGuidanceContent", htmlContent);
-            });
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
-
