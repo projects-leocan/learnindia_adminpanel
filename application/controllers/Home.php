@@ -7,7 +7,7 @@ class Home extends CI_Controller {
      {
           parent::__construct();
           $this->load->helper('url');
-		$this->load->library('session');
+		      $this->load->library('session');
           $this->conn = "";
     }
 
@@ -30,20 +30,19 @@ class Home extends CI_Controller {
     // it will change when login is successful 
     public function index()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('home');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('sidebar');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function userData()
 	{
@@ -65,227 +64,227 @@ class Home extends CI_Controller {
 
     public function keyToSuccess()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('keyToSuccess');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function careerGuidanceHelp()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('careerGuidanceHelp');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function careerJourney()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('careerJourney');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function counseling()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('counseling');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function successStory()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('successStory');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function showStory()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('showStory');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function aboutUsContent()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('aboutUsContent');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function aboutUsInner()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('aboutUsInner');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function educationLogo()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('educationLogo');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function ourTeamMember()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('ourTeamMember');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function blog()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('blogs');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function blogInner()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('blogInner');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function careerArticle()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('careerArticle');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
     public function show_articles()
     {
-        // if($this->session->userData('isAlreadyLogin')=="true")
-        // {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('showArticles');
           $this->load->view('footer');
-        // }
-        // else
-        // {
-        //   $this->load->view('header');
-        //   $this->load->view('login');
-        //   $this->load->view('footer');
-        // }
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
     }
 
     public function logout()

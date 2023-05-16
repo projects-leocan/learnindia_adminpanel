@@ -48,10 +48,10 @@
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-        <!-- Preloader
-        <div class="preloader flex-column justify-content-center align-items-center">
+        <!-- Preloader -->
+        <!-- <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="dist/img/Logo.jpeg" alt="LearnIndia" height="100" width="100">
-        </div> -->
+        </div>  -->
 
 
         <style>

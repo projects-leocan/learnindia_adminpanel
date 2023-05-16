@@ -23,10 +23,10 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <div class="fulfilling-bouncing-circle-spinner">
+                    <!-- <div class="fulfilling-bouncing-circle-spinner">
                                 <div class="circle"></div>
                                 <div class="orbit"></div>
-                        </div>
+                        </div> -->
                 <textarea name="content" id="editor">
 
                     &lt;p&gt;Add Your Content Here .&lt;/p&gt;

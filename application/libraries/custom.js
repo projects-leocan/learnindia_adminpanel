@@ -184,13 +184,13 @@ $("#sign_in").on("click", function () {
     var password = $("#signin_user_password").val();
 
     if (email == null || email == '') {
-        showAlert('Enter Email');
+        Swal.fire("Enter Email");
     }
-    else if (!validateEmail(email)) {
-        showAlert("Please enter valid email address.");
-    }
+    // else if (!validateEmail(email)) {
+    //     Swal.fire("Please enter valid email address.");
+    // }
     else if (password == null || password == '') {
-        showAlert('Enter Password');
+        Swal.fire('Enter Password');
     }
     else {
         signInUser(email, password);
@@ -211,28 +211,28 @@ function signInUser(email, password) {
             alert("Something went wrong");
         },
         success: function (data) {
-            window.location = 'home';
             if (data.Status == "Success") {
-                // $.ajax({
-                //     url: base_url + 'Home/set_session',
-                //     data: fd,
-                //     processData: false,
-                //     contentType: false,
-                //     method: 'post',
-                //     error: function (data) {
-                //         alert("Something went wrong");
-                //     },
-                //     success: function () {
-                //         Swal.fire({
-                //             title: 'Login Success',
-                //             text: 'Redirecting...',
-                //             icon: 'success',
-                //             timer: 2000,
-                //         }).then(() => {
-                //             window.location = 'home';
-                //         });
-                //     }
-                // })
+                $.ajax({
+                    url: base_url + 'Home/set_session',
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    method: 'post',
+                    error: function (data) {
+                        alert("Something went wrong");
+                    },
+                    success: function () {
+                        window.location = 'home';
+                        // Swal.fire({
+                        //     title: 'Login Success',
+                        //     text: 'Redirecting...',
+                        //     icon: 'success',
+                        //     timer: 2000,
+                        // }).then(() => {
+                        //     window.location = 'home';
+                        // });
+                    }
+                })
             }
             else {
                 Swal.fire('Invalid Email or Password');
@@ -249,7 +249,7 @@ $("#logout_menu").on("click", function (event) {
         denyButtonText: `Cancel`,
     }).then((result) => {
         if (result.isConfirmed) {
-            // signOut();
+            signOut();
         } else if (result.isDenied) {
 
         }
@@ -262,7 +262,7 @@ function signOut() {
         url: base_url + 'home/logout',
         method: 'post',
         error: function (data) {
-            alert("Something went wrong1");
+            alert("Something went wrong");
         },
         success: function (data) {
             localStorage.clear();
