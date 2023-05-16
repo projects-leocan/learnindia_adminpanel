@@ -286,6 +286,86 @@ class Home extends CI_Controller {
           $this->load->view('footer');
         }
     }
+    public function serveyContent()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('servey');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
+    public function term()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('term');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
+    public function termInner()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('termInner');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
+    public function terms_conditions()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('terms_conditions');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
+    public function showTerms()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('showTerms');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
 
     public function logout()
     {

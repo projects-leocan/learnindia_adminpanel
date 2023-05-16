@@ -69,6 +69,15 @@ $route['blog'] = 'Home/blog';
 $route['blogInner'] = 'Home/blogInner';
 $route['careerArticle'] = 'Home/careerArticle';
 $route['show_articles'] = 'Home/show_articles';
+// SERVEY SECTION 
+$route['serveyContent'] = 'Home/serveyContent';
+// Term & Condition SECTION 
+$route['term'] = 'Home/term';
+$route['termInner'] = 'Home/termInner';
+$route['terms_conditions'] = 'Home/terms_conditions';
+$route['showTerms'] = 'Home/showTerms';
+
+
 
 // DEFAULT 
 $route['404_override'] = '';

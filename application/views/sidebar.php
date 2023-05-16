@@ -151,7 +151,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="serveyArea">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Survey Content</p>
                                 </a>
@@ -180,19 +180,19 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="termArea">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Terms</p>
+                                    <p>Terms Main</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="innerTerms">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Career Help</p>
+                                    <p>Terms Inner</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="terms_conditions">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p> Term & Condition</p>
                                 </a>

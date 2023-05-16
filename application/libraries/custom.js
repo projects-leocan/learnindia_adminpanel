@@ -4,10 +4,10 @@
 const base_url = 'http://localhost/learnindia_adminpanel/';
 
 // API Host URL
-const host_url = "http://localhost/learnindia_adminpanel/learnindia_API/v1/";
+const host_url = "http://localhost/learnindia_API/v1/";
 
 // Image URL 
-const image_url = "http://localhost/learnindia_adminpanel/learnindia_API/uploads/";
+const image_url = "http://localhost/learnindia_API/uploads/";
 $(document).ready(function () {
     state_management();
 
@@ -62,6 +62,22 @@ $(document).ready(function () {
     }
     if (window.location.href == base_url + 'show_articles') {
         fetchCareerArticlesSection();
+    }
+    if (window.location.href == base_url + 'serveyContent') {
+        fetchServeyContent();
+    }
+    if (window.location.href == base_url + 'term') {
+        fetchTermsContent();
+    }
+    if (window.location.href == base_url + 'termInner') {
+        fetchTermsInnerContent();
+    }
+    if (window.location.href == base_url + 'terms_conditions') {
+        fetchTerms_condition_Section();
+        $("#heading").val(localStorage.getItem("TermsHeading"));
+    }
+    if (window.location.href == base_url + 'showTerms') {
+        fetchTerms_condition_Section();
     }
 
 });
@@ -175,6 +191,27 @@ $("#back_to_article").on("click", function (event) {
     localStorage.removeItem("image");
     window.location = 'careerArticle';
 });
+// SERVEY SECTION
+$("#serveyArea").on("click", function (event) {
+    window.location = 'serveyContent';
+});
+// Term & Conditons
+$("#termArea").on("click", function (event) {
+    window.location = 'term';
+});
+$("#innerTerms").on("click", function (event) {
+    window.location = 'termInner';
+});
+$("#terms_conditions").on("click", function (event) {
+    window.location = 'terms_conditions';
+});
+$("#show_terms").on("click", function (event) {
+    window.location = 'showTerms';
+});
+$("#back_to_terms").on("click", function (event) {
+    window.location = 'terms_conditions';
+});
+
 
 
 // ========================= ADMIN SIGN UP ==========================
@@ -336,8 +373,7 @@ $("#keyToSuccessAdd").on("click", function () {
                     Swal.fire({
                         title: '',
                         text: `${data.Message}`,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#F28123'
+                        confirmButtonText: 'Ok'
                     }).then((result) => {
                     })
                 }
@@ -373,8 +409,7 @@ $("#keyToSuccessAdd").on("click", function () {
                     Swal.fire({
                         title: '',
                         text: `${data.Message}`,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#F28123'
+                        confirmButtonText: 'Ok'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             localStorage.setItem("last_added_id", data.last_added);
@@ -459,8 +494,7 @@ $("#saveCareerGuidanceHelp").on("click", function () {
                     Swal.fire({
                         title: '',
                         text: `${data.Message}`,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#F28123'
+                        confirmButtonText: 'Ok'
                     }).then((result) => {
                     })
                 }
@@ -601,8 +635,7 @@ $("#addCareerJourneyContent").on("click", function () {
                     Swal.fire({
                         title: '',
                         text: `${data.Message}`,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#F28123'
+                        confirmButtonText: 'Ok'
                     })
                 }
                 else {
@@ -637,8 +670,7 @@ $("#addCareerJourneyContent").on("click", function () {
                     Swal.fire({
                         title: '',
                         text: `${data.Message}`,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#F28123'
+                        confirmButtonText: 'Ok'
                     }).then((result) => {
                         localStorage.setItem("last_added_id_cj", data.last_added);
                     })
@@ -1249,7 +1281,6 @@ $("#saveEducationLogo").on('click', function () {
     });
 });
 
-
 function fetchOurMemeberContent() {
     $.ajax({
         url: host_url + 'fetchTeamMember',
@@ -1343,7 +1374,6 @@ $(document).on('click',"#team_edit",function(event){
     $(".imgPreview").empty();
     $('.imgPreview').append(`<img src="${image_url}${image}" class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
 })
-
 
 $("#addTeamMembers").on("click", function () {
 
@@ -1660,7 +1690,6 @@ $("#addBlogInnerContent").on("click", function () {
     }
 });
 
-
 const fetchCareerArticlesSection = () => {
     $.ajax({
         url: host_url + 'fetchCareerArticles',
@@ -1713,8 +1742,6 @@ $(document).on("click", "#article_edit", function (e) {
     window.location = 'careerArticle';
 })
 
-
-
 $(document).on('click',"#article_delete",function(event){
     let id = $(this).attr('article_id');
 
@@ -1758,7 +1785,6 @@ $(document).on('click',"#article_delete",function(event){
         }
     })
 })
-
 
 $("#addCareerArticles").on("click", function () {
 
@@ -1861,8 +1887,527 @@ $("#addCareerArticles").on("click", function () {
     }
 });
 
+// SERVEY SECTION
+
+const fetchServeyContent = () => {
+    $.ajax({
+        url: host_url + 'fetchServeyContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            console.log('data :',data);
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_servey_id", data.Response.id);
+                localStorage.setItem("serveyContent", content);
+            }
+        }
+    });
+}
+
+$("#addServeyContent").on("click", function () {
+
+    let content = localStorage.getItem('serveyContent');
+    let content_id = localStorage.getItem("last_added_servey_id");
+    let data = new FormData();
+    data.append('content', content);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateServeyContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addServeyContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        localStorage.setItem("last_added_servey_id", data.last_added);
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
 
 
+// TERMS & CONDITION SECTION
+const fetchTermsContent = () => {
+    $.ajax({
+        url: host_url + 'fetchTerms',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_terms_id", data.Response.id);
+                localStorage.setItem("termsContent", content);
+            }
+        }
+    });
+}
+
+$("#addTerms").on("click", function () {
+
+    let content = localStorage.getItem('termsContent');
+    let content_id = localStorage.getItem("last_added_terms_id");
+    let data = new FormData();
+    data.append('content', content);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateTerms',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addTerms',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        localStorage.setItem("last_added_terms_id", data.last_added);
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
+const fetchTermsInnerContent = () => {
+    $.ajax({
+        url: host_url + 'fetchTermsContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_termsInner_id", data.Response.id);
+                localStorage.setItem("termsContentInner", content);
+            }
+        }
+    });
+}
+
+$("#addTermsInner").on("click", function () {
+
+    let content = localStorage.getItem('termsContentInner');
+    let content_id = localStorage.getItem("last_added_termsInner_id");
+    let data = new FormData();
+    data.append('content', content);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateTermsContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addTermsContent',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        localStorage.setItem("last_added_termsInner_id", data.last_added);
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
+
+const fetchTerms_condition_Section = () => {
+    $.ajax({
+        url: host_url + 'fetchTerms_condition',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                let table = $('#terms_table').DataTable();
+                table.clear().draw();
+                if (data.success) {
+                    data.Response.forEach(function (currentTerms, index) {
+                        let count = index + 1;
+                        let heading = currentTerms.heading;
+                        let content = currentTerms.content;
+
+                        $("#terms_table").DataTable().row.add([
+                            count,heading, content,
+                            `<a mx-2" id="term_edit" term_id="${currentTerms.id}" heading="${heading}" content="${content}">
+                            <i class="mx-2 fa fa-edit"></i></a>` + 
+                            `<a mx-2" id="term_delete" term_id="${currentTerms.id}" ><i class="mx-2 fa fa-trash"></i></a>`
+                        ]).draw();
+                    });
+                }
+            }
+        }
+    });
+}
+
+
+$(document).on("click", "#term_edit", function (e) {
+    let term_id = $(this).attr("term_id");
+    let heading = $(this).attr("heading");
+    let content = $(this).attr("content");
+
+    localStorage.setItem("last_added_id_terms_condtion_id", term_id);
+    localStorage.setItem("latest_terms_cnt", content);
+    localStorage.setItem("TermsHeading", heading);
+
+    window.location = 'terms_conditions';
+})
+
+$(document).on('click',"#term_delete",function(event){
+    let id = $(this).attr('term_id');
+
+    Swal.fire({
+        title: 'Do You want to delete this Term ?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: host_url + 'deleteTerms_conditon',
+                data: {
+                    'content_id': id,
+                },
+                method: 'post',
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            fetchTerms_condition_Section();
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                }
+            });
+
+        } else if (result.isDenied) {
+
+        }
+    })
+})
+
+
+$("#addTerms_condition").on("click", function () {
+
+    let termsContent = localStorage.getItem('latest_terms_cnt');
+    let heading = $("#heading").val();
+    let content_id = localStorage.getItem("last_added_id_terms_condtion_id");
+    if (heading == "" || heading == undefined || heading == null) {
+        Swal.fire("Please fill in the heading field");
+    }
+    else {
+
+        let data = new FormData();
+        data.append('content', termsContent);
+        data.append('heading', heading);
+
+        if (content_id != "" && content_id != undefined) {
+
+            data.append('content_id', content_id);
+
+            $.ajax({
+                url: host_url + 'updateTerms_condition',
+                data: data,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (data) {
+                    showLoader();
+                },
+                complete: function (data) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    Swal.fire("Failed To Update Content .");
+                    hideLoader();
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            localStorage.removeItem("last_added_id_terms_condtion_id");
+                            localStorage.removeItem("latest_terms_cnt");
+                            localStorage.removeItem("TermsHeading");
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                },
+            });
+        }
+        else {
+
+            $.ajax({
+                url: host_url + 'addTerms_condition',
+                data: data,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (data) {
+                    showLoader();
+                },
+                complete: function (data) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    showAlert("Failed to Data Add.");
+                    hideLoader();
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            $("#heading").val("");
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                    window.location.reload();
+                },
+            });
+        }
+    }
+});
 
 
 
