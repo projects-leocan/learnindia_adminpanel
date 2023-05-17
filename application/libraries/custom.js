@@ -79,6 +79,12 @@ $(document).ready(function () {
     if (window.location.href == base_url + 'showTerms') {
         fetchTerms_condition_Section();
     }
+    if (window.location.href == base_url + 'contactUs') {
+        fetchContactUsContent();
+    }
+    if (window.location.href == base_url + 'contactUsDetails') {
+        fetchContactResponse();
+    }
 
 });
 
@@ -195,6 +201,9 @@ $("#back_to_article").on("click", function (event) {
 $("#serveyArea").on("click", function (event) {
     window.location = 'serveyContent';
 });
+$("#setQuestion").on("click", function (event) {
+    window.location = 'questionnaire';
+});
 // Term & Conditons
 $("#termArea").on("click", function (event) {
     window.location = 'term';
@@ -211,7 +220,13 @@ $("#show_terms").on("click", function (event) {
 $("#back_to_terms").on("click", function (event) {
     window.location = 'terms_conditions';
 });
-
+// CONTACT US SECTION
+$("#contactUsContent").on("click", function (event) {
+    window.location = 'contactUs';
+});
+$("#contactUsDetails").on("click", function (event) {
+    window.location = 'contactUsDetails';
+});
 
 
 // ========================= ADMIN SIGN UP ==========================
@@ -824,7 +839,20 @@ const fetchSucessStorySection = () => {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                let table = $('#story_table').DataTable();
+                let table = $('#story_table').DataTable(
+                    {
+                        "columns": [
+                            { "width": "5%" },
+                            { "width": "50%" },
+                            { "width": "10%" },
+                            { "width": "5%" },
+                        ],
+                        "columnDefs": [
+                            { "targets": "_all", "className": "text-wrap" } // Wrap text if needed
+                        ],
+                        "autoWidth": false // Disable automatic column width calculation
+                    });
+                
                 table.clear().draw();
                 if (data.success) {
                     data.Response.forEach(function (currentStory, index) {
@@ -1707,7 +1735,21 @@ const fetchCareerArticlesSection = () => {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                let table = $('#article_table').DataTable();
+                let table = $('#article_table').DataTable(
+                    {
+                        "columns": [
+                            { "width": "5%" },
+                            { "width": "5%" },
+                            { "width": "20%" },
+                            { "width": "50%" },
+                            { "width": "5%" },
+                        ],
+                        "columnDefs": [
+                            { "targets": "_all", "className": "text-wrap" } // Wrap text if needed
+                        ],
+                        "autoWidth": false // Disable automatic column width calculation
+                    });
+              
                 table.clear().draw();
                 if (data.success) {
                     data.Response.forEach(function (currentArticle, index) {
@@ -1996,6 +2038,37 @@ $("#addServeyContent").on("click", function () {
             },
         });
     }
+});
+
+
+$('#addOption').on('click', function() {
+    var newOption = $('<div>').addClass('form-check').html(`
+        <input class="form-check-input" type="checkbox" name="options" id="option">
+        <label class="form-check-label editable-option" for="option">
+            Option
+        </label>
+        <span class="mx-1 delete-option" style="cursor:pointer;">&#10005;</span>
+    `);
+    $('#optionsContainer').append(newOption);
+});
+
+$('#optionsContainer').on('click', '.editable-option', function() {
+    var optionLabel = $(this);
+    var currentText = optionLabel.text();
+    var inputField = $('<input type="text" class="option-input">').val(currentText);
+    optionLabel.replaceWith(inputField);
+
+    inputField.on('blur', function() {
+        var newText = $(this).val().trim();
+        var newLabel = $('<label class="form-check-label editable-option">').text(newText);
+        $(this).replaceWith(newLabel);
+    });
+
+    inputField.focus();
+});
+
+$('#optionsContainer').on('click', '.delete-option', function() {
+    $(this).parent('.form-check').remove();
 });
 
 
@@ -2408,6 +2481,180 @@ $("#addTerms_condition").on("click", function () {
         }
     }
 });
+
+
+// CONTACT US SECTION 
+const fetchContactUsContent = () => {
+
+    $.ajax({
+        url: host_url + 'fetchContact',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                const content = data.Response.content;
+                localStorage.setItem("last_added_contact_us_id", data.Response.id);
+                localStorage.setItem("contactUsContent", content);
+                $("#contactNo").val(data.Response.contact_num);
+                $("#email").val(data.Response.email);
+                $("#address").val(data.Response.address);
+            }
+        }
+    });
+}
+
+$("#addContactContent").on("click", function () {
+
+    let contactUsContent = localStorage.getItem('contactUsContent');
+    let contactNo = $("#contactNo").val();
+    let email = $("#email").val();
+    let address = $("#address").val();
+
+    let content_id = localStorage.getItem("last_added_contact_us_id");
+    let data = new FormData();
+    data.append('content', contactUsContent);
+    data.append('contact_num', contactNo);
+    data.append('email', email);
+    data.append('address', address);
+
+    if (content_id != "" && content_id != undefined) {
+
+        data.append('content_id', content_id);
+
+        $.ajax({
+            url: host_url + 'updateContact',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addContact',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            localStorage.setItem("last_added_contact_us_id", data.last_added);
+                        }
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
+const fetchContactResponse = () => {
+    $.ajax({
+        url: host_url + 'fetchContactFormDetails',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                let table = $('#contact_table').DataTable({
+                    "columns": [
+                        { "width": "5%" },
+                        { "width": "15%" },
+                        { "width": "10%" },
+                        { "width": "50%" },
+                        { "width": "20%" }
+                    ],
+                    "columnDefs": [
+                        { "targets": "_all", "className": "text-wrap" } // Wrap text if needed
+                    ],
+                    "autoWidth": false // Disable automatic column width calculation
+                });
+
+                table.clear().draw();
+                if (data.success) {
+                    data.Response.forEach(function (currentResponse, index) {
+                        let count = index + 1;
+                        let userName = currentResponse.user_name;
+                        let message = currentResponse.message;
+                        let email = currentResponse.email;
+                        let date = currentResponse.form_submitted_date;
+
+                        table.row.add([
+                            count, userName, email, message, date
+                        ]).draw();
+                    });
+                }
+            }
+        }
+    });
+}
 
 
 

@@ -71,11 +71,16 @@ $route['careerArticle'] = 'Home/careerArticle';
 $route['show_articles'] = 'Home/show_articles';
 // SERVEY SECTION 
 $route['serveyContent'] = 'Home/serveyContent';
+$route['questionnaire'] = 'Home/questionnaire';
 // Term & Condition SECTION 
 $route['term'] = 'Home/term';
 $route['termInner'] = 'Home/termInner';
 $route['terms_conditions'] = 'Home/terms_conditions';
 $route['showTerms'] = 'Home/showTerms';
+// CONTACT US SECTION
+$route['contactUs'] = 'Home/contactUs';
+$route['contactUsDetails'] = 'Home/contactUsDetails';
+
 
 
 

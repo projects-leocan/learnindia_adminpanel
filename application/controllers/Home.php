@@ -302,6 +302,22 @@ class Home extends CI_Controller {
           $this->load->view('footer');
         }
     }
+    public function questionnaire()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('questionnaire');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
     public function term()
     {
         if($this->session->userData('isAlreadyLogin')=="true")
@@ -357,6 +373,38 @@ class Home extends CI_Controller {
           $this->load->view('header');
           $this->load->view('sidebar');
           $this->load->view('showTerms');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
+    public function contactUs()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('contactUs');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
+    public function contactUsDetails()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('contactUsDetails');
           $this->load->view('footer');
         }
         else

@@ -163,7 +163,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="setQuestion">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Questionnaire</p>
                                 </a>
@@ -209,13 +209,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="contactUsContent">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Contact Us Content</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages/tables/data.html" class="nav-link">
+                                <a href="#" class="nav-link" id="contactUsDetails">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Contact Us Details </p>
                                 </a>
