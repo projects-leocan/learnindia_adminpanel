@@ -2041,34 +2041,47 @@ $("#addServeyContent").on("click", function () {
 });
 
 
-$('#addOption').on('click', function() {
-    var newOption = $('<div>').addClass('form-check').html(`
-        <input class="form-check-input" type="checkbox" name="options" id="option">
-        <label class="form-check-label editable-option" for="option">
-            Option
-        </label>
-        <span class="mx-1 delete-option" style="cursor:pointer;">&#10005;</span>
-    `);
+// $('#addOption').on('click', function() {
+//     var newOption = $('<div>').addClass('form-check').html(`
+//         <input class="form-check-input" type="checkbox" name="options" id="option">
+//         <label class="form-check-label editable-option" for="option">
+//             Option
+//         </label>
+//         <span class="mx-1 delete-option" style="cursor:pointer;">&#10005;</span>
+//     `);
+//     $('#optionsContainer').append(newOption);
+// });
+
+// $('#optionsContainer').on('click', '.editable-option', function() {
+//     var optionLabel = $(this);
+//     var currentText = optionLabel.text();
+//     var inputField = $('<input type="text" class="option-input">').val(currentText);
+//     optionLabel.replaceWith(inputField);
+
+//     inputField.on('blur', function() {
+//         var newText = $(this).val().trim();
+//         var newLabel = $('<label class="form-check-label editable-option">').text(newText);
+//         $(this).replaceWith(newLabel);
+//     });
+
+//     inputField.focus();
+// });
+
+// $('#optionsContainer').on('click', '.delete-option', function() {
+//     $(this).parent('.form-check').remove();
+// });
+
+
+$('#addOptionIcon').on('click', function() {
+    var newOption = $('<div>').addClass('form-check');
+    var optionLabel = $('<label>').addClass('form-check-label editable-option');
+    var optionText = $('<span>').addClass('option-text').text('Option');
+    var editIcon = $('<span>').addClass('edit-icon').html('&#9998;');
+    var deleteIcon = $('<span>').addClass('delete-icon').html('&#10005;');
+    
+    optionLabel.append(optionText, editIcon,deleteIcon);
+    newOption.append(optionLabel);
     $('#optionsContainer').append(newOption);
-});
-
-$('#optionsContainer').on('click', '.editable-option', function() {
-    var optionLabel = $(this);
-    var currentText = optionLabel.text();
-    var inputField = $('<input type="text" class="option-input">').val(currentText);
-    optionLabel.replaceWith(inputField);
-
-    inputField.on('blur', function() {
-        var newText = $(this).val().trim();
-        var newLabel = $('<label class="form-check-label editable-option">').text(newText);
-        $(this).replaceWith(newLabel);
-    });
-
-    inputField.focus();
-});
-
-$('#optionsContainer').on('click', '.delete-option', function() {
-    $(this).parent('.form-check').remove();
 });
 
 

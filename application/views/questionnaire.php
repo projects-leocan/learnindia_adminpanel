@@ -9,21 +9,24 @@
         border-color: #046A38;
         box-shadow: none;
     }
-    .form-check {
-        position: relative;
-        padding-left: 30px;
-    }
-    
-    .delete-option {
-        position: absolute;
-        right: 0;
-        top: 0;
-        cursor: pointer;
-        transform: scale(1.5);
+
+    .add-option-container {
+        display: flex;
+        align-items: center;
     }
 
-    .delete-option:hover {
-        color: #ff0000;
+    .add-option-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        font-size: 25px;
+        color: #fff;
+        background-color: #046A38;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-left: 10px;
     }
 </style>
 <div class="wrapper ScrollStyle">
@@ -32,7 +35,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-10">
-                        <h1 class="m-0 mx-2">Career Support Questionnaire</h1>
+                        <h1 class="m-0 mx-2">Add Questionnaire</h1>
                     </div>
                     <div class="col-sm-2">
                         <ol class="breadcrumb float-sm-right">
@@ -50,16 +53,19 @@
                 </textarea>
 
                 </div>
+
+                <h4>Add Options</h4>
                 <div class="form-group row">
                     <div class="col-sm-4" id="optionsContainer">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="options" id="addOption">
-                            <label class="form-check-label text-muted" for="addOption">
+                        <div class="form-check add-option-container">
+                            <label class="form-check-label" for="addOption">
                                 Add option
                             </label>
+                            <span class="add-option-icon" id="addOptionIcon">&#43;</span>
                         </div>
                     </div>
                 </div>
+                
             </div>
             <button type="submit" id="" class="common-btn-padding btn btn-success  mx-3"> Save </button>
         </div>
