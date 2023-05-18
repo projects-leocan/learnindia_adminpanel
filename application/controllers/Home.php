@@ -302,6 +302,38 @@ class Home extends CI_Controller {
           $this->load->view('footer');
         }
     }
+    public function surveyFormDetails()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('surveyFormDetails');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
+    public function show_question()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('show_question');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
     public function questionnaire()
     {
         if($this->session->userData('isAlreadyLogin')=="true")

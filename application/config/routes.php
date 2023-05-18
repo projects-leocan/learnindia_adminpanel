@@ -72,6 +72,8 @@ $route['show_articles'] = 'Home/show_articles';
 // SERVEY SECTION 
 $route['serveyContent'] = 'Home/serveyContent';
 $route['questionnaire'] = 'Home/questionnaire';
+$route['surveyFormDetails'] = 'Home/surveyFormDetails';
+$route['show_question'] = 'Home/show_question';
 // Term & Condition SECTION 
 $route['term'] = 'Home/term';
 $route['termInner'] = 'Home/termInner';

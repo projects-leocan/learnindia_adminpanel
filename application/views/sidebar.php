@@ -157,7 +157,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" id="surveyFormDetails">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Survey Form Details</p>
                                 </a>

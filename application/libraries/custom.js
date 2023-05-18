@@ -66,6 +66,9 @@ $(document).ready(function () {
     if (window.location.href == base_url + 'serveyContent') {
         fetchServeyContent();
     }
+    if (window.location.href == base_url + 'surveyFormDetails') {
+        fetchServeyForm();
+    }
     if (window.location.href == base_url + 'term') {
         fetchTermsContent();
     }
@@ -84,6 +87,9 @@ $(document).ready(function () {
     }
     if (window.location.href == base_url + 'contactUsDetails') {
         fetchContactResponse();
+    }
+    if (window.location.href == base_url + 'show_question') {
+        fetchQuestions();
     }
 
 });
@@ -204,6 +210,16 @@ $("#serveyArea").on("click", function (event) {
 $("#setQuestion").on("click", function (event) {
     window.location = 'questionnaire';
 });
+$("#surveyFormDetails").on("click", function (event) {
+    window.location = 'surveyFormDetails';
+});
+$("#show_question").on("click", function (event) {
+    window.location = 'show_question';
+});
+$("#back_to_question").on("click", function (event) {
+    window.location = 'questionnaire';
+});
+
 // Term & Conditons
 $("#termArea").on("click", function (event) {
     window.location = 'term';
@@ -2040,49 +2056,398 @@ $("#addServeyContent").on("click", function () {
     }
 });
 
-
-// $('#addOption').on('click', function() {
-//     var newOption = $('<div>').addClass('form-check').html(`
-//         <input class="form-check-input" type="checkbox" name="options" id="option">
-//         <label class="form-check-label editable-option" for="option">
-//             Option
-//         </label>
-//         <span class="mx-1 delete-option" style="cursor:pointer;">&#10005;</span>
-//     `);
-//     $('#optionsContainer').append(newOption);
-// });
-
-// $('#optionsContainer').on('click', '.editable-option', function() {
-//     var optionLabel = $(this);
-//     var currentText = optionLabel.text();
-//     var inputField = $('<input type="text" class="option-input">').val(currentText);
-//     optionLabel.replaceWith(inputField);
-
-//     inputField.on('blur', function() {
-//         var newText = $(this).val().trim();
-//         var newLabel = $('<label class="form-check-label editable-option">').text(newText);
-//         $(this).replaceWith(newLabel);
-//     });
-
-//     inputField.focus();
-// });
-
-// $('#optionsContainer').on('click', '.delete-option', function() {
-//     $(this).parent('.form-check').remove();
-// });
-
-
 $('#addOptionIcon').on('click', function() {
     var newOption = $('<div>').addClass('form-check');
     var optionLabel = $('<label>').addClass('form-check-label editable-option');
     var optionText = $('<span>').addClass('option-text').text('Option');
-    var editIcon = $('<span>').addClass('edit-icon').html('&#9998;');
-    var deleteIcon = $('<span>').addClass('delete-icon').html('&#10005;');
-    
-    optionLabel.append(optionText, editIcon,deleteIcon);
+    var editIcon = $('<span>').addClass('edit-icon').html('<i class="fas fa-pencil-alt"></i>');
+    var deleteIcon = $('<span>').addClass('delete-icon').html('<i class="fas fa-times"></i>');
+
+    optionLabel.append(optionText);
+    optionLabel.append(editIcon);
+    optionLabel.append(deleteIcon);
     newOption.append(optionLabel);
     $('#optionsContainer').append(newOption);
+
+    // Edit option
+    editIcon.on('click', function() {
+        var option = $(this).closest('.form-check');
+        var optionText = option.find('.option-text');
+        var inputField = $('<input type="text" class="option-input">').val(optionText.text());
+        optionText.replaceWith(inputField);
+
+        inputField.on('blur', function() {
+            var newText = $(this).val().trim();
+            var newSpan = $('<span class="option-text">').text(newText);
+            $(this).replaceWith(newSpan);
+        });
+
+        option.addClass('editing'); // Add the 'editing' class to highlight the editing option
+        inputField.focus();
+    });
+
+    // Delete option
+    deleteIcon.on('click', function() {
+        $(this).closest('.form-check').remove();
+    });
 });
+
+const fetchServeyForm = () => {
+    $.ajax({
+        url: host_url + 'fetchServeyForm',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                // let table = $('#survey_table').DataTable({
+                //     "bDestroy": true,
+                //     columnDefs: [
+                //       { orderable: false, targets: [0] } // Disable sorting for the checkbox column
+                //     ]
+                //   });
+                let table = $('#survey_table').DataTable();
+                table.clear().draw();
+                if (data.success) {
+                    data.Response.forEach(function (currentUser, index) {
+                        let count = index + 1;
+                        let first_name = currentUser.first_name;
+                        let last_name = currentUser.last_name;
+                        let email = currentUser.email;
+                        let date_of_birth = currentUser.date_of_birth;
+                        let gender = currentUser.gender;
+                        let grade = currentUser.grade;
+
+                        // let checkboxHtml = `<input type="checkbox" class="row-checkbox" user_id="${currentUser.id}">`;
+
+                        $("#survey_table").DataTable().row.add([
+                             count, first_name, last_name, email, date_of_birth, gender, grade,
+                            `<a mx-2" id="survey_delete" user_id="${currentUser.id}" ><i class="mx-2 fa fa-trash"></i></a>`
+                        ]).draw();
+                    });
+                }
+            }
+        }
+    });
+}
+
+$(document).on('click',"#survey_delete",function(event){
+    let id = $(this).attr('user_id');
+
+    Swal.fire({
+        title: 'Do You want to delete this response ?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: host_url + 'deleteServeyResponse',
+                data: {
+                    'user_id': id,
+                },
+                method: 'post',
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            fetchServeyForm();
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                }
+            });
+
+        } else if (result.isDenied) {
+
+        }
+    })
+})
+
+const fetchQuestions = () => {
+    $.ajax({
+        url: host_url + 'fetchQuestionnaire',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                let table = $('#questionaire_table').DataTable(
+                    {
+                        "bDestroy": true,
+                        "columns": [
+                            { "width": "5%" },
+                            { "width": "50%" },
+                            { "width": "20%" },
+                            { "width": "5%" },
+                        ],
+                        "columnDefs": [
+                            { "targets": "_all", "className": "text-wrap" } // Wrap text if needed
+                        ],
+                        "autoWidth": false // Disable automatic column width calculation
+                    });
+
+                table.clear().draw();
+                if (data.success) {
+                    data.Response.forEach(function (currentQuestion, index) {
+                        let count = index + 1;
+                        let question = currentQuestion.question;
+                        let options = currentQuestion.options;
+
+                        $("#questionaire_table").DataTable().row.add([
+                            count,question, options, 
+                            `<a mx-2" id="edit_question" question_id="${currentQuestion.id}" question="${question}"><i class="mx-2 fa fa-edit"></i></a>` + 
+                            `<a mx-2" id="delete_question" question_id="${currentQuestion.id}" ><i class="mx-2 fa fa-trash"></i></a>`
+                        ]).draw();
+                    });
+                }
+            }
+        }
+    });
+}
+
+$(document).on("click","#edit_question",function(event){
+    let id = $(this).attr('question_id');
+    let question = $(this).attr('question');
+    localStorage.setItem('last_added_question',id);
+    localStorage.setItem('letest_question',question);
+    window.location = "questionnaire";
+})
+
+$(document).on("click","#delete_question",function(event){
+    let id = $(this).attr('question_id');
+
+    Swal.fire({
+        title: 'Do You want to delete this Question ?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: host_url + 'deleteQuestionnaire',
+                data: {
+                    'question_id': id,
+                },
+                method: 'post',
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            fetchQuestions();
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                }
+            });
+
+        } else if (result.isDenied) {
+
+        }
+    })
+})
+
+
+$("#submitQuestion").on("click", function () {
+
+    let question = localStorage.getItem('letest_question');
+    let question_id = localStorage.getItem("last_added_question");
+
+    let data = new FormData();
+    data.append('question', question);
+
+
+    if (question_id != "" && question_id != undefined) {
+
+        data.append('question_id', question_id);
+
+        $.ajax({
+            url: host_url + 'updateQuestionnaire',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Failed To Update Content .");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+
+                        let response = new FormData();
+                        let option_arr = [];
+                        
+                        $(".option-text").each(function () {
+                          option_arr.push($(this).text());
+                        });
+                        
+                        let option_str = option_arr.join(", "); // Join the options with a comma separator
+                        
+                        response.append('option', option_str);
+                        response.append('question_id',question_id)
+
+                        $.ajax({
+                            url: host_url + 'updateOption',
+                            data: response,
+                            type: "POST",
+                            cache: false,
+                            processData: false,
+                            contentType: false,
+                            dataType: false,
+                            beforeSend: function (response) {
+                                showLoader();
+                            },
+                            complete: function (response) {
+                                hideLoader();
+                            },
+                            error: function (e) {
+                                showAlert("Failed to Data Add.");
+                                hideLoader();
+                            },
+                            success: function (response) {
+                                hideLoader();
+                                localStorage.removeItem("letest_question");
+                                localStorage.removeItem("last_added_question");
+                                $("#editor").html("")
+                            }
+                        });
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addQuestionnaire',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                showAlert("Failed to Data Add.");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+
+                        let response = new FormData();
+                        let option_arr = [];
+                        
+                        $(".option-text").each(function () {
+                          option_arr.push($(this).text());
+                        });
+                        
+                        let option_str = option_arr.join(", "); // Join the options with a comma separator
+                        
+                        response.append('option', option_str);
+                        response.append('question_id',data.last_added)
+
+                        $.ajax({
+                            url: host_url + 'addOption',
+                            data: response,
+                            type: "POST",
+                            cache: false,
+                            processData: false,
+                            contentType: false,
+                            dataType: false,
+                            beforeSend: function (response) {
+                                showLoader();
+                            },
+                            complete: function (response) {
+                                hideLoader();
+                            },
+                            error: function (e) {
+                                showAlert("Failed to Data Add.");
+                                hideLoader();
+                            },
+                            success: function (response) {
+                                hideLoader();
+                                localStorage.removeItem("letest_question");
+                                $("#editor").html("")
+                            }
+                        });
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+});
+
 
 
 // TERMS & CONDITION SECTION
@@ -2341,7 +2706,6 @@ const fetchTerms_condition_Section = () => {
     });
 }
 
-
 $(document).on("click", "#term_edit", function (e) {
     let term_id = $(this).attr("term_id");
     let heading = $(this).attr("heading");
@@ -2494,7 +2858,6 @@ $("#addTerms_condition").on("click", function () {
         }
     }
 });
-
 
 // CONTACT US SECTION 
 const fetchContactUsContent = () => {
