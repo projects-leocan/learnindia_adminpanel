@@ -2131,6 +2131,7 @@ const fetchServeyForm = () => {
 
                         $("#survey_table").DataTable().row.add([
                              count, first_name, last_name, email, date_of_birth, gender, grade,
+                            `<a mx-2" id="survey_view" user_id="${currentUser.id}" ><i class="mx-2 fa fa-eye"></i></a>`,
                             `<a mx-2" id="survey_delete" user_id="${currentUser.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });
@@ -2447,7 +2448,6 @@ $("#submitQuestion").on("click", function () {
         });
     }
 });
-
 
 
 // TERMS & CONDITION SECTION

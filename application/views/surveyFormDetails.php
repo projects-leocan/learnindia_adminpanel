@@ -1,6 +1,4 @@
-<style>
 
-</style>
 <div class="wrapper ScrollStyle">
     <div class="content-wrapper">
         <div class="content-header">
@@ -33,6 +31,7 @@
                                 <th>Date Of Birth</th>
                                 <th>Gender</th>
                                 <th>Grade</th>
+                                <th>View Answer</th>
                                 <th>Submitted Date</th>
                             </tr>
                         </thead>
