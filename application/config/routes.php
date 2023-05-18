@@ -74,6 +74,7 @@ $route['serveyContent'] = 'Home/serveyContent';
 $route['questionnaire'] = 'Home/questionnaire';
 $route['surveyFormDetails'] = 'Home/surveyFormDetails';
 $route['show_question'] = 'Home/show_question';
+$route['show_answer'] = 'Home/show_answer';
 // Term & Condition SECTION 
 $route['term'] = 'Home/term';
 $route['termInner'] = 'Home/termInner';

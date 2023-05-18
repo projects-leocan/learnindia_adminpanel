@@ -334,6 +334,22 @@ class Home extends CI_Controller {
           $this->load->view('footer');
         }
     }
+    public function show_answer()
+    {
+        if($this->session->userData('isAlreadyLogin')=="true")
+        {
+          $this->load->view('header');
+          $this->load->view('sidebar');
+          $this->load->view('answer');
+          $this->load->view('footer');
+        }
+        else
+        {
+          $this->load->view('header');
+          $this->load->view('login');
+          $this->load->view('footer');
+        }
+    }
     public function questionnaire()
     {
         if($this->session->userData('isAlreadyLogin')=="true")

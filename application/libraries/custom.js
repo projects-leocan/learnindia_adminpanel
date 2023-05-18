@@ -54,7 +54,7 @@ $(document).ready(function () {
     if (window.location.href == base_url + 'careerArticle') {
         $("#heading").val(localStorage.getItem("heading"))
 
-        if(localStorage.getItem("image") != undefined && localStorage.getItem("image") != null){
+        if (localStorage.getItem("image") != undefined && localStorage.getItem("image") != null) {
             $(".imgPreview").empty();
             $('.imgPreview').append(`<img src=${image_url}${localStorage.getItem("image")} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`)
         }
@@ -90,6 +90,9 @@ $(document).ready(function () {
     }
     if (window.location.href == base_url + 'show_question') {
         fetchQuestions();
+    }
+    if (window.location.href == base_url + 'show_answer') {
+        show_answer();
     }
 
 });
@@ -218,6 +221,9 @@ $("#show_question").on("click", function (event) {
 });
 $("#back_to_question").on("click", function (event) {
     window.location = 'questionnaire';
+});
+$("#back_to_form").on("click", function (event) {
+    window.location = 'surveyFormDetails';
 });
 
 // Term & Conditons
@@ -868,7 +874,7 @@ const fetchSucessStorySection = () => {
                         ],
                         "autoWidth": false // Disable automatic column width calculation
                     });
-                
+
                 table.clear().draw();
                 if (data.success) {
                     data.Response.forEach(function (currentStory, index) {
@@ -1364,7 +1370,7 @@ function fetchOurMemeberContent() {
     });
 }
 
-$(document).on('click',"#team_delete",function(event){
+$(document).on('click', "#team_delete", function (event) {
     let id = $(this).attr('member_id');
 
     Swal.fire({
@@ -1408,11 +1414,11 @@ $(document).on('click',"#team_delete",function(event){
     })
 })
 
-$(document).on('click',"#team_edit",function(event){
+$(document).on('click', "#team_edit", function (event) {
     let id = $(this).attr("member_id");
     let teacher_name = $(this).attr("teacher_name");
     let image = $(this).attr("image");
-    localStorage.setItem("last_added_teacher_id",id);
+    localStorage.setItem("last_added_teacher_id", id);
     $("#teacher_name").val(teacher_name);
 
     $(".imgPreview").empty();
@@ -1765,7 +1771,7 @@ const fetchCareerArticlesSection = () => {
                         ],
                         "autoWidth": false // Disable automatic column width calculation
                     });
-              
+
                 table.clear().draw();
                 if (data.success) {
                     data.Response.forEach(function (currentArticle, index) {
@@ -1775,8 +1781,8 @@ const fetchCareerArticlesSection = () => {
                         let image = `<img src="${image_url}${currentArticle.image}" class="toZoom" style="width:100px;height:auto;border-radius: 10px;">`
 
                         $("#article_table").DataTable().row.add([
-                            count,image, heading, content,
-                            `<a mx-2" id="article_edit" article_id="${currentArticle.id}" heading="${heading}" content="${content}" image="${currentArticle.image}"  ><i class="mx-2 fa fa-edit"></i></a>` + 
+                            count, image, heading, content,
+                            `<a mx-2" id="article_edit" article_id="${currentArticle.id}" heading="${heading}" content="${content}" image="${currentArticle.image}"  ><i class="mx-2 fa fa-edit"></i></a>` +
                             `<a mx-2" id="article_delete" article_id="${currentArticle.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });
@@ -1800,7 +1806,7 @@ $(document).on("click", "#article_edit", function (e) {
     window.location = 'careerArticle';
 })
 
-$(document).on('click',"#article_delete",function(event){
+$(document).on('click', "#article_delete", function (event) {
     let id = $(this).attr('article_id');
 
     Swal.fire({
@@ -1962,7 +1968,7 @@ const fetchServeyContent = () => {
             hideLoader();
         },
         success: function (data) {
-            console.log('data :',data);
+            console.log('data :', data);
             hideLoader();
             if (data.success) {
                 const content = data.Response.content;
@@ -2056,7 +2062,7 @@ $("#addServeyContent").on("click", function () {
     }
 });
 
-$('#addOptionIcon').on('click', function() {
+$('#addOptionIcon').on('click', function () {
     var newOption = $('<div>').addClass('form-check');
     var optionLabel = $('<label>').addClass('form-check-label editable-option');
     var optionText = $('<span>').addClass('option-text').text('Option');
@@ -2070,13 +2076,13 @@ $('#addOptionIcon').on('click', function() {
     $('#optionsContainer').append(newOption);
 
     // Edit option
-    editIcon.on('click', function() {
+    editIcon.on('click', function () {
         var option = $(this).closest('.form-check');
         var optionText = option.find('.option-text');
         var inputField = $('<input type="text" class="option-input">').val(optionText.text());
         optionText.replaceWith(inputField);
 
-        inputField.on('blur', function() {
+        inputField.on('blur', function () {
             var newText = $(this).val().trim();
             var newSpan = $('<span class="option-text">').text(newText);
             $(this).replaceWith(newSpan);
@@ -2087,7 +2093,7 @@ $('#addOptionIcon').on('click', function() {
     });
 
     // Delete option
-    deleteIcon.on('click', function() {
+    deleteIcon.on('click', function () {
         $(this).closest('.form-check').remove();
     });
 });
@@ -2130,8 +2136,8 @@ const fetchServeyForm = () => {
                         // let checkboxHtml = `<input type="checkbox" class="row-checkbox" user_id="${currentUser.id}">`;
 
                         $("#survey_table").DataTable().row.add([
-                             count, first_name, last_name, email, date_of_birth, gender, grade,
-                            `<a mx-2" id="survey_view" user_id="${currentUser.id}" ><i class="mx-2 fa fa-eye"></i></a>`,
+                            count, first_name, last_name, email, date_of_birth, gender, grade,
+                            `<a mx-2" id="survey_view" user_id="${currentUser.id}" email="${email}"><i class="mx-2 fa fa-eye"></i></a>`,
                             `<a mx-2" id="survey_delete" user_id="${currentUser.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });
@@ -2141,7 +2147,74 @@ const fetchServeyForm = () => {
     });
 }
 
-$(document).on('click',"#survey_delete",function(event){
+$(document).on('click', "#survey_view", function (event) {
+    let email = $(this).attr('email');
+    window.location = "show_answer";
+    localStorage.setItem("user_email", email);
+})
+
+
+function show_answer() {
+    let data = new FormData();
+    let email = localStorage.getItem("user_email");
+    data.append('email', email);
+
+    $.ajax({
+        url: host_url + 'fetchAnswers',
+        data: data,
+        type: "POST",
+        cache: false,
+        processData: false,
+        contentType: false,
+        dataType: false,
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (e) {
+            Swal.fire("Failed To Update Content .");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                let table = $('#answer_table').DataTable({
+                    "columns": [
+                        { "width": "5%" },
+                        { "width": "50%" },
+                        { "width": "20%" },
+                    ],
+                    "columnDefs": [
+                        { "targets": "_all", "className": "text-wrap" } // Wrap text if needed
+                    ],
+                    "autoWidth": false // Disable automatic column width calculation
+                });
+
+                table.clear().draw();
+                if (data.success) {
+                    let response = data.Response;
+                    let answers = JSON.parse(response.answer);
+
+                    Object.keys(answers).forEach((key, index) => {
+                        let question = answers[key].Question;
+                        let answer = answers[key].Answer;
+
+                        table.row.add([
+                            index + 1,
+                            question,
+                            answer
+                        ]).draw();
+                    });
+                }
+            }
+        }
+    });
+}
+
+
+$(document).on('click', "#survey_delete", function (event) {
     let id = $(this).attr('user_id');
 
     Swal.fire({
@@ -2225,8 +2298,8 @@ const fetchQuestions = () => {
                         let options = currentQuestion.options;
 
                         $("#questionaire_table").DataTable().row.add([
-                            count,question, options, 
-                            `<a mx-2" id="edit_question" question_id="${currentQuestion.id}" question="${question}"><i class="mx-2 fa fa-edit"></i></a>` + 
+                            count, question, options,
+                            `<a mx-2" id="edit_question" question_id="${currentQuestion.id}" question="${question}"><i class="mx-2 fa fa-edit"></i></a>` +
                             `<a mx-2" id="delete_question" question_id="${currentQuestion.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });
@@ -2236,15 +2309,15 @@ const fetchQuestions = () => {
     });
 }
 
-$(document).on("click","#edit_question",function(event){
+$(document).on("click", "#edit_question", function (event) {
     let id = $(this).attr('question_id');
     let question = $(this).attr('question');
-    localStorage.setItem('last_added_question',id);
-    localStorage.setItem('letest_question',question);
+    localStorage.setItem('last_added_question', id);
+    localStorage.setItem('letest_question', question);
     window.location = "questionnaire";
 })
 
-$(document).on("click","#delete_question",function(event){
+$(document).on("click", "#delete_question", function (event) {
     let id = $(this).attr('question_id');
 
     Swal.fire({
@@ -2331,15 +2404,15 @@ $("#submitQuestion").on("click", function () {
 
                         let response = new FormData();
                         let option_arr = [];
-                        
+
                         $(".option-text").each(function () {
-                          option_arr.push($(this).text());
+                            option_arr.push($(this).text());
                         });
-                        
+
                         let option_str = option_arr.join(", "); // Join the options with a comma separator
-                        
+
                         response.append('option', option_str);
-                        response.append('question_id',question_id)
+                        response.append('question_id', question_id)
 
                         $.ajax({
                             url: host_url + 'updateOption',
@@ -2405,15 +2478,15 @@ $("#submitQuestion").on("click", function () {
 
                         let response = new FormData();
                         let option_arr = [];
-                        
+
                         $(".option-text").each(function () {
-                          option_arr.push($(this).text());
+                            option_arr.push($(this).text());
                         });
-                        
+
                         let option_str = option_arr.join(", "); // Join the options with a comma separator
-                        
+
                         response.append('option', option_str);
-                        response.append('question_id',data.last_added)
+                        response.append('question_id', data.last_added)
 
                         $.ajax({
                             url: host_url + 'addOption',
@@ -2694,9 +2767,9 @@ const fetchTerms_condition_Section = () => {
                         let content = currentTerms.content;
 
                         $("#terms_table").DataTable().row.add([
-                            count,heading, content,
+                            count, heading, content,
                             `<a mx-2" id="term_edit" term_id="${currentTerms.id}" heading="${heading}" content="${content}">
-                            <i class="mx-2 fa fa-edit"></i></a>` + 
+                            <i class="mx-2 fa fa-edit"></i></a>` +
                             `<a mx-2" id="term_delete" term_id="${currentTerms.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });
@@ -2718,7 +2791,7 @@ $(document).on("click", "#term_edit", function (e) {
     window.location = 'terms_conditions';
 })
 
-$(document).on('click',"#term_delete",function(event){
+$(document).on('click', "#term_delete", function (event) {
     let id = $(this).attr('term_id');
 
     Swal.fire({
