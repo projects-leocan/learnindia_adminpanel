@@ -1,1 +1,1 @@
-# frutika_admin_2023
+# learn_india_adminpanel
