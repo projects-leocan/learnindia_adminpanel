@@ -1223,7 +1223,7 @@ $("#addInnerAboutUs").on("click", function () {
 });
 
 
-const fetchEducationLogo = () => {
+function fetchEducationLogo() {
     // AJAX Call 
     $.ajax({
         url: host_url + 'fetchEducationLogo',
@@ -1248,31 +1248,75 @@ const fetchEducationLogo = () => {
                         let count = index + 1;
                         let logo = `<img src="${image_url}${currentLogo.image}" class="toZoom" style="width:100px;height:auto;border-radius: 10px;">`;
 
-                        let editLink = `<a  class="logo_edit text-dark mx-2" logo_id="${currentLogo.id}" logo="${currentLogo.image}"><i class="mx-2 fa fa-edit"></i></a>`;
-                        let fileUploadInput = `<input type="file" class="file_upload" id="file_upload_${currentLogo.id}" style="display: none;">`;
+                        let editLink = `<a class="logo_edit text-dark mx-2" logo_id="${currentLogo.id}" logo="${currentLogo.image}"><i class="mx-2 fa fa-edit"></i></a>` + `<a class="logo_delete text-dark mx-2" logo_id="${currentLogo.id}"><i class="mx-2 fa fa-trash"></i></a>`;
 
                         $("#logo_table").DataTable().row.add([
-                            count, logo,
-                            editLink + fileUploadInput
+                            count, logo, editLink
                         ]).draw();
-                    });
-
-                    // Event listeners for edit icon and file upload input
-                    $('.logo_edit').on('click', function () {
-                        $(this).siblings('.file_upload').click();
-                    });
-
-                    $('.file_upload').on('change', function (e) {
-                        $(".imgPreview").empty();
-                        $('.imgPreview').append(`<img src=${URL.createObjectURL(e.target.files[0])} class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
                     });
                 }
             }
         }
 
-
     });
 }
+
+$(document).on("click", ".logo_edit", function (e) {
+    let id = $(this).attr("logo_id")
+    let logo = $(this).attr("logo");
+
+    localStorage.setItem("logo_id", id);
+
+    $(".imgPreview").empty();
+    $('.imgPreview').append(`<img src=${image_url}${logo} class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
+})
+
+
+$(document).on('click', ".logo_delete", function (event) {
+    let id = $(this).attr("logo_id")
+
+    Swal.fire({
+        title: 'Do You want to delete this Logo ?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: host_url + 'deleteEducationLogo',
+                data: {
+                    'logo_id': id,
+                },
+                method: 'post',
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            fetchEducationLogo()
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                }
+            });
+
+        } else if (result.isDenied) {
+
+        }
+    })
+})
+
+
 
 $(document).on("change", "#customLOGO", function () {
     if ($(this)[0].files.length > 4) {
@@ -1281,6 +1325,7 @@ $(document).on("change", "#customLOGO", function () {
         $(".imgPreview").empty();
         return false;
     }
+
     $(".imgPreview").empty();
     for (let i = 0; i < $(this)[0].files.length; i++) {
         $('.imgPreview').append(`<img src=${URL.createObjectURL($(this)[0].files[i])} class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
@@ -1288,47 +1333,103 @@ $(document).on("change", "#customLOGO", function () {
 
 });
 
-$("#saveEducationLogo").on('click', function () {
+
+$("#saveEducationLogo").on("click", function () {
+
     let image = $("#customLOGO").prop('files');
+    let id = localStorage.getItem("logo_id");
 
     let data = new FormData();
     for (let i = 0; i < image.length; i++) {
         data.append("image[]", image[i]);
     }
 
-    $.ajax({
-        url: host_url + 'addEducationLogo',
-        data: data,
-        type: "POST",
-        cache: false,
-        processData: false,
-        contentType: false,
-        dataType: false,
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (e) {
-            Swal.fire("Failed To Update Content .");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.Status == "Success") {
-                Swal.fire({
-                    title: '',
-                    text: `${data.Message}`,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
-                })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
-            }
-        },
-    });
+    if (id != "" && id != undefined) {
+
+        data.append('id', id);
+
+
+        $.ajax({
+            url: host_url + 'updateEducationLogo',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Please Choose a logo");
+                hideLoader();
+            },
+            success: function (data) {
+                fetchEducationLogo(); // Call the function to fetch education logo
+                localStorage.removeItem("logo_id");
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetchEducationLogo(); // Call the function to fetch education logo
+                            localStorage.removeItem("logo_id");
+                        }
+                    })
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
+    else {
+
+        $.ajax({
+            url: host_url + 'addEducationLogo',
+            data: data,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: false,
+            beforeSend: function (data) {
+                showLoader();
+            },
+            complete: function (data) {
+                hideLoader();
+            },
+            error: function (e) {
+                Swal.fire("Please Choose a logo");
+                hideLoader();
+            },
+            success: function (data) {
+                hideLoader();
+                if (data.Status == "Success") {
+                    Swal.fire({
+                        title: '',
+                        text: `${data.Message}`,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#F28123'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetchEducationLogo(); // Call the function to fetch education logo
+                        }
+                    })
+                    fetchEducationLogo();
+                }
+                else {
+                    Swal.fire(`${data.Message}`);
+                }
+            },
+        });
+    }
 });
 
 function fetchOurMemeberContent() {
@@ -2194,19 +2295,17 @@ function show_answer() {
 
                 table.clear().draw();
                 if (data.success) {
-                    let response = data.Response;
-                    let answers = JSON.parse(response.answer);
-
-                    Object.keys(answers).forEach((key, index) => {
-                        let question = answers[key].Question;
-                        let answer = answers[key].Answer;
+                    data.Response.map((res, index) => {
+                        let question = res.question;
+                        let answer = res.answer;
 
                         table.row.add([
                             index + 1,
                             question,
                             answer
                         ]).draw();
-                    });
+
+                    })
                 }
             }
         }
@@ -2260,7 +2359,7 @@ $(document).on('click', "#survey_delete", function (event) {
 
 const fetchQuestions = () => {
     $.ajax({
-        url: host_url + 'fetchQuestionnaire',
+        url: host_url + 'fetchQuestions',
         method: 'get',
         beforeSend: function (data) {
             showLoader();
@@ -2275,20 +2374,19 @@ const fetchQuestions = () => {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                let table = $('#questionaire_table').DataTable(
-                    {
-                        "bDestroy": true,
-                        "columns": [
-                            { "width": "5%" },
-                            { "width": "50%" },
-                            { "width": "20%" },
-                            { "width": "5%" },
-                        ],
-                        "columnDefs": [
-                            { "targets": "_all", "className": "text-wrap" } // Wrap text if needed
-                        ],
-                        "autoWidth": false // Disable automatic column width calculation
-                    });
+                let table = $('#questionaire_table').DataTable({
+                    "bDestroy": true,
+                    "columns": [
+                        { "width": "5%" },
+                        { "width": "50%" },
+                        { "width": "20%" },
+                        { "width": "5%" },
+                    ],
+                    "columnDefs": [
+                        { "targets": "_all", "className": "text-wrap" } // Wrap text if needed
+                    ],
+                    "autoWidth": false // Disable automatic column width calculation
+                });
 
                 table.clear().draw();
                 if (data.success) {
@@ -2297,9 +2395,18 @@ const fetchQuestions = () => {
                         let question = currentQuestion.question;
                         let options = currentQuestion.options;
 
+                        let optionsArray = options.split(',');
+
+                        let optionHtml = "";
+                        if (Array.isArray(optionsArray)) {
+                            optionsArray.forEach(function (option) {
+                                optionHtml += `<span>${option}</span><br>`;
+                            });
+                        }
+
                         $("#questionaire_table").DataTable().row.add([
-                            count, question, options,
-                            `<a mx-2" id="edit_question" question_id="${currentQuestion.id}" question="${question}"><i class="mx-2 fa fa-edit"></i></a>` +
+                            count, question, optionHtml,
+                            `<a mx-2" id="edit_question" question_id="${currentQuestion.id}" question="${question}" options="${options}"><i class="mx-2 fa fa-edit"></i></a>` +
                             `<a mx-2" id="delete_question" question_id="${currentQuestion.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });
@@ -2309,13 +2416,115 @@ const fetchQuestions = () => {
     });
 }
 
+// Update the click event handler for editing a question
 $(document).on("click", "#edit_question", function (event) {
     let id = $(this).attr('question_id');
     let question = $(this).attr('question');
+    let options = $(this).attr('options');
     localStorage.setItem('last_added_question', id);
     localStorage.setItem('letest_question', question);
+    localStorage.setItem('letest_options', options); // Save the options in local storage
+
+    // Redirect to the questionnaire page
     window.location = "questionnaire";
-})
+});
+
+const populateQuestionAndOptions = () => {
+    let question = localStorage.getItem('letest_question');
+    let options = localStorage.getItem('letest_options');
+  
+    // Populate the question field
+    $("#question_field").val(question);
+  
+    // Check if options exist and are not null
+    if (options && options !== "null") {
+      // Split the options string into an array
+      let optionsArray = options.split(',');
+  
+      // Generate the HTML for displaying options
+      let optionHtml = "";
+      optionsArray.forEach(function (option) {
+        let newOption = $('<div>').addClass('form-check');
+        let optionLabel = $('<label>').addClass('form-check-label editable-option');
+        let optionText = $('<span>').addClass('option-text').text(option);
+        let editIcon = $('<span>').addClass('edit-icon').html('<i class="fas fa-pencil-alt"></i>');
+        let deleteIcon = $('<span>').addClass('delete-icon').html('<i class="fas fa-times"></i>');
+  
+        optionLabel.append(optionText);
+        optionLabel.append(editIcon);
+        optionLabel.append(deleteIcon);
+        newOption.append(optionLabel);
+        optionHtml += newOption[0].outerHTML;
+      });
+  
+      // Append the option HTML to the options container
+      $("#optionsContainer").html(optionHtml);
+    }
+  };
+  
+  // Call the populateQuestionAndOptions function when needed (e.g., on page load)
+  populateQuestionAndOptions();
+  
+  // Edit option
+  $(document).on('click', '.edit-icon', function () {
+    var option = $(this).closest('.form-check');
+    var optionText = option.find('.option-text');
+    var inputField = $('<input type="text" class="option-input">').val(optionText.text());
+    optionText.replaceWith(inputField);
+  
+    inputField.on('blur', function () {
+      var newText = $(this).val().trim();
+      var newSpan = $('<span class="option-text">').text(newText);
+      $(this).replaceWith(newSpan);
+    });
+  
+    option.addClass('editing');
+    inputField.focus();
+  });
+  
+  // Delete option
+  $(document).on('click', '.delete-icon', function () {
+    $(this).closest('.form-check').remove();
+  });
+  
+  // Add option
+  $('#addOptionIcon').on('click', function () {
+    var newOption = $('<div>').addClass('form-check');
+    var optionLabel = $('<label>').addClass('form-check-label editable-option');
+    var optionText = $('<span>').addClass('option-text').text('Option');
+    var editIcon = $('<span>').addClass('edit-icon').html('<i class="fas fa-pencil-alt"></i>');
+    var deleteIcon = $('<span>').addClass('delete-icon').html('<i class="fas fa-times"></i>');
+  
+    optionLabel.append(optionText);
+    optionLabel.append(editIcon);
+    optionLabel.append(deleteIcon);
+    newOption.append(optionLabel);
+    $('#optionsContainer').append(newOption);
+  
+    // Edit option
+    editIcon.on('click', function () {
+      var option = $(this).closest('.form-check');
+      var optionText = option.find('.option-text');
+      var inputField = $('<input type="text" class="option-input">').val(optionText.text());
+      optionText.replaceWith(inputField);
+  
+      inputField.on('blur', function () {
+        var newText = $(this).val().trim();
+        var newSpan = $('<span class="option-text">').text(newText);
+        $(this).replaceWith(newSpan);
+      });
+  
+      option.addClass('editing');
+      inputField.focus();
+    });
+  
+    // Delete option
+    deleteIcon.on('click', function () {
+      $(this).closest('.form-check').remove();
+    });
+  });
+  
+  
 
 $(document).on("click", "#delete_question", function (event) {
     let id = $(this).attr('question_id');
