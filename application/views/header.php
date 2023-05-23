@@ -142,6 +142,30 @@
                 box-shadow: none;
             }
 
+            .page-item.active .page-link {
+                z-index: 3;
+                color: #fff;
+                background-color: #046A38;
+                border-color: #046A38;
+            }
+
+            .page-link {
+                position: relative;
+                display: block;
+                padding: 0.5rem 0.75rem;
+                margin-left: -1px;
+                line-height: 1.25;
+                color: #046A38;
+                background-color: #fff;
+                border: 1px solid #dee2e6;
+            }
+
+            a {
+                /* color: #046A38 ; */
+                text-decoration: none;
+                background-color: transparent;
+            }
+
             /* Loader */
             .fulfilling-bouncing-circle-spinner,
             .fulfilling-bouncing-circle-spinner * {
@@ -264,6 +288,15 @@
                     border-color: transparent;
                     border-top-color: inherit;
                     transform: scale(1);
+                }
+            }
+
+            @media (max-width: 767px) {
+
+                /* Adjust the size and position for mobile devices */
+                .fulfilling-bouncing-circle-spinner {
+                    top: calc(50vh - 25px);
+                    left: calc(50vw - 25px);
                 }
             }
         </style>

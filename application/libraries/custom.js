@@ -1818,6 +1818,7 @@ const fetchCareerArticlesSection = () => {
             if (data.success) {
                 let table = $('#article_table').DataTable(
                     {
+                        "bDestroy": true,
                         "columns": [
                             { "width": "5%" },
                             { "width": "5%" },
@@ -2942,7 +2943,19 @@ const fetchTerms_condition_Section = () => {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                let table = $('#terms_table').DataTable();
+                let table = $('#terms_table').DataTable({
+                    "bDestroy": true,
+                    "columns": [
+                        { "width": "5%" },
+                        { "width": "30%" },
+                        { "width": "50%" },
+                        { "width": "5%" },
+                    ],
+                    "columnDefs": [
+                        { "targets": "_all", "className": "text-wrap" } // Wrap text if needed
+                    ],
+                    "autoWidth": false // Disable automatic column width calculation
+                });
                 table.clear().draw();
                 if (data.success) {
                     data.Response.forEach(function (currentTerms, index) {
