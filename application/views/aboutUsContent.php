@@ -29,6 +29,14 @@
 
                 </div>
                 <button type="submit" id="aboutUsAdd" class="common-btn-padding btn btn-success "> Save </button>
+                <button type="submit" id="clear" class="mx-2 common-btn-padding btn btn-danger "> Clear </button>
+
+                 <!-- Loader HTML code -->
+                 <div id="loader" class="fulfilling-bouncing-circle-spinner">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
+
             </div>
 
         </div>
@@ -49,6 +57,11 @@
                 let editorData = editor.getData();
                 let htmlContent = editorData.trim();
                 localStorage.setItem("aboutUsContent", htmlContent);
+            });
+
+            // Clear the editor's content when the "Clear" button is clicked
+            $('#clear').on('click', () => {
+                editor.setData('');
             });
         })
         .catch(error => {

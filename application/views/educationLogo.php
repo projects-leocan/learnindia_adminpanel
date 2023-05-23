@@ -118,7 +118,10 @@
                         </button>
                     </div>
                 </div>
-
+                <div id="loader" class="fulfilling-bouncing-circle-spinner">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
                 
             </div>
             <section class="content mt-5">

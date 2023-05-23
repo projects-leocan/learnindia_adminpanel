@@ -71,7 +71,6 @@
     border-left: none;
     border-right: none;
 }
-
 </style>
 <div class="wrapper ScrollStyle">
     <div class="content-wrapper">
@@ -112,6 +111,13 @@
 
             </div>
             <button type="submit" id="submitQuestion" class="common-btn-padding btn btn-success  mx-3"> Save </button>
+            <button type="submit" id="clear" class="mx-1 common-btn-padding btn btn-danger "> Clear </button>
+
+            <!-- <div id="loader" class="fulfilling-bouncing-circle-spinner">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div> -->
+
         </div>
 
     </div>
@@ -138,6 +144,11 @@
                 let editorData = editor.getData();
                 let htmlContent = editorData.trim();
                 localStorage.setItem("letest_question", htmlContent);
+            });
+
+            // Clear the editor's content when the "Clear" button is clicked
+            $('#clear').on('click', () => {
+                editor.setData('');
             });
         })
         .catch(error => {

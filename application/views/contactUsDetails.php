@@ -16,6 +16,11 @@
             </div>
         </div>
 
+        <div id="loader" class="fulfilling-bouncing-circle-spinner">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
+
         <section class="content">
             <div class="container-fluid" >
                 <div class="table-responsive">

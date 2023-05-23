@@ -7,8 +7,7 @@
     <title>LearnIndia | Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -57,211 +56,215 @@
 
 
         <style>
-        .ScrollStyle {
-            overflow-y: auto;
-            overflow-x: hidden;
-            max-height: calc(100vh - 30px - 30px)
-        }
-
-        .active2 {
-            background-color: #F28123;
-            color: black;
-        }
-
-        .swal2-styled.swal2-confirm {
-            background-color: #046A38 !important;
-        }
-
-        .swal2-styled.swal2-confirm:focus {
-            box-shadow: 0 0 0 3px rgba(17, 64, 34, 0.5);
-        }
-
-        .swal-modal {
-            width: 300px;
-        }
-
-        .swal-title {
-            color: green;
-            text-transform: none;
-            position: relative;
-            display: block;
-            padding: 13px 16px;
-            font-size: 18px;
-            line-height: normal;
-            text-align: center;
-            margin-bottom: 0;
-        }
-
-        .swal-button {
-            background-color: #046A38;
-            color: #fff;
-            border: none;
-            box-shadow: none;
-            border-radius: 3px;
-            font-size: 12px;
-            padding: 7px 19px;
-            cursor: pointer;
-        }
-
-        .swal2-title {
-            position: relative;
-            max-width: 100%;
-            margin: 0;
-            padding: 0.8em 1em 0;
-            color: inherit;
-            font-size: 1.125em !important;
-            font-weight: 400 !important;
-            text-align: center;
-            text-transform: none;
-            word-wrap: break-word;
-        }
-
-        .common-btn-padding {
-            padding: 5px 15px;
-        }
-
-        .set-logo {
-            transform: scale(2);
-            /* margin-left: 1rem; */
-            border-radius: 2px;
-        }
-
-        .center-utl {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-evenly !important;
-        }
-
-        .submenu {
-            display: none;
-        }
-
-        .btn-success {
-            color: #fff;
-            background-color: #046A38;
-            border-color: #046A38;
-            box-shadow: none;
-        }
-
-        /* Loader */
-        .fulfilling-bouncing-circle-spinner,
-        .fulfilling-bouncing-circle-spinner * {
-            box-sizing: border-box;
-        }
-
-        .fulfilling-bouncing-circle-spinner {
-            height: 60px;
-            width: 60px;
-            margin-left: 200px;
-            position: relative;
-            animation: fulfilling-bouncing-circle-spinner-animation infinite 4000ms ease;
-        }
-
-        .fulfilling-bouncing-circle-spinner .orbit {
-            height: 60px;
-            width: 60px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-radius: 50%;
-            border: calc(60px * 0.03) solid #FF671F;
-            animation: fulfilling-bouncing-circle-spinner-orbit-animation infinite 4000ms ease;
-        }
-
-        .fulfilling-bouncing-circle-spinner .circle {
-            height: 60px;
-            width: 60px;
-            color: #FF671F;
-            display: block;
-            border-radius: 50%;
-            position: relative;
-            border: calc(60px * 0.1) solid #FF671F;
-            animation: fulfilling-bouncing-circle-spinner-circle-animation infinite 4000ms ease;
-            transform: rotate(0deg) scale(1);
-        }
-
-        @keyframes fulfilling-bouncing-circle-spinner-animation {
-            0% {
-                transform: rotate(0deg);
+            .ScrollStyle {
+                overflow-y: auto;
+                overflow-x: hidden;
+                max-height: calc(100vh - 30px - 30px)
             }
 
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes fulfilling-bouncing-circle-spinner-orbit-animation {
-            0% {
-                transform: scale(1);
+            .active2 {
+                background-color: #F28123;
+                color: black;
             }
 
-            50% {
-                transform: scale(1);
+            .swal2-styled.swal2-confirm {
+                background-color: #046A38 !important;
             }
 
-            62.5% {
-                transform: scale(0.8);
+            .swal2-styled.swal2-confirm:focus {
+                box-shadow: 0 0 0 3px rgba(17, 64, 34, 0.5);
             }
 
-            75% {
-                transform: scale(1);
+            .swal-modal {
+                width: 300px;
             }
 
-            87.5% {
-                transform: scale(0.8);
+            .swal-title {
+                color: green;
+                text-transform: none;
+                position: relative;
+                display: block;
+                padding: 13px 16px;
+                font-size: 18px;
+                line-height: normal;
+                text-align: center;
+                margin-bottom: 0;
             }
 
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes fulfilling-bouncing-circle-spinner-circle-animation {
-            0% {
-                transform: scale(1);
-                border-color: transparent;
-                border-top-color: inherit;
-            }
-
-            16.7% {
-                border-color: transparent;
-                border-top-color: initial;
-                border-right-color: initial;
+            .swal-button {
+                background-color: #046A38;
+                color: #fff;
+                border: none;
+                box-shadow: none;
+                border-radius: 3px;
+                font-size: 12px;
+                padding: 7px 19px;
+                cursor: pointer;
             }
 
-            33.4% {
-                border-color: transparent;
-                border-top-color: inherit;
-                border-right-color: inherit;
-                border-bottom-color: inherit;
+            .swal2-title {
+                position: relative;
+                max-width: 100%;
+                margin: 0;
+                padding: 0.8em 1em 0;
+                color: inherit;
+                font-size: 1.125em !important;
+                font-weight: 400 !important;
+                text-align: center;
+                text-transform: none;
+                word-wrap: break-word;
             }
 
-            50% {
-                border-color: inherit;
-                transform: scale(1);
+            .common-btn-padding {
+                padding: 5px 15px;
             }
 
-            62.5% {
-                border-color: inherit;
-                transform: scale(1.4);
+            .set-logo {
+                transform: scale(2);
+                /* margin-left: 1rem; */
+                border-radius: 2px;
             }
 
-            75% {
-                border-color: inherit;
-                transform: scale(1);
-                opacity: 1;
+            .center-utl {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-evenly !important;
             }
 
-            87.5% {
-                border-color: inherit;
-                transform: scale(1.4);
+            .submenu {
+                display: none;
             }
 
-            100% {
-                border-color: transparent;
-                border-top-color: inherit;
-                transform: scale(1);
+            .btn-success {
+                color: #fff;
+                background-color: #046A38;
+                border-color: #046A38;
+                box-shadow: none;
             }
-        }
+
+            /* Loader */
+            .fulfilling-bouncing-circle-spinner,
+            .fulfilling-bouncing-circle-spinner * {
+                box-sizing: border-box;
+            }
+
+            .fulfilling-bouncing-circle-spinner {
+                height: 90px;
+                width: 90px;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+                animation: fulfilling-bouncing-circle-spinner-animation infinite 4000ms ease;
+            }
+
+
+            .fulfilling-bouncing-circle-spinner .orbit {
+                height: 90px;
+                width: 90px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: 50%;
+                border: calc(90px * 0.03) solid #FF671F;
+                animation: fulfilling-bouncing-circle-spinner-orbit-animation infinite 4000ms ease;
+            }
+
+            .fulfilling-bouncing-circle-spinner .circle {
+                height: 90px;
+                width: 90px;
+                color: #FF671F;
+                display: block;
+                border-radius: 50%;
+                position: relative;
+                border: calc(90px * 0.1) solid #FF671F;
+                animation: fulfilling-bouncing-circle-spinner-circle-animation infinite 4000ms ease;
+                transform: rotate(0deg) scale(1);
+            }
+
+            @keyframes fulfilling-bouncing-circle-spinner-animation {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes fulfilling-bouncing-circle-spinner-orbit-animation {
+                0% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1);
+                }
+
+                62.5% {
+                    transform: scale(0.8);
+                }
+
+                75% {
+                    transform: scale(1);
+                }
+
+                87.5% {
+                    transform: scale(0.8);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            @keyframes fulfilling-bouncing-circle-spinner-circle-animation {
+                0% {
+                    transform: scale(1);
+                    border-color: transparent;
+                    border-top-color: inherit;
+                }
+
+                16.7% {
+                    border-color: transparent;
+                    border-top-color: initial;
+                    border-right-color: initial;
+                }
+
+                33.4% {
+                    border-color: transparent;
+                    border-top-color: inherit;
+                    border-right-color: inherit;
+                    border-bottom-color: inherit;
+                }
+
+                50% {
+                    border-color: inherit;
+                    transform: scale(1);
+                }
+
+                62.5% {
+                    border-color: inherit;
+                    transform: scale(1.4);
+                }
+
+                75% {
+                    border-color: inherit;
+                    transform: scale(1);
+                    opacity: 1;
+                }
+
+                87.5% {
+                    border-color: inherit;
+                    transform: scale(1.4);
+                }
+
+                100% {
+                    border-color: transparent;
+                    border-top-color: inherit;
+                    transform: scale(1);
+                }
+            }
         </style>
         </head>

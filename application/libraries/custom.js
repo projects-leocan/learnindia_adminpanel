@@ -11,46 +11,25 @@ const image_url = "http://localhost/learnindia_API/uploads/";
 $(document).ready(function () {
     state_management();
 
-    if (window.location.href == base_url + 'keyToSuccess') {
-        fetchSuccessContent();
-    }
-    if (window.location.href == base_url + 'careerGuidanceHelp') {
-        fetchGuidanceHelpContent();
-    }
-    if (window.location.href == base_url + 'careerJourney') {
-        fetchCareerJourneyContent();
-    }
-    if (window.location.href == base_url + 'counseling') {
-        fetchCounsellingSection();
-    }
+    fetchSuccessContent();
+    fetchGuidanceHelpContent();
+    fetchCareerJourneyContent();
+    fetchCounsellingSection();
+    fetchSucessStorySection();
     if (window.location.href == base_url + 'successStory') {
-        fetchSucessStorySection();
         let sName = localStorage.getItem("student_name");
         if (sName != null && sName != undefined && sName != "") {
             $("#student_name").val(sName);
         }
     }
-    if (window.location.href == base_url + 'showStory') {
-        fetchSucessStorySection();
-    }
-    if (window.location.href == base_url + 'aboutUs') {
-        fetchAboutContent();
-    }
-    if (window.location.href == base_url + 'aboutUsInner') {
-        fetchAboutInnerContent();
-    }
-    if (window.location.href == base_url + 'educationLogo') {
-        fetchEducationLogo();
-    }
-    if (window.location.href == base_url + 'ourTeamMember') {
-        fetchOurMemeberContent();
-    }
-    if (window.location.href == base_url + 'blog') {
-        fetchBlogContent();
-    }
-    if (window.location.href == base_url + 'blogInner') {
-        fetchBlogInnerContent();
-    }
+    fetchSucessStorySection();
+    fetchAboutContent();
+    fetchAboutInnerContent();
+    fetchEducationLogo();
+    fetchOurMemeberContent();
+    fetchBlogContent();
+    fetchBlogInnerContent();
+    fetchCareerArticlesSection();
     if (window.location.href == base_url + 'careerArticle') {
         $("#heading").val(localStorage.getItem("heading"))
 
@@ -58,42 +37,24 @@ $(document).ready(function () {
             $(".imgPreview").empty();
             $('.imgPreview').append(`<img src=${image_url}${localStorage.getItem("image")} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`)
         }
-        fetchCareerArticlesSection();
+
     }
-    if (window.location.href == base_url + 'show_articles') {
-        fetchCareerArticlesSection();
-    }
-    if (window.location.href == base_url + 'serveyContent') {
-        fetchServeyContent();
-    }
-    if (window.location.href == base_url + 'surveyFormDetails') {
-        fetchServeyForm();
-    }
-    if (window.location.href == base_url + 'term') {
-        fetchTermsContent();
-    }
-    if (window.location.href == base_url + 'termInner') {
-        fetchTermsInnerContent();
-    }
+
+    fetchCareerArticlesSection();
+    fetchServeyContent();
+    fetchServeyForm();
+    fetchTermsContent();
+    fetchTermsInnerContent();
+    fetchTerms_condition_Section();
     if (window.location.href == base_url + 'terms_conditions') {
-        fetchTerms_condition_Section();
         $("#heading").val(localStorage.getItem("TermsHeading"));
     }
-    if (window.location.href == base_url + 'showTerms') {
-        fetchTerms_condition_Section();
-    }
-    if (window.location.href == base_url + 'contactUs') {
-        fetchContactUsContent();
-    }
-    if (window.location.href == base_url + 'contactUsDetails') {
-        fetchContactResponse();
-    }
-    if (window.location.href == base_url + 'show_question') {
-        fetchQuestions();
-    }
-    if (window.location.href == base_url + 'show_answer') {
-        show_answer();
-    }
+    fetchTerms_condition_Section();
+    fetchContactUsContent();
+    fetchContactResponse();
+    fetchQuestions();
+    show_answer();
+
 
 });
 
@@ -329,7 +290,6 @@ $("#logout_menu").on("click", function (event) {
         }
     })
 });
-
 
 function signOut() {
     $.ajax({
@@ -1271,7 +1231,6 @@ $(document).on("click", ".logo_edit", function (e) {
     $('.imgPreview').append(`<img src=${image_url}${logo} class="toZoom mx-2 mt-2" style="width:100px;height:100px;"/>`);
 })
 
-
 $(document).on('click', ".logo_delete", function (event) {
     let id = $(this).attr("logo_id")
 
@@ -1315,7 +1274,6 @@ $(document).on('click', ".logo_delete", function (event) {
         }
     })
 })
-
 
 
 $(document).on("change", "#customLOGO", function () {
@@ -2069,7 +2027,6 @@ const fetchServeyContent = () => {
             hideLoader();
         },
         success: function (data) {
-            console.log('data :', data);
             hideLoader();
             if (data.success) {
                 const content = data.Response.content;
@@ -2163,7 +2120,8 @@ $("#addServeyContent").on("click", function () {
     }
 });
 
-$('#addOptionIcon').on('click', function () {
+
+const addOption = () => {
     var newOption = $('<div>').addClass('form-check');
     var optionLabel = $('<label>').addClass('form-check-label editable-option');
     var optionText = $('<span>').addClass('option-text').text('Option');
@@ -2189,7 +2147,7 @@ $('#addOptionIcon').on('click', function () {
             $(this).replaceWith(newSpan);
         });
 
-        option.addClass('editing'); // Add the 'editing' class to highlight the editing option
+        option.addClass('editing');
         inputField.focus();
     });
 
@@ -2197,7 +2155,7 @@ $('#addOptionIcon').on('click', function () {
     deleteIcon.on('click', function () {
         $(this).closest('.form-check').remove();
     });
-});
+};
 
 const fetchServeyForm = () => {
     $.ajax({
@@ -2432,99 +2390,74 @@ $(document).on("click", "#edit_question", function (event) {
 const populateQuestionAndOptions = () => {
     let question = localStorage.getItem('letest_question');
     let options = localStorage.getItem('letest_options');
-  
+
     // Populate the question field
     $("#question_field").val(question);
-  
+
     // Check if options exist and are not null
     if (options && options !== "null") {
-      // Split the options string into an array
-      let optionsArray = options.split(',');
-  
-      // Generate the HTML for displaying options
-      let optionHtml = "";
-      optionsArray.forEach(function (option) {
-        let newOption = $('<div>').addClass('form-check');
-        let optionLabel = $('<label>').addClass('form-check-label editable-option');
-        let optionText = $('<span>').addClass('option-text').text(option);
-        let editIcon = $('<span>').addClass('edit-icon').html('<i class="fas fa-pencil-alt"></i>');
-        let deleteIcon = $('<span>').addClass('delete-icon').html('<i class="fas fa-times"></i>');
-  
-        optionLabel.append(optionText);
-        optionLabel.append(editIcon);
-        optionLabel.append(deleteIcon);
-        newOption.append(optionLabel);
-        optionHtml += newOption[0].outerHTML;
-      });
-  
-      // Append the option HTML to the options container
-      $("#optionsContainer").html(optionHtml);
+        // Split the options string into an array
+        let optionsArray = options.split(',');
+
+        // Generate the HTML for displaying options
+        let optionHtml = "";
+
+        // Add the "Add Option" button
+        let addOptionButton = $('<div class="form-check add-option-container">')
+            .append($('<label class="form-check-label" for="addOption">').text('Add option'))
+            .append($('<span class="add-option-icon" id="addOptionIcon">').text('+'))
+            .on('click', addOption);
+
+        optionHtml += addOptionButton[0].outerHTML;
+
+        optionsArray.forEach(function (option) {
+            let newOption = $('<div>').addClass('form-check');
+            let optionLabel = $('<label>').addClass('form-check-label editable-option');
+            let optionText = $('<span>').addClass('option-text').text(option);
+            let editIcon = $('<span>').addClass('edit-icon').html('<i class="fas fa-pencil-alt"></i>');
+            let deleteIcon = $('<span>').addClass('delete-icon').html('<i class="fas fa-times"></i>');
+
+            optionLabel.append(optionText);
+            optionLabel.append(editIcon);
+            optionLabel.append(deleteIcon);
+            newOption.append(optionLabel);
+            optionHtml += newOption[0].outerHTML;
+        });
+
+        // Append the option HTML to the options container
+        $("#optionsContainer").html(optionHtml);
     }
-  };
-  
-  // Call the populateQuestionAndOptions function when needed (e.g., on page load)
-  populateQuestionAndOptions();
-  
-  // Edit option
-  $(document).on('click', '.edit-icon', function () {
+};
+
+// Call the populateQuestionAndOptions function when needed (e.g., on page load)
+populateQuestionAndOptions();
+
+// Edit option
+$(document).on('click', '.edit-icon', function () {
     var option = $(this).closest('.form-check');
     var optionText = option.find('.option-text');
     var inputField = $('<input type="text" class="option-input">').val(optionText.text());
     optionText.replaceWith(inputField);
-  
+
     inputField.on('blur', function () {
-      var newText = $(this).val().trim();
-      var newSpan = $('<span class="option-text">').text(newText);
-      $(this).replaceWith(newSpan);
-    });
-  
-    option.addClass('editing');
-    inputField.focus();
-  });
-  
-  // Delete option
-  $(document).on('click', '.delete-icon', function () {
-    $(this).closest('.form-check').remove();
-  });
-  
-  // Add option
-  $('#addOptionIcon').on('click', function () {
-    var newOption = $('<div>').addClass('form-check');
-    var optionLabel = $('<label>').addClass('form-check-label editable-option');
-    var optionText = $('<span>').addClass('option-text').text('Option');
-    var editIcon = $('<span>').addClass('edit-icon').html('<i class="fas fa-pencil-alt"></i>');
-    var deleteIcon = $('<span>').addClass('delete-icon').html('<i class="fas fa-times"></i>');
-  
-    optionLabel.append(optionText);
-    optionLabel.append(editIcon);
-    optionLabel.append(deleteIcon);
-    newOption.append(optionLabel);
-    $('#optionsContainer').append(newOption);
-  
-    // Edit option
-    editIcon.on('click', function () {
-      var option = $(this).closest('.form-check');
-      var optionText = option.find('.option-text');
-      var inputField = $('<input type="text" class="option-input">').val(optionText.text());
-      optionText.replaceWith(inputField);
-  
-      inputField.on('blur', function () {
         var newText = $(this).val().trim();
         var newSpan = $('<span class="option-text">').text(newText);
         $(this).replaceWith(newSpan);
-      });
-  
-      option.addClass('editing');
-      inputField.focus();
     });
-  
-    // Delete option
-    deleteIcon.on('click', function () {
-      $(this).closest('.form-check').remove();
-    });
-  });
-  
-  
+
+    option.addClass('editing');
+    inputField.focus();
+});
+
+// Delete option
+$(document).on('click', '.delete-icon', function () {
+    $(this).closest('.form-check').remove();
+});
+
+// Add option
+$('#addOptionIcon').on('click', addOption);
+
+
 
 $(document).on("click", "#delete_question", function (event) {
     let id = $(this).attr('question_id');
@@ -2572,16 +2505,60 @@ $(document).on("click", "#delete_question", function (event) {
 
 
 $("#submitQuestion").on("click", function () {
-
     let question = localStorage.getItem('letest_question');
     let question_id = localStorage.getItem("last_added_question");
+
+    // Check if the question has been modified
+    if (question_id && question_id !== "" && question_id !== undefined) {
+        let originalQuestion = localStorage.getItem("letest_question");
+        if (originalQuestion === question) {
+
+            // No changes made to the question, so no need to update
+            let response = new FormData();
+            let option_arr = [];
+
+            $(".option-text").each(function () {
+                option_arr.push($(this).text());
+            });
+
+            let option_str = option_arr.join(", "); // Join the options with a comma separator
+
+            response.append('option', option_str);
+            response.append('question_id', question_id)
+
+            $.ajax({
+                url: host_url + 'updateOption',
+                data: response,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: false,
+                beforeSend: function (response) {
+                    showLoader();
+                },
+                complete: function (response) {
+                    hideLoader();
+                },
+                error: function (e) {
+                    showAlert("Failed to Data Add.");
+                    hideLoader();
+                },
+                success: function (response) {
+                    hideLoader();
+                    localStorage.removeItem("letest_question");
+                    localStorage.removeItem("last_added_question");
+                    localStorage.removeItem("letest_options");
+                }
+            });
+
+        }
+    }
 
     let data = new FormData();
     data.append('question', question);
 
-
-    if (question_id != "" && question_id != undefined) {
-
+    if (question_id && question_id !== "" && question_id !== undefined) {
         data.append('question_id', question_id);
 
         $.ajax({
@@ -2655,9 +2632,7 @@ $("#submitQuestion").on("click", function () {
                 }
             },
         });
-    }
-    else {
-
+    } else {
         $.ajax({
             url: host_url + 'addQuestionnaire',
             data: data,

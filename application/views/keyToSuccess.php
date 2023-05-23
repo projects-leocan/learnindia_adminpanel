@@ -1,9 +1,7 @@
 <style>
-.ck-editor__editable {
-    height: 30vh;
-}
-
-
+    .ck-editor__editable {
+        height: 30vh;
+    }
 </style>
 <div class="wrapper ScrollStyle">
     <div class="content-wrapper">
@@ -23,17 +21,21 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <!-- <div class="fulfilling-bouncing-circle-spinner">
-                                <div class="circle"></div>
-                                <div class="orbit"></div>
-                        </div> -->
-                <textarea name="content" id="editor">
+                    <textarea name="content" id="editor">
 
                     &lt;p&gt;Add Your Content Here .&lt;/p&gt;
                 </textarea>
 
                 </div>
+
                 <button type="submit" id="keyToSuccessAdd" class="common-btn-padding btn btn-success "> Save </button>
+                <button type="submit" id="keyToSuccessClear" class="mx-2 common-btn-padding btn btn-danger "> Clear </button>
+
+                <!-- Loader HTML code -->
+                <div id="loader" class="fulfilling-bouncing-circle-spinner">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
             </div>
 
         </div>
@@ -42,22 +44,45 @@
 
 <script>
     ClassicEditor
-        .create(document.querySelector('#editor'))
-        .then(editor => {
-            // Set the editor's content to the value from localStorage on page load
-            let htmlContent = localStorage.getItem("last_keyToS_cnt");
-            if (htmlContent) {
-                editor.setData(htmlContent);
-            }
-            editor.model.document.on('change:data', () => {
-                // Save the latest HTML content to localStorage whenever the editor content changes
-                let editorData = editor.getData();
-                let htmlContent = editorData.trim();
-                localStorage.setItem("keyToSuccessContent", htmlContent);
-            });
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
+    .create(document.querySelector('#editor'))
+    .then(editor => {
+        // Define a function to fetch the editor content asynchronously
+        const fetchEditorContent = () => {
+            return new Promise((resolve, reject) => {
+                // Fetch the value from localStorage
+                let htmlContent = localStorage.getItem("last_keyToS_cnt");
 
+                // Resolve the promise with the fetched value
+                resolve(htmlContent);
+            });
+        };
+
+        // Fetch the editor content asynchronously
+        fetchEditorContent()
+            .then(htmlContent => {
+                // Set the editor content with the fetched value
+                if (htmlContent) {
+                    editor.setData(htmlContent);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        editor.model.document.on('change:data', () => {
+            // Save the latest HTML content to localStorage whenever the editor content changes
+            let editorData = editor.getData();
+            let htmlContent = editorData.trim();
+            localStorage.setItem("keyToSuccessContent", htmlContent);
+        });
+
+        // Clear the editor's content when the "Clear" button is clicked
+        $('#keyToSuccessClear').on('click', () => {
+            editor.setData('');
+        });
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+</script>

@@ -123,6 +123,14 @@
 
         </div>
         <button type="submit" id="saveCareerGuidanceHelp" class="common-btn-padding btn btn-success mx-4"> Save </button>
+        <button type="submit" id="CareerGuidanceHelpClear" class="common-btn-padding btn btn-danger "> Clear </button>
+
+        <!-- Loader HTML code -->
+        <div id="loader" class="fulfilling-bouncing-circle-spinner">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
+                
         <!-- The Modal -->
         <div class="idMyModal modal">
             <span class="close">&times;</span>
@@ -151,6 +159,12 @@
                 let htmlContent = editorData.trim();
                 localStorage.setItem("careerGuidanceContent", htmlContent);
             });
+
+            // Clear the editor's content when the "Clear" button is clicked
+            $('#CareerGuidanceHelpClear').on('click', () => {
+                editor.setData('');
+            });
+
         })
         .catch(error => {
             console.error(error);

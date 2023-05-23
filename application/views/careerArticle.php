@@ -133,6 +133,13 @@
 
         </div>
         <button type="submit" id="addCareerArticles" class="common-btn-padding btn btn-success mx-4"> Save </button>
+        <button type="submit" id="clear" class="mx-2 common-btn-padding btn btn-danger "> Clear </button>
+
+        <div id="loader" class="fulfilling-bouncing-circle-spinner">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
+
         <!-- The Modal -->
         <div class="idMyModal modal">
             <span class="close">&times;</span>
@@ -156,6 +163,12 @@
                 let editorData = editor.getData();
                 let htmlContent = editorData.trim();
                 localStorage.setItem("articlesContent", htmlContent);
+            });
+
+             // Clear the editor's content when the "Clear" button is clicked
+             $('#clear').on('click', () => {
+                editor.setData('');
+                $("#heading").val("");
             });
         })
         .catch(error => {
