@@ -37,6 +37,7 @@
                                 <th>Grade</th>
                                 <th>View Answer</th>
                                 <th>Submitted Date</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
