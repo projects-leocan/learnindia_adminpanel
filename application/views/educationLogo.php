@@ -113,7 +113,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="setDesign">
                         <button type="submit" id="saveEducationLogo" class="common-btn-padding btn btn-success"> Save
                         </button>
                     </div>
