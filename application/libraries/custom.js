@@ -1,13 +1,16 @@
 // Define Global base path...
 
 // local base_url...
-const base_url = 'http://localhost/learnindia_adminpanel/';
+// const base_url = 'http://localhost/learnindia_adminpanel/';
+const base_url = 'https://leocan.co/subFolder/learnIndiaWeb/Admin/';
 
 // API Host URL
-const host_url = "http://localhost/learnindia_API/v1/";
+const host_url = "https://leocan.co/subFolder/learnIndiaWeb/API/v1/";
+// const host_url = "http://localhost/learnindia_API/v1/";
 
 // Image URL 
-const image_url = "http://localhost/learnindia_API/uploads/";
+const image_url = "https://leocan.co/subFolder/learnIndiaWeb/API/uploads/";
+// const image_url = "http://localhost/learnindia_API/uploads/";
 $(document).ready(function () {
     state_management();
 
