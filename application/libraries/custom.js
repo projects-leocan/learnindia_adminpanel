@@ -31,7 +31,7 @@ $(document).ready(function () {
     fetchBlogInnerContent();
     fetchCareerArticlesSection();
     if (window.location.href == base_url + 'careerArticle') {
-        $("#heading").val(localStorage.getItem("heading"))
+        // $("#heading").val(localStorage.getItem("heading"))
 
         if (localStorage.getItem("image") != undefined && localStorage.getItem("image") != null) {
             $(".imgPreview").empty();
@@ -443,9 +443,13 @@ const fetchGuidanceHelpContent = () => {
             if (data.success) {
                 localStorage.setItem("last_career_gui_id", data.Response.id);
                 localStorage.setItem("last_career_gui_content", data.Response.content);
-                $(".imgPreview").empty();
-                $('.imgPreview').append(`<img src=${image_url}${data.Response.image} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
-                $('.imgPreview').append(`<img src=${image_url}${data.Response.image2} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
+
+                if (window.location.href == base_url + 'careerGuidanceHelp') {
+                    $(".imgPreview").empty();
+                    $('.imgPreview').append(`<img src=${image_url}${data.Response.image} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
+                    $('.imgPreview').append(`<img src=${image_url}${data.Response.image2} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
+                   
+                }
 
             }
         }
@@ -701,7 +705,9 @@ const fetchCounsellingSection = () => {
             if (data.success) {
                 localStorage.setItem("last_added_id_counselling", data.Response.id);
                 localStorage.setItem("latest_counselling_cnt", data.Response.content);
-                $("#heading").val(data.Response.heading)
+                if (window.location.href == base_url + 'counseling') {
+                    $("#heading").val(data.Response.heading)
+                }
             }
         }
     });
@@ -823,6 +829,7 @@ const fetchSucessStorySection = () => {
             if (data.success) {
                 let table = $('#story_table').DataTable(
                     {
+                        "bDestroy": true,
                         "columns": [
                             { "width": "5%" },
                             { "width": "50%" },
