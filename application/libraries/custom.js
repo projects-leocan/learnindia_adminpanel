@@ -375,7 +375,7 @@ $("#keyToSuccessAdd").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -640,7 +640,7 @@ $("#addCareerJourneyContent").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -921,7 +921,7 @@ $("#studentSuceessAdd").on("click", function () {
                         })
                     }
                     else {
-                        Swal.fire(`${data.Message}`);
+                        Swal.fire(`Content remains the same. No changes were made.`);
                     }
                 },
             });
@@ -1034,7 +1034,7 @@ $("#aboutUsAdd").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -1144,7 +1144,7 @@ $("#addInnerAboutUs").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -1349,7 +1349,7 @@ $("#saveEducationLogo").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -1535,7 +1535,7 @@ $("#addTeamMembers").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -1647,7 +1647,7 @@ $("#addBlogContent").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -1760,7 +1760,7 @@ $("#addBlogInnerContent").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -1973,7 +1973,7 @@ $("#addCareerArticles").on("click", function () {
                         })
                     }
                     else {
-                        Swal.fire(`${data.Message}`);
+                        Swal.fire(`Content remains the same. No changes were made.`);
                     }
                 },
             });
@@ -2781,7 +2781,7 @@ $("#addTerms").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -2889,7 +2889,7 @@ $("#addTermsInner").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -3091,7 +3091,7 @@ $("#addTerms_condition").on("click", function () {
                         })
                     }
                     else {
-                        Swal.fire(`${data.Message}`);
+                        Swal.fire(`Content remains the same. No changes were made.`);
                     }
                 },
             });
@@ -3214,7 +3214,7 @@ $("#addContactContent").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
