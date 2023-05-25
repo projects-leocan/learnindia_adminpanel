@@ -163,6 +163,7 @@
             // Clear the editor's content when the "Clear" button is clicked
             $('#CareerGuidanceHelpClear').on('click', () => {
                 editor.setData('');
+                $('.imgPreview').empty(); 
             });
 
         })

@@ -169,6 +169,7 @@
              $('#clear').on('click', () => {
                 editor.setData('');
                 $("#heading").val("");
+                $('.imgPreview').empty(); 
             });
         })
         .catch(error => {

@@ -34,7 +34,7 @@ $(document).ready(function () {
     fetchBlogInnerContent();
     fetchCareerArticlesSection();
     if (window.location.href == base_url + 'careerArticle') {
-        // $("#heading").val(localStorage.getItem("heading"))
+        $("#heading").val(localStorage.getItem("heading"))
 
         if (localStorage.getItem("image") != undefined && localStorage.getItem("image") != null) {
             $(".imgPreview").empty();
@@ -922,6 +922,10 @@ $("#studentSuceessAdd").on("click", function () {
                             confirmButtonText: 'Ok',
                             confirmButtonColor: '#F28123'
                         })
+
+                        $("#student_name").val("");
+                        localStorage.removeItem("student_name");
+                        localStorage.removeItem("latest_succ_story_cnt")
                     }
                     else {
                         Swal.fire(`Content remains the same. No changes were made.`);
@@ -1352,7 +1356,7 @@ $("#saveEducationLogo").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`Content remains the same. No changes were made.`);
+                    Swal.fire(`Education Logo Updated Successfully.`);
                 }
             },
         });
@@ -1495,7 +1499,6 @@ $(document).on('click', "#team_edit", function (event) {
 })
 
 $("#addTeamMembers").on("click", function () {
-
     let teacherName = $("#teacher_name").val();
     let content_image = $("#customFile").prop('files')[0];
     let content_id = localStorage.getItem("last_added_teacher_id");
@@ -1503,8 +1506,13 @@ $("#addTeamMembers").on("click", function () {
     data.append('teacher_name', teacherName);
     data.append('content_image', content_image);
 
-    if (content_id != "" && content_id != undefined) {
+    // Add validation for the teacher name
+    if (teacherName.trim() === "") {
+        Swal.fire("Please enter a valid teacher name.");
+        return;
+    }
 
+    if (content_id != "" && content_id != undefined) {
         data.append('content_id', content_id);
 
         $.ajax({
@@ -1522,7 +1530,7 @@ $("#addTeamMembers").on("click", function () {
                 hideLoader();
             },
             error: function (e) {
-                Swal.fire("Failed To Update Content .");
+                Swal.fire("Failed To Update Content.");
                 hideLoader();
             },
             success: function (data) {
@@ -1535,16 +1543,15 @@ $("#addTeamMembers").on("click", function () {
                     }).then((result) => {
                         fetchOurMemeberContent();
                         localStorage.removeItem("last_added_teacher_id");
-                    })
-                }
-                else {
+                        $("#teacher_name").val(""); // Clear the teacher name input
+                        $('.imgPreview').empty(); 
+                    });
+                } else {
                     Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
-    }
-    else {
-
+    } else {
         $.ajax({
             url: host_url + 'addTeamMember',
             data: data,
@@ -1560,7 +1567,7 @@ $("#addTeamMembers").on("click", function () {
                 hideLoader();
             },
             error: function (e) {
-                showAlert("Failed to Data Add.");
+                showAlert("Failed to Add Data.");
                 hideLoader();
             },
             success: function (data) {
@@ -1571,10 +1578,11 @@ $("#addTeamMembers").on("click", function () {
                         text: `${data.Message}`,
                         confirmButtonText: 'Ok',
                     }).then((result) => {
+                        $('.imgPreview').empty(); 
+                        $("#teacher_name").val(""); // Clear the teacher name input
                         fetchOurMemeberContent();
-                    })
-                }
-                else {
+                    });
+                } else {
                     Swal.fire(`${data.Message}`);
                 }
             },
