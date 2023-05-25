@@ -1709,7 +1709,7 @@ const fetchBlogInnerContent = () => {
             hideLoader();
         },
         error: function (data) {
-            alert("Something went wrong");
+            // alert("Something went wrong");
             hideLoader();
         },
         success: function (data) {
