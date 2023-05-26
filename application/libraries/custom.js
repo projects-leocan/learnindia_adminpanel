@@ -854,7 +854,8 @@ const fetchSucessStorySection = () => {
 
                         $("#story_table").DataTable().row.add([
                             count, content, student_name,
-                            `<a mx-2" id="story_edit" story_id="${currentStory.id}" content="${content}" student_name="${student_name}" ><i class="mx-2 fa fa-edit"></i></a>`
+                            `<a mx-2" id="story_edit" story_id="${currentStory.id}" content="${content}" student_name="${student_name}" ><i class="mx-2 fa fa-edit"></i></a>`+
+                            `<a mx-2" id="story_delete" story_id="${currentStory.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });
                 }
@@ -873,6 +874,50 @@ $(document).on("click", "#story_edit", function (e) {
     localStorage.setItem("student_name", student_name);
 
     window.location = 'successStory';
+})
+
+$(document).on('click', "#story_delete", function (event) {
+    let id = $(this).attr("story_id")
+
+    Swal.fire({
+        title: 'Do You want to delete this success story ?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: host_url + 'deleteSuccessStory',
+                data: {
+                    'content_id': id,
+                },
+                method: 'post',
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status == "Success") {
+                        Swal.fire({
+                            title: '',
+                            text: `${data.Message}`,
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            fetchSucessStorySection();
+                        })
+                    }
+                    else {
+                        Swal.fire(`${data.Message}`);
+                    }
+                }
+            });
+
+        } else if (result.isDenied) {
+
+        }
+    })
 })
 
 $("#studentSuceessAdd").on("click", function () {
