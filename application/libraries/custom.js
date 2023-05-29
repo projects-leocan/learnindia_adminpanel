@@ -2190,7 +2190,7 @@ $("#addServeyContent").on("click", function () {
     }
 });
 
-
+let dynamicOptions = [];
 const addOption = () => {
     var newOption = $('<div>').addClass('form-check');
     var optionLabel = $('<label>').addClass('form-check-label editable-option');
@@ -2219,6 +2219,9 @@ const addOption = () => {
 
         option.addClass('editing');
         inputField.focus();
+
+        // Add the new option to the dynamicOptions array
+        dynamicOptions.push(optionText.text());
     });
 
     // Delete option
@@ -2529,6 +2532,10 @@ $(document).on('click', '.delete-icon', function () {
 $('#addOptionIcon').on('click', addOption);
 
 
+const clearOptions = () => {
+    dynamicOptions = []; // Clear the dynamicOptions array
+    $('.form-check').not('.add-option-container').remove(); // Remove the dynamically added options from the DOM
+};
 
 $(document).on("click", "#delete_question", function (event) {
     let id = $(this).attr('question_id');
@@ -2579,7 +2586,13 @@ $("#submitQuestion").on("click", function () {
     let question = localStorage.getItem('letest_question');
     let question_id = localStorage.getItem("last_added_question");
 
-    // Check if the question has been modified
+    // Validate question
+    if (!question || question == "") {
+        Swal.fire("Please enter a question");
+        return;
+    }
+
+    // // Check if the question has been modified
     if (question_id && question_id !== "" && question_id !== undefined) {
         let originalQuestion = localStorage.getItem("letest_question");
         if (originalQuestion === question) {
@@ -2617,9 +2630,12 @@ $("#submitQuestion").on("click", function () {
                 },
                 success: function (response) {
                     hideLoader();
-                    localStorage.removeItem("letest_question");
-                    localStorage.removeItem("last_added_question");
+                    // localStorage.removeItem("letest_question");
+                    // localStorage.removeItem("last_added_question");
                     localStorage.removeItem("letest_options");
+                    // editorInstance.setData('');
+                    // clearOptions(); // Clear the dynamically added options
+
                 }
             });
 
@@ -2651,6 +2667,7 @@ $("#submitQuestion").on("click", function () {
                 hideLoader();
             },
             success: function (data) {
+                console.log("data -",data);
                 hideLoader();
                 if (data.Status == "Success") {
                     Swal.fire({
@@ -2693,13 +2710,18 @@ $("#submitQuestion").on("click", function () {
                                 hideLoader();
                                 localStorage.removeItem("letest_question");
                                 localStorage.removeItem("last_added_question");
-                                $("#editor").html("")
+                                // clear editor content
+                                editorInstance.setData('');
+                                clearOptions(); // Clear the dynamically added options
+
                             }
                         });
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Question remains the same. Option updated successfully`);
+                    editorInstance.setData('');
+                    clearOptions(); // Clear the dynamically added options
                 }
             },
         });
@@ -2764,7 +2786,9 @@ $("#submitQuestion").on("click", function () {
                             success: function (response) {
                                 hideLoader();
                                 localStorage.removeItem("letest_question");
-                                $("#editor").html("")
+                                editorInstance.setData('');
+                                clearOptions(); // Clear the dynamically added options
+
                             }
                         });
                     })

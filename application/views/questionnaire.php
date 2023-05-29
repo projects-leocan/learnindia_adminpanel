@@ -66,11 +66,11 @@
     }
 
     .editable-option.editing {
-    border-bottom: 2px solid #046A38;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-}
+        border-bottom: 2px solid #046A38;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+    }
 </style>
 <div class="wrapper ScrollStyle">
     <div class="content-wrapper">
@@ -125,17 +125,17 @@
 </div>
 
 <script>
+    let editorInstance; // Declare a variable to store the CKEditor instance
 
-    
-    
     ClassicEditor
         .create(document.querySelector('#editor'))
         .then(editor => {
+            editorInstance = editor; // Store the CKEditor instance in the variable
             // Set the editor's content to the value from localStorage on page load
             let htmlContent = localStorage.getItem("letest_question");
             if (htmlContent) {
                 editor.setData(htmlContent);
-            }else{
+            } else {
                 // Clear the editor content
                 editor.setData('Untitled Question');
             }
@@ -148,7 +148,8 @@
 
             // Clear the editor's content when the "Clear" button is clicked
             $('#clear').on('click', () => {
-                editor.setData('');
+                editorInstance.setData(''); // Clear the CKEditor's content using the stored instance
+                clearOptions(); // Clear the dynamically added options
             });
         })
         .catch(error => {
