@@ -101,6 +101,17 @@
             <div class="card-body">
 
                 <div class="form-group row">
+                    <label for="teacher_name" class="col-sm-2 col-form-label">Teacher Name</label>
+                    <div class="col-sm-6 col-md-4 input-group">
+                        <input type="text" id="teacher_name" value="" class="form-control" placeholder="Teacher Name Here">
+                        <div class="input-group-append">
+                            <button type="submit" id="addTeamMembers" class="mx-2 common-btn-padding btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="form-group row">
                     <label for="" class="col-sm-2 col-form-label">Teacher Name </label>
                     <div class="col-sm-4">
                         <input type="text" id="teacher_name" value="" class="form-control" placeholder="Teacher Name Here">
@@ -108,8 +119,7 @@
                     <div class="col-sm-4">
                         <button type="submit" id="addTeamMembers" class="common-btn-padding btn btn-success mx-4"> Save </button>
                     </div>
-
-                </div>
+                </div> -->
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
