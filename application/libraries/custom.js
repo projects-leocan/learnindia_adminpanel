@@ -172,7 +172,7 @@ $("#back_to_article").on("click", function (event) {
 });
 // SERVEY SECTION
 $("#serveyArea").on("click", function (event) {
-    window.location = 'serveyContent';
+    window.location = 'surveyContent';
 });
 $("#setQuestion").on("click", function (event) {
     window.location = 'questionnaire';
@@ -451,7 +451,7 @@ const fetchGuidanceHelpContent = () => {
                     $(".imgPreview").empty();
                     $('.imgPreview').append(`<img src=${image_url}${data.Response.image} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
                     $('.imgPreview').append(`<img src=${image_url}${data.Response.image2} class="toZoom mx-2 mt-2" style="width:100px;height:100px;object-fit: contain;"/>`);
-                   
+
                 }
 
             }
@@ -854,7 +854,7 @@ const fetchSucessStorySection = () => {
 
                         $("#story_table").DataTable().row.add([
                             count, content, student_name,
-                            `<a mx-2" id="story_edit" story_id="${currentStory.id}" content="${content}" student_name="${student_name}" ><i class="mx-2 fa fa-edit"></i></a>`+
+                            `<a mx-2" id="story_edit" story_id="${currentStory.id}" content="${content}" student_name="${student_name}" ><i class="mx-2 fa fa-edit"></i></a>` +
                             `<a mx-2" id="story_delete" story_id="${currentStory.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });
@@ -1395,14 +1395,16 @@ $("#saveEducationLogo").on("click", function () {
                         confirmButtonText: 'Ok',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            fetchEducationLogo(); // Call the function to fetch education logo
-                            localStorage.removeItem("logo_id");
+
                         }
                     })
                 }
                 else {
                     Swal.fire(`Education Logo Updated Successfully.`);
                 }
+                // Remove image preview after upload
+                $(".imgPreview").empty();
+                $("#customLOGO").val(""); // Reset the file input
             },
         });
     }
@@ -1427,23 +1429,21 @@ $("#saveEducationLogo").on("click", function () {
                 hideLoader();
             },
             success: function (data) {
-                hideLoader();
+                fetchEducationLogo();
                 if (data.Status == "Success") {
                     Swal.fire({
                         title: '',
                         text: `${data.Message}`,
                         confirmButtonText: 'Ok',
                         confirmButtonColor: '#F28123'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            fetchEducationLogo(); // Call the function to fetch education logo
-                        }
                     })
-                    fetchEducationLogo();
                 }
                 else {
                     Swal.fire(`${data.Message}`);
                 }
+                // Remove image preview after upload
+                $(".imgPreview").empty();
+                $("#customLOGO").val(""); // Reset the file input
             },
         });
     }
@@ -1588,8 +1588,9 @@ $("#addTeamMembers").on("click", function () {
                     }).then((result) => {
                         fetchOurMemeberContent();
                         localStorage.removeItem("last_added_teacher_id");
+                        $(".imgPreview").empty();
                         $("#teacher_name").val(""); // Clear the teacher name input
-                        $('.imgPreview').empty(); 
+                        $("#customFile").val(""); // Reset the file input
                     });
                 } else {
                     Swal.fire(`Content remains the same. No changes were made.`);
@@ -1623,7 +1624,8 @@ $("#addTeamMembers").on("click", function () {
                         text: `${data.Message}`,
                         confirmButtonText: 'Ok',
                     }).then((result) => {
-                        $('.imgPreview').empty(); 
+                        $(".imgPreview").empty();
+                        $("#customFile").val(""); // Reset the file input
                         $("#teacher_name").val(""); // Clear the teacher name input
                         fetchOurMemeberContent();
                     });
@@ -1974,7 +1976,6 @@ $(document).on('click', "#article_delete", function (event) {
 })
 
 $("#addCareerArticles").on("click", function () {
-
     let articles = localStorage.getItem('articlesContent');
     let heading = $("#heading").val();
     let content_image = $("#customFile").prop('files')[0];
@@ -1982,18 +1983,15 @@ $("#addCareerArticles").on("click", function () {
 
     if (articles == "" || articles == undefined || articles == null) {
         Swal.fire("Please fill in the article field");
-    }
-    else if (heading == "" || heading == undefined || heading == null) {
+    } else if (heading == "" || heading == undefined || heading == null) {
         Swal.fire("Please fill in the heading field");
-    }
-    else {
+    } else {
         let data = new FormData();
         data.append('content', articles);
         data.append('heading', heading);
         data.append('content_image', content_image);
 
         if (content_id != "" && content_id != undefined) {
-
             data.append('content_id', content_id);
 
             $.ajax({
@@ -2011,7 +2009,7 @@ $("#addCareerArticles").on("click", function () {
                     hideLoader();
                 },
                 error: function (e) {
-                    Swal.fire("Failed To Update Content .");
+                    Swal.fire("Failed To Update Content.");
                     hideLoader();
                 },
                 success: function (data) {
@@ -2022,20 +2020,23 @@ $("#addCareerArticles").on("click", function () {
                             text: `${data.Message}`,
                             confirmButtonText: 'Ok'
                         }).then((result) => {
+                            editorInstance.setData(''); // Clear the CKEditor's content
                             localStorage.removeItem("last_added_article_id");
                             localStorage.removeItem("articlesContent");
                             localStorage.removeItem("heading");
                             localStorage.removeItem("image");
-                        })
-                    }
-                    else {
+
+                            $("#heading").val("");
+                            // Remove image preview after upload
+                            $(".imgPreview").empty();
+                            $("#customFile").val(""); // Reset the file input
+                        });
+                    } else {
                         Swal.fire(`Content remains the same. No changes were made.`);
                     }
                 },
             });
-        }
-        else {
-
+        } else {
             $.ajax({
                 url: host_url + 'addCareerArticles',
                 data: data,
@@ -2051,7 +2052,7 @@ $("#addCareerArticles").on("click", function () {
                     hideLoader();
                 },
                 error: function (e) {
-                    showAlert("Failed to Data Add.");
+                    showAlert("Failed to Add Data.");
                     hideLoader();
                 },
                 success: function (data) {
@@ -2062,10 +2063,14 @@ $("#addCareerArticles").on("click", function () {
                             text: `${data.Message}`,
                             confirmButtonText: 'Ok'
                         }).then((result) => {
-
-                        })
-                    }
-                    else {
+                            editorInstance.setData(''); // Clear the CKEditor's content
+                            $("#heading").val("");
+                            localStorage.removeItem("articlesContent");
+                            // Remove image preview after upload
+                            $(".imgPreview").empty();
+                            $("#customFile").val(""); // Reset the file input
+                        });
+                    } else {
                         Swal.fire(`${data.Message}`);
                     }
                 },
@@ -2073,6 +2078,7 @@ $("#addCareerArticles").on("click", function () {
         }
     }
 });
+
 
 // SERVEY SECTION
 
@@ -2261,7 +2267,7 @@ const fetchServeyForm = () => {
                         // let checkboxHtml = `<input type="checkbox" class="row-checkbox" user_id="${currentUser.id}">`;
 
                         $("#survey_table").DataTable().row.add([
-                            count, first_name, last_name, email, date_of_birth, gender, grade,view,submitted_date,
+                            count, first_name, last_name, email, date_of_birth, gender, grade, view, submitted_date,
                             `<a mx-2" id="survey_delete" user_id="${currentUser.id}" ><i class="mx-2 fa fa-trash"></i></a>`
                         ]).draw();
                     });

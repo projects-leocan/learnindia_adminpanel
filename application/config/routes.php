@@ -70,7 +70,7 @@ $route['blogInner'] = 'Home/blogInner';
 $route['careerArticle'] = 'Home/careerArticle';
 $route['show_articles'] = 'Home/show_articles';
 // SERVEY SECTION 
-$route['serveyContent'] = 'Home/serveyContent';
+$route['surveyContent'] = 'Home/serveyContent';
 $route['questionnaire'] = 'Home/questionnaire';
 $route['surveyFormDetails'] = 'Home/surveyFormDetails';
 $route['show_question'] = 'Home/show_question';
