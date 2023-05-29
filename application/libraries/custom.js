@@ -3150,6 +3150,8 @@ $("#addTerms_condition").on("click", function () {
                             localStorage.removeItem("last_added_id_terms_condtion_id");
                             localStorage.removeItem("latest_terms_cnt");
                             localStorage.removeItem("TermsHeading");
+                            editorInstance.setData('');
+                            $("#heading").val("");
                         })
                     }
                     else {
@@ -3187,12 +3189,12 @@ $("#addTerms_condition").on("click", function () {
                             confirmButtonText: 'Ok'
                         }).then((result) => {
                             $("#heading").val("");
+                            editorInstance.setData('');
                         })
                     }
                     else {
                         Swal.fire(`${data.Message}`);
                     }
-                    window.location.reload();
                 },
             });
         }
