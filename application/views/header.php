@@ -44,6 +44,9 @@
 
     <!-- <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script> -->
 
+      <!-- favIcon -->
+      <link rel="icon" type="image/png" href="dist/img/favicon.png">
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -69,6 +72,7 @@
 
             .swal2-styled.swal2-confirm {
                 background-color: #046A38 !important;
+                margin-right: 10px !important;
             }
 
             .swal2-styled.swal2-confirm:focus {
