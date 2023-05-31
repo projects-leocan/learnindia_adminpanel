@@ -503,7 +503,7 @@ $("#saveCareerGuidanceHelp").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
@@ -766,7 +766,7 @@ $("#counsellingSectionAdd").on("click", function () {
                         })
                     }
                     else {
-                        Swal.fire(`${data.Message}`);
+                        Swal.fire(`Content remains the same. No changes were made.`);
                     }
                 },
             });
@@ -2146,7 +2146,7 @@ $("#addServeyContent").on("click", function () {
                     })
                 }
                 else {
-                    Swal.fire(`${data.Message}`);
+                    Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
