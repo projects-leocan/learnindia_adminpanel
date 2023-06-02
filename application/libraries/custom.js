@@ -499,12 +499,14 @@ $("#saveCareerGuidanceHelp").on("click", function () {
             contentType: false,
             dataType: false,
             beforeSend: function (data) {
-
+                showLoader();
             },
             complete: function (data) {
+                hideLoader();
             },
             error: function (e) {
                 Swal.fire("Failed To Update Content .");
+                hideLoader();
             },
             success: function (data) {
                 if (data.Status == "Success") {
@@ -531,12 +533,14 @@ $("#saveCareerGuidanceHelp").on("click", function () {
             contentType: false,
             dataType: false,
             beforeSend: function (data) {
-
+                showLoader();
             },
             complete: function (data) {
+                hideLoader();
             },
             error: function (e) {
                 Swal.fire("Failed to Data Add.");
+                hideLoader();
             },
             success: function (data) {
                 if (data.Status == "Success") {
