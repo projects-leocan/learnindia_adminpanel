@@ -467,6 +467,19 @@ $("#saveCareerGuidanceHelp").on("click", function () {
     let content_image = $("#customFile").prop('files')[0];
     let content_image1 = $("#customFile").prop('files')[1];
 
+    
+    // Check if a file is selected
+    if (!content_image || content_image.type.split('/')[0] !== 'image') {
+        Swal.fire("Please select an image file.");
+        return;
+    }
+
+      // Check if content_image1 exists and is not an image
+      if (content_image1 && content_image1.type.split('/')[0] !== 'image') {
+        Swal.fire("Please select only image files.");
+        return;
+    }
+
     let data = new FormData();
 
     data.append('content', careerGuidanceContent);
