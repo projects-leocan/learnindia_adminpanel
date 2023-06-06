@@ -58,9 +58,14 @@
 </div>
 
 <script>
+        let editorInstance; // Declare a variable to store the CKEditor instance
+        
+
     ClassicEditor
         .create(document.querySelector('#editor'))
         .then(editor => {
+
+            editorInstance = editor; // Store the CKEditor instance in the variable
             // Set the editor's content to the value from localStorage on page load
             let htmlContent = localStorage.getItem("latest_succ_story_cnt");
             if (htmlContent) {

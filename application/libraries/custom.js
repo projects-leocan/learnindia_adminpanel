@@ -18,14 +18,16 @@ $(document).ready(function () {
     fetchGuidanceHelpContent();
     fetchCareerJourneyContent();
     fetchCounsellingSection();
-    fetchSucessStorySection();
+    if (window.location.href == base_url + 'showStory') {
+        fetchSucessStorySection();
+    }
+
     if (window.location.href == base_url + 'successStory') {
         let sName = localStorage.getItem("student_name");
         if (sName != null && sName != undefined && sName != "") {
             $("#student_name").val(sName);
         }
     }
-    fetchSucessStorySection();
     fetchAboutContent();
     fetchAboutInnerContent();
     fetchEducationLogo();
@@ -1001,7 +1003,7 @@ $("#studentSuceessAdd").on("click", function () {
                             confirmButtonText: 'Ok',
                             confirmButtonColor: '#F28123'
                         })
-
+                        editorInstance.setData(''); // Clear the CKEditor's content
                         $("#student_name").val("");
                         localStorage.removeItem("student_name");
                         localStorage.removeItem("latest_succ_story_cnt")
@@ -1041,6 +1043,8 @@ $("#studentSuceessAdd").on("click", function () {
                             confirmButtonText: 'Ok',
                             confirmButtonColor: '#F28123'
                         }).then((result) => {
+                            editorInstance.setData(''); // Clear the CKEditor's content
+                            $("#student_name").val("");
                             // localStorage.setItem("last_added_id_sus_story", data.last_added);
                         })
                     }
