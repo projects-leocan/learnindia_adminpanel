@@ -467,16 +467,33 @@ $("#saveCareerGuidanceHelp").on("click", function () {
     let content_image = $("#customFile").prop('files')[0];
     let content_image1 = $("#customFile").prop('files')[1];
 
-    
-    // Check if a file is selected
-    if (!content_image || content_image.type.split('/')[0] !== 'image') {
-        Swal.fire("Please select an image file.");
+
+    if (careerGuidanceContent == undefined || careerGuidanceContent == null || careerGuidanceContent == "") {
+        Swal.fire("Please add content");
         return;
     }
 
-      // Check if content_image1 exists and is not an image
-      if (content_image1 && content_image1.type.split('/')[0] !== 'image') {
-        Swal.fire("Please select only image files.");
+    // Check if the first image is not selected
+    if (!content_image) {
+        Swal.fire("Please select the first image.");
+        return;
+    }
+
+    // Check if the first image is not a valid image file
+    if (content_image.type.split('/')[0] !== 'image') {
+        Swal.fire("The selected file for the first image is not a valid image.");
+        return;
+    }
+
+    // Check if the second image is not selected
+    if (!content_image1) {
+        Swal.fire("Please select the second image.");
+        return;
+    }
+
+    // Check if the second image is not a valid image file
+    if (content_image1.type.split('/')[0] !== 'image') {
+        Swal.fire("The selected file for the second image is not a valid image.");
         return;
     }
 
@@ -2684,7 +2701,6 @@ $("#submitQuestion").on("click", function () {
                 hideLoader();
             },
             success: function (data) {
-                console.log("data -",data);
                 hideLoader();
                 if (data.Status == "Success") {
                     Swal.fire({
