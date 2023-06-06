@@ -1585,9 +1585,21 @@ $("#addTeamMembers").on("click", function () {
     data.append('teacher_name', teacherName);
     data.append('content_image', content_image);
 
+    
     // Add validation for the teacher name
     if (teacherName.trim() === "") {
-        Swal.fire("Please enter a valid teacher name.");
+        Swal.fire("Please enter  teacher name.");
+        return;
+    }
+
+    if (!content_image) {
+        Swal.fire("Please select the image.");
+        return;
+    }
+
+    // Check if the first image is not a valid image file
+    if (content_image.type.split('/')[0] !== 'image') {
+        Swal.fire("Please select an image file");
         return;
     }
 
@@ -1617,7 +1629,7 @@ $("#addTeamMembers").on("click", function () {
                 if (data.Status == "Success") {
                     Swal.fire({
                         title: '',
-                        text: `${data.Message}`,
+                        text: `Team Member updated successfully`,
                         confirmButtonText: 'Ok',
                     }).then((result) => {
                         fetchOurMemeberContent();
@@ -1655,7 +1667,7 @@ $("#addTeamMembers").on("click", function () {
                 if (data.Status == "Success") {
                     Swal.fire({
                         title: '',
-                        text: `${data.Message}`,
+                        text: `Team Member added successfully`,
                         confirmButtonText: 'Ok',
                     }).then((result) => {
                         $(".imgPreview").empty();
