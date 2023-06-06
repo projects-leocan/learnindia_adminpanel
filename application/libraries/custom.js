@@ -2015,6 +2015,12 @@ $("#addCareerArticles").on("click", function () {
     let content_image = $("#customFile").prop('files')[0];
     let content_id = localStorage.getItem("last_added_article_id");
 
+      // Check if the first image is not a valid image file
+      if (content_image.type.split('/')[0] !== 'image') {
+        Swal.fire("Please select an image file");
+        return;
+    }
+
     if (articles == "" || articles == undefined || articles == null) {
         Swal.fire("Please fill in the article field");
     } else if (heading == "" || heading == undefined || heading == null) {
