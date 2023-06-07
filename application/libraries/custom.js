@@ -465,48 +465,50 @@ $("#saveCareerGuidanceHelp").on("click", function () {
     let careerGuidanceContent = localStorage.getItem('last_career_gui_content');
     let content_id = localStorage.getItem("last_career_gui_id");
 
-    let content_image = $("#customFile").prop('files')[0];
-    let content_image1 = $("#customFile").prop('files')[1];
-    
+    let content_image = $("#customFile")[0].files[0];
+    let content_image1 = $("#customFile")[0].files[1];
+
 
     if (careerGuidanceContent == undefined || careerGuidanceContent == null || careerGuidanceContent == "") {
         Swal.fire("Please add content");
         return;
     }
-    
+
     // Check if the first image is not selected and not already appended
     if (!content_image && $('.imgPreview').children().length === 0) {
-        Swal.fire("Please select the first image.");
+        Swal.fire("Please select the only 2  image.");
         return;
     }
-    
+
     // Check if the first image is not a valid image file
     if (content_image && content_image.type.split('/')[0] !== 'image') {
         Swal.fire("The selected file for the first image is not a valid image.");
         return;
     }
-    
+
     // Check if the second image is not selected and not already appended
     if (!content_image1 && $('.imgPreview').children().length === 0) {
         Swal.fire("Please select the second image.");
         return;
     }
-    
+
     // Check if the second image is not a valid image file
     if (content_image1 && content_image1.type.split('/')[0] !== 'image') {
         Swal.fire("The selected file for the second image is not a valid image.");
         return;
     }
 
-    
     let data = new FormData();
 
     data.append('content', careerGuidanceContent);
-    data.append('content_image', content_image);
-    data.append('content_image2', content_image1);
+    if (content_image) {
+        data.append('content_image', content_image);
+    }
+    if (content_image1) {
+        data.append('content_image2', content_image1);
+    }
 
     if (content_id != "" && content_id != undefined) {
-
         data.append('content_id', content_id);
 
         $.ajax({
@@ -516,7 +518,6 @@ $("#saveCareerGuidanceHelp").on("click", function () {
             cache: false,
             processData: false,
             contentType: false,
-            dataType: false,
             beforeSend: function (data) {
                 showLoader();
             },
@@ -524,7 +525,7 @@ $("#saveCareerGuidanceHelp").on("click", function () {
                 hideLoader();
             },
             error: function (e) {
-                Swal.fire("Failed To Update Content .");
+                Swal.fire("Failed To Update Content.");
                 hideLoader();
             },
             success: function (data) {
@@ -534,15 +535,13 @@ $("#saveCareerGuidanceHelp").on("click", function () {
                         text: `${data.Message}`,
                         confirmButtonText: 'Ok'
                     }).then((result) => {
-                    })
-                }
-                else {
+                    });
+                } else {
                     Swal.fire(`Content remains the same. No changes were made.`);
                 }
             },
         });
-    }
-    else {
+    } else {
         $.ajax({
             url: host_url + 'addGuidenceContent',
             data: data,
@@ -550,7 +549,6 @@ $("#saveCareerGuidanceHelp").on("click", function () {
             cache: false,
             processData: false,
             contentType: false,
-            dataType: false,
             beforeSend: function (data) {
                 showLoader();
             },
@@ -558,7 +556,7 @@ $("#saveCareerGuidanceHelp").on("click", function () {
                 hideLoader();
             },
             error: function (e) {
-                Swal.fire("Failed to Data Add.");
+                Swal.fire("Failed to Add Data.");
                 hideLoader();
             },
             success: function (data) {
@@ -572,15 +570,15 @@ $("#saveCareerGuidanceHelp").on("click", function () {
                         if (result.isConfirmed) {
                             localStorage.setItem("last_career_gui_id", data.last_added);
                         }
-                    })
-                }
-                else {
+                    });
+                } else {
                     Swal.fire(`${data.Message}`);
                 }
             },
         });
     }
 });
+
 
 $(document).on("change", "#customFile", function () {
     if ($(this)[0].files.length > 2) {
