@@ -474,29 +474,48 @@ $("#saveCareerGuidanceHelp").on("click", function () {
         return;
     }
 
-    // Check if the first image is not selected and not already appended
-    if (!content_image && $('.imgPreview').children().length === 0) {
-        Swal.fire("Please select the only 2  image.");
+
+    // Check if both images are selected
+    if (!content_image || !content_image1) {
+        Swal.fire("Please select 2 images.");
         return;
     }
 
-    // Check if the first image is not a valid image file
-    if (content_image && content_image.type.split('/')[0] !== 'image') {
-        Swal.fire("The selected file for the first image is not a valid image.");
+    // Check if the first image is a valid image file
+    if (content_image.type.split('/')[0] !== 'image') {
+        Swal.fire("Please select a valid image file for the first image.");
         return;
     }
 
-    // Check if the second image is not selected and not already appended
-    if (!content_image1 && $('.imgPreview').children().length === 0) {
-        Swal.fire("Please select the second image.");
+    // Check if the second image is a valid image file
+    if (content_image1.type.split('/')[0] !== 'image') {
+        Swal.fire("Please select a valid image file for the second image.");
         return;
     }
 
-    // Check if the second image is not a valid image file
-    if (content_image1 && content_image1.type.split('/')[0] !== 'image') {
-        Swal.fire("The selected file for the second image is not a valid image.");
-        return;
-    }
+    // // Check if the first image is not selected and not already appended
+    // if (!content_image && $('.imgPreview').children().length === 0) {
+    //     Swal.fire("Please select the only 2  image.");
+    //     return;
+    // }
+
+    // // Check if the first image is not a valid image file
+    // if (content_image && content_image.type.split('/')[0] !== 'image') {
+    //     Swal.fire("The selected file for the first image is not a valid image.");
+    //     return;
+    // }
+
+    // // Check if the second image is not selected and not already appended
+    // if (!content_image1 && $('.imgPreview').children().length === 0) {
+    //     Swal.fire("Please select the second image.");
+    //     return;
+    // }
+
+    // // Check if the second image is not a valid image file
+    // if (content_image1 && content_image1.type.split('/')[0] !== 'image') {
+    //     Swal.fire("The selected file for the second image is not a valid image.");
+    //     return;
+    // }
 
     let data = new FormData();
 
@@ -1587,7 +1606,7 @@ $("#addTeamMembers").on("click", function () {
     data.append('teacher_name', teacherName);
     data.append('content_image', content_image);
 
-    
+
     // Add validation for the teacher name
     if (teacherName.trim() === "") {
         Swal.fire("Please enter  teacher name.");
