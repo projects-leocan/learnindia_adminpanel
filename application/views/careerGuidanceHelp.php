@@ -157,7 +157,7 @@
                 // Save the latest HTML content to localStorage whenever the editor content changes
                 let editorData = editor.getData();
                 let htmlContent = editorData.trim();
-                localStorage.setItem("careerGuidanceContent", htmlContent);
+                localStorage.setItem("last_career_gui_content", htmlContent);
             });
 
             // Clear the editor's content when the "Clear" button is clicked
