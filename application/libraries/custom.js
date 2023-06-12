@@ -1411,6 +1411,21 @@ $("#saveEducationLogo").on("click", function () {
     let image = $("#customLOGO").prop('files');
     let id = localStorage.getItem("logo_id");
 
+    if (!image || image.length === 0) {
+        Swal.fire("Please select an image.");
+        return;
+    }
+
+    // Validate each file
+    for (let i = 0; i < image.length; i++) {
+        const fileName = image[i].name;
+        const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+        if (!['jpeg', 'jpg', 'png'].includes(ext)) {
+            Swal.fire("Only image files (JPEG, JPG, PNG) are allowed.");
+            return;
+        }
+    }
+
     let data = new FormData();
     for (let i = 0; i < image.length; i++) {
         data.append("image[]", image[i]);
@@ -1614,19 +1629,19 @@ $("#addTeamMembers").on("click", function () {
     }
 
     if (!content_image) {
-        Swal.fire("Please select the image.");
+        Swal.fire("Please select an image.");
         return;
     }
 
-    // Check if the first image is not a valid image file
-    if (content_image.type.split('/')[0] !== 'image') {
-        Swal.fire("Please select an image file");
+    // Check if the selected file is not a valid image file
+    const allowedExtensions = ['jpg', 'jpeg', 'png'];
+    const fileExtension = content_image.name.split('.').pop().toLowerCase();
+    if (!allowedExtensions.includes(fileExtension)) {
+        Swal.fire("Only JPEG, JPG, and PNG image files are allowed.");
         return;
     }
-    if (content_image.type.split('/')[0] !== 'image/gif') {
-        Swal.fire("Please select an image file");
-        return;
-    }
+
+
 
     if (content_id != "" && content_id != undefined) {
         data.append('content_id', content_id);
@@ -1707,6 +1722,7 @@ $("#addTeamMembers").on("click", function () {
         });
     }
 });
+
 
 // BLOG SECTION 
 const fetchBlogContent = () => {

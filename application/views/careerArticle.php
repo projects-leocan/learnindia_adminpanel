@@ -119,7 +119,7 @@
                     <label class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
                         <div class="custom-file">
-                            <input type="file" class="form-control-file customFile" name="imageFile" id="customFile">
+                            <input type="file" style="margin-top: 5px;" class="form-control-file customFile" name="imageFile" id="customFile">
                             <a href="#">
                                 <div class="imgPreview">
 

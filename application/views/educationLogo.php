@@ -99,36 +99,31 @@
                 </div>
             </div>
             <div class="card-body">
-
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Logo </label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-2 col-form-label">Logo</label>
+                    <div class="col-sm-4">
                         <div class="custom-file">
-                            <input type="file" class="form-control-file customFile" name="imageFile" id="customLOGO"
+                            <input type="file" style="margin-top: 5px;" class="form-control-file customFile" name="imageFile" id="customLOGO"
                                 multiple>
                             <a href="#">
-                                <div class="imgPreview">
-
-                                </div>
+                                <div class="imgPreview"></div>
                             </a>
                         </div>
                     </div>
                     <div class="col-sm-3" id="setDesign">
-                        <button type="submit" id="saveEducationLogo" class="common-btn-padding btn btn-success"> Save
-                        </button>
+                        <button type="submit" id="saveEducationLogo"
+                            class="common-btn-padding btn btn-success">Save</button>
                     </div>
                 </div>
                 <div id="loader" class="fulfilling-bouncing-circle-spinner">
                     <div class="circle"></div>
                     <div class="orbit"></div>
                 </div>
-                
             </div>
-            <section class="content mt-5">
+            <section class="content mt-3">
                 <div class="container-fluid">
                     <div class="table-responsive">
-                        <table id="logo_table" class="table table-bordered table-striped"
-                            style="text-align: center;">
+                        <table id="logo_table" class="table table-bordered table-striped" style="text-align: center;">
                             <thead>
                                 <tr>
                                     <th>No</th>
