@@ -468,64 +468,35 @@ $("#saveCareerGuidanceHelp").on("click", function () {
     let content_image = $("#customFile")[0].files[0];
     let content_image1 = $("#customFile")[0].files[1];
 
-
     if (careerGuidanceContent == undefined || careerGuidanceContent == null || careerGuidanceContent == "") {
         Swal.fire("Please add content");
         return;
     }
 
-
-    // Check if both images are selected
-    if (!content_image || !content_image1) {
-        Swal.fire("Please select 2 images.");
-        return;
-    }
-
-    // Check if the first image is a valid image file
-    if (content_image.type.split('/')[0] !== 'image') {
-        Swal.fire("Please select a valid image file for the first image.");
-        return;
-    }
-
-    // Check if the second image is a valid image file
-    if (content_image1.type.split('/')[0] !== 'image') {
-        Swal.fire("Please select a valid image file for the second image.");
-        return;
-    }
-
     // // Check if the first image is not selected and not already appended
-    // if (!content_image && $('.imgPreview').children().length === 0) {
-    //     Swal.fire("Please select the only 2  image.");
-    //     return;
-    // }
+    if (!content_image && $('.imgPreview').children().length === 0 && !content_image1 && $('.imgPreview').children().length === 0) {
+        Swal.fire("Please select the only 2 image.");
+        return;
+    }
 
-    // // Check if the first image is not a valid image file
-    // if (content_image && content_image.type.split('/')[0] !== 'image') {
-    //     Swal.fire("The selected file for the first image is not a valid image.");
-    //     return;
-    // }
 
-    // // Check if the second image is not selected and not already appended
-    // if (!content_image1 && $('.imgPreview').children().length === 0) {
-    //     Swal.fire("Please select the second image.");
-    //     return;
-    // }
-
-    // // Check if the second image is not a valid image file
-    // if (content_image1 && content_image1.type.split('/')[0] !== 'image') {
-    //     Swal.fire("The selected file for the second image is not a valid image.");
-    //     return;
-    // }
+    // Check if the selected files are not valid image files
+    const allowedExtensions = ['jpg', 'jpeg', 'png'];
+    const fileExtension = content_image ? content_image.name.split('.').pop().toLowerCase() : null;
+    const fileExtension2 = content_image1 ? content_image1.name.split('.').pop().toLowerCase() : null;
+    if (content_image && !allowedExtensions.includes(fileExtension)) {
+        Swal.fire("Only JPEG, JPG, and PNG image files are allowed for the first image.");
+        return;
+    }
+    if (content_image1 && !allowedExtensions.includes(fileExtension2)) {
+        Swal.fire("Only JPEG, JPG, and PNG image files are allowed for the second image.");
+        return;
+    }
 
     let data = new FormData();
-
     data.append('content', careerGuidanceContent);
-    if (content_image) {
-        data.append('content_image', content_image);
-    }
-    if (content_image1) {
-        data.append('content_image2', content_image1);
-    }
+    data.append('content_image', content_image);
+    data.append('content_image2', content_image1);
 
     if (content_id != "" && content_id != undefined) {
         data.append('content_id', content_id);
@@ -597,6 +568,7 @@ $("#saveCareerGuidanceHelp").on("click", function () {
         });
     }
 });
+
 
 
 $(document).on("change", "#customFile", function () {
