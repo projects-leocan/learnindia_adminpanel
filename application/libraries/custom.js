@@ -2324,35 +2324,27 @@ const fetchServeyForm = () => {
         },
         success: function (data) {
             hideLoader();
+            let table = $('#survey_table').DataTable();
+            table.clear().draw();
             if (data.success) {
-                // let table = $('#survey_table').DataTable({
-                //     "bDestroy": true,
-                //     columnDefs: [
-                //       { orderable: false, targets: [0] } // Disable sorting for the checkbox column
-                //     ]
-                //   });
-                let table = $('#survey_table').DataTable();
-                table.clear().draw();
-                if (data.success) {
-                    data.Response.forEach(function (currentUser, index) {
-                        let count = index + 1;
-                        let first_name = currentUser.first_name;
-                        let last_name = currentUser.last_name;
-                        let email = currentUser.email;
-                        let date_of_birth = currentUser.date_of_birth;
-                        let gender = currentUser.gender;
-                        let grade = currentUser.grade;
-                        let submitted_date = currentUser.submitted_date;
-                        let view = `<a mx-2" id="survey_view" user_id="${currentUser.id}" email="${email}"><i class="mx-2 fa fa-eye"></i></a>`;
+                data.Response.forEach(function (currentUser, index) {
+                    let count = index + 1;
+                    let first_name = currentUser.first_name;
+                    let last_name = currentUser.last_name;
+                    let email = currentUser.email;
+                    let date_of_birth = currentUser.date_of_birth;
+                    let gender = currentUser.gender;
+                    let grade = currentUser.grade;
+                    let submitted_date = currentUser.submitted_date;
+                    let view = `<a mx-2" id="survey_view" user_id="${currentUser.id}" email="${email}"><i class="mx-2 fa fa-eye"></i></a>`;
 
-                        // let checkboxHtml = `<input type="checkbox" class="row-checkbox" user_id="${currentUser.id}">`;
+                    // let checkboxHtml = `<input type="checkbox" class="row-checkbox" user_id="${currentUser.id}">`;
 
-                        $("#survey_table").DataTable().row.add([
-                            count, first_name, last_name, email, date_of_birth, gender, grade, view, submitted_date,
-                            `<a mx-2" id="survey_delete" user_id="${currentUser.id}" ><i class="mx-2 fa fa-trash"></i></a>`
-                        ]).draw();
-                    });
-                }
+                    $("#survey_table").DataTable().row.add([
+                        count, first_name, last_name, email, date_of_birth, gender, grade, view, submitted_date,
+                        `<a mx-2" id="survey_delete" user_id="${currentUser.id}" ><i class="mx-2 fa fa-trash"></i></a>`
+                    ]).draw();
+                });
             }
         }
     });
