@@ -1623,6 +1623,10 @@ $("#addTeamMembers").on("click", function () {
         Swal.fire("Please select an image file");
         return;
     }
+    if (content_image.type.split('/')[0] !== 'image/gif') {
+        Swal.fire("Please select an image file");
+        return;
+    }
 
     if (content_id != "" && content_id != undefined) {
         data.append('content_id', content_id);
