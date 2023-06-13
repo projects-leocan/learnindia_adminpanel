@@ -112,7 +112,7 @@
             <div class="container-fluid">
                 <div class="row mb-2" id="manage">
                     <div class="col-sm-10">
-                        <h1 class="m-0 mx-2"> Our Team </h1>
+                        <h1 class="m-0 heading-align"> Our Team </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">

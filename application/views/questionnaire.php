@@ -78,7 +78,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-10">
-                        <h1 class="m-0 mx-3">Add Questionnaire</h1>
+                        <h1 class="m-0 heading-align">Add Questionnaire</h1>
                     </div>
                     <div class="col-sm-2">
                         <ol class="breadcrumb float-sm-right">
@@ -97,7 +97,7 @@
 
                 </div>
 
-                <h4>Add Options</h4>
+                <h4 class="heading-align">Add Options</h4>
                 <div class="form-group row">
                     <div class="col-sm-4" id="optionsContainer">
                         <div class="form-check add-option-container">
@@ -110,7 +110,7 @@
                 </div>
 
             </div>
-            <button type="submit" id="submitQuestion" class="common-btn-padding btn btn-success  mx-3"> Save </button>
+            <button type="submit" id="submitQuestion" class="common-btn-padding btn btn-success  mx-4"> Save </button>
             <button type="submit" id="clear" class="mx-1 common-btn-padding btn btn-danger "> Clear </button>
 
             <!-- <div id="loader" class="fulfilling-bouncing-circle-spinner">

@@ -16,7 +16,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-10">
-                        <h1 class="m-0 mx-2">How we will help you in your Career journey ?</h1>
+                        <h1 class="m-0 heading-align">How we will help you in your Career journey ?</h1>
                     </div>
                     <div class="col-sm-2">
                         <ol class="breadcrumb float-sm-right">

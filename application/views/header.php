@@ -135,6 +135,10 @@
                 justify-content: space-evenly !important;
             }
 
+            .heading-align {
+                margin-left: 0.7rem!important;
+            }
+
             .submenu {
                 display: none;
             }

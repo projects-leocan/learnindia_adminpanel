@@ -87,9 +87,9 @@
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2" id="manage">
+                <div class="row mb-2">
                     <div class="col-sm-10">
-                        <h1 class="m-0 mx-2">Career articles</h1>
+                        <h1 class="m-0 heading-align">Career articles</h1>
                     </div>
                     <div class="col-sm-2">
                         <ol class="breadcrumb float-sm-right">
