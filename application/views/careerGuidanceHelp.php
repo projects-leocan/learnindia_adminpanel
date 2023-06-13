@@ -144,6 +144,68 @@
 </div>
 
 <script>
+ClassicEditor
+    .create(document.querySelector('#editor'))
+    .then(editor => {
+        // Set the editor's content to the value from localStorage on page load
+        let DBhtmlContent = localStorage.getItem("last_career_gui_content");
+        if (DBhtmlContent) {
+            editor.setData(DBhtmlContent);
+        }
+
+        editor.model.document.on('change:data', () => {
+            // Save the latest HTML content to localStorage whenever the editor content changes
+            let editorData = editor.getData();
+            let htmlContent = editorData.trim();
+            localStorage.setItem("last_career_gui_content", htmlContent);
+        });
+
+        // Clear the editor's content when the "Clear" button is clicked
+        $('#CareerGuidanceHelpClear').on('click', () => {
+            editor.setData('');
+            $(".imgPreview").empty();
+            $("#customFile").val(""); // Reset the file input
+        });
+
+        // Disable drag and drop for images and video files
+        editor.editing.view.document.on('drop', (event, data) => {
+            const { linkTarget } = editor.config.get('link');
+            const { files } = event.dataTransfer;
+            
+            for (const file of files) {
+                const isImage = file.type.includes('image/');
+                const isVideo = file.type.includes('video/');
+                
+                if (isImage || isVideo) {
+                    event.stop();
+                    event.preventDefault();
+                    return;
+                }
+            }
+        });
+
+        editor.editing.view.document.on('paste', (event, data) => {
+            const { files } = data.dataTransfer;
+            
+            for (const file of files) {
+                const isImage = file.type.includes('image/');
+                const isVideo = file.type.includes('video/');
+                
+                if (isImage || isVideo) {
+                    event.stop();
+                    event.preventDefault();
+                    return;
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error(error);
+    });
+</script>
+
+
+<!-- <script>
     ClassicEditor
         .create(document.querySelector('#editor'))
         .then(editor => {
@@ -171,5 +233,5 @@
         .catch(error => {
             console.error(error);
         });
-</script>
+</script> -->
 
