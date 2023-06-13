@@ -2045,9 +2045,11 @@ $("#addCareerArticles").on("click", function () {
         return;
     }
 
-    // Check if the first image is not a valid image file
-    if (content_image.type.split('/')[0] !== 'image') {
-        Swal.fire("Please select an image file");
+    // Check if the selected file is not a valid image file
+    const allowedExtensions = ['jpg', 'jpeg', 'png'];
+    const fileExtension = content_image.name.split('.').pop().toLowerCase();
+    if (!allowedExtensions.includes(fileExtension)) {
+        Swal.fire("Only JPEG, JPG, and PNG image files are allowed.");
         return;
     }
 
