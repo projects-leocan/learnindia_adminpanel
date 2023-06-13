@@ -525,6 +525,7 @@ $("#saveCareerGuidanceHelp").on("click", function () {
                         text: `${data.Message}`,
                         confirmButtonText: 'Ok'
                     }).then((result) => {
+                        $("#customFile").val("");
                     });
                 } else {
                     Swal.fire(`Content remains the same. No changes were made.`);
@@ -559,6 +560,7 @@ $("#saveCareerGuidanceHelp").on("click", function () {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             localStorage.setItem("last_career_gui_id", data.last_added);
+                            $("#customFile").val("");
                         }
                     });
                 } else {
